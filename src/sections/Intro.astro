@@ -1,0 +1,82 @@
+<main id="landing-intro" class="hidden">
+    <section class="max-w-[650px] text-center animate-blurred-fade-in">
+        <h1
+            style="line-height: 45px;"
+            class="text-center font-medium font-parisienne text-[#B97600] text-[65px] desktop:text-[50px]"
+        >
+            Bienvenidos
+        </h1>
+        <p class="text-[#6F6F6E] mt-4 desktop:text-2xl text-lg">
+            Queremos contar contigo en el día mas especial de nuestras vidas
+        </p>
+        <div class="desktop:mt-5 mt-3">
+            <button class="btn-music">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-music-heart"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path d="M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"
+                    ></path><path d="M9 17v-13h10v7"></path><path d="M9 8h10"
+                    ></path><path
+                        d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z"
+                    ></path></svg
+                >
+            </button>
+            <button class="btn-music">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#ffffff"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-music-cancel"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path d="M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"
+                    ></path><path d="M9 17v-13h10v8"></path><path d="M9 8h10"
+                    ></path><path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"
+                    ></path><path d="M17 21l4 -4"></path></svg
+                >
+            </button>
+        </div>
+    </section>
+</main>
+<style>
+    #landing-intro {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+        @apply mx-8;
+    }
+    .btn-music {
+        background-color: #b97600;
+        color: white;
+
+        @apply px-10;
+        @apply py-3;
+        @apply rounded-3xl;
+        @apply shadow-md;
+        @apply font-medium;
+        margin: 8px;
+    }
+    @media (max-width: 1023px) {
+        .btn-music {
+            @apply text-xs;
+            @apply px-8;
+            @apply py-3;
+        }
+    }
+</style>

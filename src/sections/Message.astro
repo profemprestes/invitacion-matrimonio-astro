@@ -1,0 +1,28 @@
+---
+
+import MessageCard from "@/components/MessageCard.astro";
+import Divider from "@/components/Divider.astro";
+import Title from "@/components/Title.astro";
+---
+
+<section>
+    <div
+        class="max-w-[1140px] phone:w-full phone:px-2 mx-auto mb-12 mt-12 desktop:mb-14 desktop:mt-24 text-color01 flex gap-3 justify-center items-center flex-col"
+    >
+      <Title title="Mensaje de los novios" />
+        <span
+            class="font-rubik desktop:text-xl text-center font-extralight text-gray-400"
+        >
+            Un minuto, un segundo, un instante que queda en la eternidad
+        </span>
+        <img src="/camera.gif" class="w-28 mx-auto" title="gift de camara" />
+    </div>
+    <div
+        class="max-w-[1140px] flex flex-row flex-wrap gap-8 desktop:gap-4 mx-auto justify-center items-center"
+    >
+        <MessageCard person="Dahiana" message="" image="novia.jpg" />
+
+        <MessageCard person="Johan" message="" image="novio.jpg" />
+    </div>
+    <Divider />
+</section>
