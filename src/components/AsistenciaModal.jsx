@@ -15,7 +15,7 @@ export default function AsistenciaModal({ type }) {
                 onOpenChange={onOpenChange}
                 placement="center"
                 size='xl'
-                className='      p-8'
+                className='p-8'
             >
                 <ModalContent>
                     {(onClose) => (
