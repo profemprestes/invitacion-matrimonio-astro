@@ -22,9 +22,8 @@ const ControlMusic = () => {
 
     return (
         <>
-            <audio ref={audioRef} autoPlay loop>
+            <audio ref={audioRef}  loop>
                 <source src="/cancion-fondo.mp3" type="audio/mpeg" />
-                Tu navegador no soporta la etiqueta de audio.
             </audio>
             <button className="btn-music m-2 font-medium shadow-md rounded-3xl py-3 px-10 bg-color01 text-white" onClick={handlePlayMusic}>
                 <svg

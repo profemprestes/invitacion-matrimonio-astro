@@ -3,7 +3,7 @@ import ControlMusic from './ControlMusic'
 
 function Welcome() {
     return (
-        <main  className='flex justify-center items-center h-screen relative mx-8'  >
+        <main  id='welcome-hero' className='flex justify-center items-center h-screen relative mx-8'  >
             <section className="max-w-[650px] text-center animate-blurred-fade-in">
                 <h1
                  

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Welcome from './Welcome'
+import Intro from '@/sections/Intro.astro'
 
 function Loader() {
 
@@ -9,7 +10,7 @@ function Loader() {
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
-        }, 2000)
+        }, 1000)
     }, [])
 
     return (
@@ -18,14 +19,13 @@ function Loader() {
                 loading ? (
                     <div
                         id="loader"
-                        className="flex z-50 fixed top-0 left-0 w-full h-full bg-white animate-blurred-fade-in items-center justify-center"
+                        className="flex z-50 fixed top-0 left-0 w-full h-full bg-white  items-center justify-center"
                     >
                         <div className="max-w-lg">
                             <img className="w-28 h-auto" src="/love-heart.gif" />
                         </div>
                     </div>
-                ) : <Welcome />
-            }
+                ) : null}
         </>
     )
 }
