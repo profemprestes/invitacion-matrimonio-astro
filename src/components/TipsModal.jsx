@@ -72,8 +72,9 @@ function TipsModal() {
                 isDismissable={false} isKeyboardDismissDisabled={true}
                 onOpenChange={onOpenChange}
                 placement="center"
+                
                 size='xl'
-                className='p-8'
+                className='p-8 phone:max-h-[60vh] max-h-[60vh] desktop:max-h-[90vh] overflow-y-auto'
             >
                 <ModalContent>
                     {(onClose) => (
@@ -86,6 +87,7 @@ function TipsModal() {
                             phone:text-[34px]
                             p-0
                             desktop:text-5xl
+
                             text-center
                             my-4
                             flex-col gap-1">

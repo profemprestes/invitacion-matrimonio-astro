@@ -22,7 +22,7 @@ export default function AsistenciaModal({ type }) {
             T_Tipo_Sede: type,
         }
 
-        const response = await fetch('https://eae-api.pedagogicos.pe/api/asistencia', {
+        const response = await fetch('http://127.0.0.1:8000/api/asistencia', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

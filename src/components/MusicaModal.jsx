@@ -34,7 +34,7 @@ function MusicaModal(
 
         }
 
-        const response = await fetch('https://eae-api.pedagogicos.pe/api/recomendacionmusica', {
+        const response = await fetch('http://127.0.0.1:8000/api/recomendacionmusica', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
