@@ -72,7 +72,7 @@ function TipsModal() {
                 isDismissable={false} isKeyboardDismissDisabled={true}
                 onOpenChange={onOpenChange}
                 placement="center"
-                
+
                 size='xl'
                 className='p-8 phone:max-h-[60vh] max-h-[60vh] desktop:max-h-[90vh] overflow-y-auto'
             >
@@ -108,12 +108,17 @@ function TipsModal() {
 
                                     </li>
                                     <li style={li} >
-
                                         <span className="font-semibold">
-                                            Recepción:
+                                            Ceremonia Civil:
                                         </span>
 
-                                        <span>        La recepción será a las 17:00 horas.</span>
+                                        <span>La ceremonia civil será a las 17:00 horas.</span>
+                                    </li>
+                                    <li style={li} >
+                                        <span className="font-semibold">
+                                            Fiesta:
+                                        </span>
+                                        <span>Se realizará una vez culmine la ceremonia Civil. </span>
                                     </li>
                                 </ul>
 
@@ -168,11 +173,11 @@ function TipsModal() {
 
                                 </ul>
                                 <div className="flex flex-col gap-1 justify-end items-end " >
-                                    
-                                        <span className="font-parisienne text-color01 text-lg font-bold">
-                                            Johan y Dahiana
-                                        </span>
-                                    </div>
+
+                                    <span className="font-parisienne text-color01 text-lg font-bold">
+                                        Johan y Dahiana
+                                    </span>
+                                </div>
                             </ModalBody>
 
                         </>
