@@ -1,8 +1,8 @@
 ---
-const { person, image } = Astro.props;
+const { person, image, message } = Astro.props;
 ---
 
-<div class="max-w-sm w-full  shadow-lg desktop:max-w-md desktop:flex">
+<div class="max-w-sm w-full shadow-lg desktop:max-w-lg desktop:flex">
     <div
         class="h-48 desktop:h-auto desktop:w-48 flex-none bg-cover rounded-t desktop:rounded-t-none desktop:rounded-l text-center overflow-hidden"
         style={`background-image: url('/photos/${image} ')`}
@@ -20,9 +20,7 @@ const { person, image } = Astro.props;
                 Mensaje de {person}
             </div>
             <p class="text-gray-700 text-base">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Voluptatibus quia, nulla! Maiores et perferendis eaque,
-                exercitationem praesentium nihil.
+                {message}
             </p>
         </div>
     </div>

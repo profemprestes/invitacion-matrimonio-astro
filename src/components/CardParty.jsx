@@ -1,11 +1,14 @@
 
 import { Card } from "@nextui-org/react";
+import MusicaModal from "./MusicaModal";
+import DressCodeModal from "./DressCodeModal";
+import TipsModal from "./TipsModal";
 
 export default function CardParty({
     title,
+    guid,
     description,
-    icon,
-    textButton
+    icon
 }) {
     return (
         <Card shadow="md" className="p-0 py-10 max-w-sm  w-full desktop:max-w-72 text-center flex items-center justify-center">
@@ -19,9 +22,19 @@ export default function CardParty({
             <span className="h-32 p-6  text-gray-400 font-medium flex justify-center items-center" >
                 {description}
             </span>
-            <button className="bg-color01 min-w-52 max-w-52 text-color02 py-3 rounded-3xl">
-                {textButton}
-            </button>
+
+            {
+                guid == 1 ? (
+                    <MusicaModal  />
+                ): (
+                    guid == 2 ? (
+                        <DressCodeModal  />
+                    ) :(
+                        <TipsModal  />
+                    )
+                )
+            }
+       
         </Card>
     );
 }

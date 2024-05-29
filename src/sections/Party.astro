@@ -12,7 +12,8 @@ import Title from "@/components/Title.astro";
         <span
             class="font-rubik desktop:text-xl text-center font-extralight text-gray-400"
         >
-        Hagamos juntos una fiesta épica. Aquí algunos detalles a tener en cuenta.
+            Hagamos juntos una fiesta épica. Aquí algunos detalles a tener en
+            cuenta.
         </span>
     </div>
     <div
@@ -22,24 +23,24 @@ import Title from "@/components/Title.astro";
             class="flex flex-wrap justify-center items-center flex-row gap-8 flex-1"
         >
             <CardParty
+                guid="1"
                 title="Música"
                 icon="music"
                 description="¿Cuál es la canción que no debe faltar en la PlayList de la fiesta?"
-                textButton="Sugerir canción"
                 client:load
             />
             <CardParty
+                guid="2"
                 title="Dress Code"
                 icon="dress-code"
                 description="Una orientación para tu vestuario"
-                textButton="Ver más"
                 client:load
             />
             <CardParty
+                guid="3"
                 title="Tips y Notas"
                 icon="tips"
-                description="Información adicional para tener en cuenta"
-                textButton="+ Info"
+                description="Información importante para tener en cuenta"
                 client:load
             />
         </div>

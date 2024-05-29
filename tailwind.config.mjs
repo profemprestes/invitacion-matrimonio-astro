@@ -28,6 +28,7 @@ export default {
 			'color03': '#6F6F6E',
 			transparent: 'transparent',
 			current: 'currentColor',
+			'red-500': '#ef4444',
 			black: colors.black,
 			white: colors.white,
 			gray: colors.gray,

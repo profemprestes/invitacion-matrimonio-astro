@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Welcome from './Welcome'
-import Intro from '@/sections/Intro.astro'
+
 
 function Loader() {
 

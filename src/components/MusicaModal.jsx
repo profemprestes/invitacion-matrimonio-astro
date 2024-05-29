@@ -1,32 +1,43 @@
 
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link, Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { Radio, RadioGroup } from "@nextui-org/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 
-export default function AsistenciaModal({ type }) {
+const generosmusicales = [
+    "Pop",
+    "Cumbia",
+    "Salsa",
+    "Bolero",
+    "Valse Criollo",
+    "Marinera",
+    "Reggaetón",
+    "Jazz",
+    "Soul",
+    "R&B",
+    "Blues",
+    "Otros"
+]
+
+function MusicaModal(
+
+) {
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
     const [error, setError] = useState("");
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
     const [send, setSend] = useState(false);
-    const [asistenciaCheck, setAsistenciaCheck] = useState("");
     const handleGuardarForm = handleSubmit(async (data) => {
-        if (asistenciaCheck === "") {
-            setError("Debes seleccionar una opción de asistencia")
-            return
-        }
+
         const datos = {
             ...data,
-            Flag_Asistencia: asistenciaCheck,
-            T_Tipo_Sede: type,
+
         }
 
-        const response = await fetch('https://eae-api.pedagogicos.pe/api/asistencia', {
+        const response = await fetch('https://eae-api.pedagogicos.pe/api/recomendacionmusica', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer 12|SjaqxYBCTstwlZndGdS7IKUjTW7nKnZRayAVsKzA4fcc3c0c'
             },
             body: JSON.stringify(datos)
 
@@ -44,7 +55,9 @@ export default function AsistenciaModal({ type }) {
 
     return (
         <>
-            <button onClick={onOpen} className="w-[280px] desktop:w-[200px] mx-auto  bg-color01 text-color02 py-3 rounded-3xl">Confirmar Asistencia</button>
+            <button onClick={onOpen} className="bg-color01 min-w-52 max-w-52 text-color02 py-3 rounded-3xl">
+                Sugerir canción
+            </button>
             <Modal
                 backdrop={'blur'}
                 isOpen={isOpen}
@@ -68,7 +81,7 @@ export default function AsistenciaModal({ type }) {
                             text-center
                             my-4
                             flex-col gap-1">
-                                ¿Asistes a la {type} ?
+                                Sugerir Canción
 
                             </ModalHeader>
                             <ModalBody>
@@ -84,108 +97,73 @@ export default function AsistenciaModal({ type }) {
                                             )
                                         }
 
-                                        <div className="text-center mt-4 mb-8" >
-                                            <div className="flex items-center justify-center " >
 
-                                                <RadioGroup
-                                                    {...register('Flag_Asistencia', {
+                                        <div className="flex flex-col mt-5 gap-4" >
+                                            <div>
 
+                                                <Autocomplete
+                                                    {...register('T_Categoria', {
+                                                        required: {
+                                                            value: true,
+                                                            message: 'Campo es requerido'
+                                                        }
                                                     })}
-                                                    color='warning'
-                                                    size='lg'
-                                                    orientation='horizontal'
-                                                    label=""
-                                                    value={asistenciaCheck}
-                                                    onValueChange={setAsistenciaCheck}
+                                                    variant={"bordered"}
+                                                    defaultItems={generosmusicales}
+                                                    labelPlacement={'inside'}
+                                                    label="Selecciona un género musical"
+                                                    className="max-w-full"
                                                 >
-                                                    <Radio value="SI">¡Sí, confirmo!</Radio>
-                                                    <Radio value="NO">{`No puedo :(`} </Radio>
-                                                </RadioGroup>
+                                                    {
+                                                        generosmusicales.map((item, index) => (
+                                                            <AutocompleteItem key={index}>{item}</AutocompleteItem>
+                                                        ))
+                                                    }
 
-                                            </div>
-                                            {
-                                                errors.Flag_Asistencia && (
-                                                    <span className="text-red-500 text-xs">{errors.Flag_Asistencia.message}</span>
-                                                )
-                                            }
-                                        </div>
-                                        <div className="flex flex-col gap-4" >
-                                            <div>
-                                                <Input
-                                                    {...register('T_NroDocumento', {
-                                                        required: {
-                                                            value: true,
-                                                            message: 'Campo es requerido'
-                                                        }
-                                                    })}
-                                                    label="DNI"
-                                                    placeholder="Ingresa tu DNI"
-                                                    variant="bordered"
-                                                />
+                                                </Autocomplete>
                                                 {
-                                                    errors.T_NroDocumento && (
-                                                        <span className="text-red-500 text-xs">{errors.T_NroDocumento.message}</span>
+                                                    errors.T_Categoria && (
+                                                        <span className="text-red-500 text-xs">{errors.T_Categoria.message}</span>
                                                     )
                                                 }
                                             </div>
                                             <div>
                                                 <Input
-                                                    {...register('T_ApellidoPaterno', {
+                                                    {...register('T_Cantante', {
                                                         required: {
                                                             value: true,
                                                             message: 'Campo es requerido'
                                                         }
                                                     })}
-                                                    label="Apellido Paterno"
-                                                    placeholder="Ingresa tu apellido paterno"
+                                                    label="Cantante/Grupo"
+                                                    placeholder="Ingresa la Canción o Grupo"
                                                     variant="bordered"
                                                 />
                                                 {
-                                                    errors.T_ApellidoPaterno && (
-                                                        <span className="text-red-500 text-xs">{errors.T_ApellidoPaterno.message}</span>
+                                                    errors.T_Cantante && (
+                                                        <span className="text-red-500 text-xs">{errors.T_Cantante.message}</span>
                                                     )
                                                 }
                                             </div>
                                             <div>
                                                 <Input
-                                                    {...register('T_ApellidoMaterno', {
+                                                    {...register('T_Nombre_Cancion', {
                                                         required: {
                                                             value: true,
                                                             message: 'Campo es requerido'
                                                         }
                                                     })}
-                                                    label="Apellido Materno"
-                                                    placeholder="Ingresa tu apellido materno"
-                                                    variant="bordered"
-                                                />
-                                                {
-                                                    errors.T_ApellidoMaterno && (
-                                                        <span className="text-red-500 text-xs">{errors.T_ApellidoMaterno.message}</span>
-                                                    )
-                                                }
-                                            </div>
-                                            <div>
-                                                <Input
-                                                    {...register('T_Nombres', {
-                                                        required: {
-                                                            value: true,
-                                                            message: 'Campo es requerido'
-                                                        }
-                                                    })}
-                                                    label="Nombres"
-                                                    placeholder="Ingresa tus nombres"
-                                                    variant="bordered"
-                                                />
-                                                {
-                                                    errors.T_Nombres && (
-                                                        <span className="text-red-500 text-xs">{errors.T_Nombres.message}</span>
-                                                    )
-                                                }
-                                            </div>
-                                            {
+                                                    label="Canción"
 
-
-                                            }
+                                                    placeholder="Ingresa el Cantante"
+                                                    variant="bordered"
+                                                />
+                                                {
+                                                    errors.T_Nombre_Cancion && (
+                                                        <span className="text-red-500 text-xs">{errors.T_Nombre_Cancion.message}</span>
+                                                    )
+                                                }
+                                            </div>
 
                                             {
                                                 isSubmitting ? (
@@ -194,7 +172,7 @@ export default function AsistenciaModal({ type }) {
                                                     </button>
                                                 ) : (
                                                     <button className='bg-color01 text-color02 py-3  w-[280px] mx-auto desktop:w-[200px] rounded-3xl'>
-                                                        Enviar
+                                                        Sugerir canción
                                                     </button>
                                                 )
                                             }
@@ -208,7 +186,7 @@ export default function AsistenciaModal({ type }) {
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                                                 </svg>
                                                 <p className='  font-rubik text-center  text-xl ' >
-                                                    ¡Se envió tu respuesta, Gracias!
+                                                    ¡Gracias por tu recomendación!
                                                 </p>
                                             </div>
                                             <button
@@ -230,5 +208,7 @@ export default function AsistenciaModal({ type }) {
                 </ModalContent>
             </Modal >
         </>
-    );
+    )
 }
+
+export default MusicaModal

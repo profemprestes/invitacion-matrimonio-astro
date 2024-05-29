@@ -17,9 +17,14 @@ import AsistenciaModal from "@/components/AsistenciaModal.jsx";
                 <span class="text-[20px] font-normal text-[#C6C6C5]">
                     Sábado 10 de Agosto - 15hs
                 </span>
-                <button class="bg-color01 w-auto text-color02 py-3 rounded-3xl">
+                <a
+                    data-id="NL21835056"
+                    href="https://www.addevent.com/event/NL21835056"
+                    target="_blank"
+                    class="bg-color01 text-color02 py-3 rounded-3xl"
+                >
                     Agendar
-                </button>
+                </a>
             </li>
             <li>
                 <p class="text-[28px] text-[#6F6F6E] font-medium">Lugar</p>
@@ -31,7 +36,7 @@ import AsistenciaModal from "@/components/AsistenciaModal.jsx";
                     Confirmar asistencia
                 </button>
                  -->
-                <AsistenciaModal  type={"ceremonia"} client:load  />
+                <AsistenciaModal type={"ceremonia"} client:load />
             </li>
             <li>
                 <p class="text-[28px] text-[#6F6F6E] font-medium">Direción</p>
@@ -55,16 +60,22 @@ import AsistenciaModal from "@/components/AsistenciaModal.jsx";
                 <span class="text-[20px] font-normal text-[#C6C6C5]">
                     Sábado 10 de Agosto - 17hs
                 </span>
-                <button class="bg-color01 text-color02 py-3 rounded-3xl">
+
+                <a
+                    data-id="TK21835117"
+                    href="https://www.addevent.com/event/TK21835117"
+                    target="_blank"
+                    class="bg-color01 text-color02 py-3 rounded-3xl"
+                >
                     Agendar
-                </button>
+                </a>
             </li>
             <li>
                 <p class="text-[28px] text-[#6F6F6E] font-medium">Lugar</p>
                 <span class="text-[20px] font-normal text-[#C6C6C5]">
                     Hermandad del señor de la Agonia
                 </span>
-                <AsistenciaModal  type={"celebración"} client:load  />
+                <AsistenciaModal type={"celebración"} client:load />
             </li>
             <li>
                 <p class="text-[28px] text-[#6F6F6E] font-medium">Dirección</p>
@@ -79,6 +90,11 @@ import AsistenciaModal from "@/components/AsistenciaModal.jsx";
     </div>
 </section>
 <Divider />
+<script
+    type="text/javascript"
+    src="https://cdn.addevent.com/libs/atc/1.6.1/atc.min.js"
+    async
+    defer></script>
 <style>
     .title-pd {
         border-top: 1px solid #c6c6c5;
@@ -99,6 +115,15 @@ import AsistenciaModal from "@/components/AsistenciaModal.jsx";
         @apply w-[280px];
         @apply desktop:w-[200px];
         @apply mx-auto;
+    }
+    a {
+        @apply w-[280px];
+        @apply desktop:w-[200px];
+        @apply mx-auto;
+    }
+    a:hover {
+        background-color: rgb(195 128 11 / 73%);
+        @apply animate-pulsing;
     }
     button:hover {
         background-color: rgb(195 128 11 / 73%);
