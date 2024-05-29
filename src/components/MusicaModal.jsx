@@ -155,7 +155,7 @@ function MusicaModal(
                                                     })}
                                                     label="Canción"
 
-                                                    placeholder="Ingresa el Cantante"
+                                                    placeholder="Ingresa la canción"
                                                     variant="bordered"
                                                 />
                                                 {
