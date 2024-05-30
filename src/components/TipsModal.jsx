@@ -112,7 +112,7 @@ function TipsModal() {
                                             Ceremonia Civil:
                                         </span>
 
-                                        <span>La ceremonia civil será a las 17:00 horas.</span>
+                                        <span>La ceremonia civil será a las 16:30 horas.</span>
                                     </li>
                                     <li style={li} >
                                         <span className="font-semibold">
@@ -131,19 +131,8 @@ function TipsModal() {
                                         <span className="font-semibold">
                                             Menú:
                                         </span>
-
                                         <span>
                                             Esperamos que disfrutes de la cena que hemos preparado para ti.
-                                        </span>
-                                    </li>
-                                    <li style={li} >
-
-                                        <span className="font-semibold">
-                                            Barra Libre:
-                                        </span>
-
-                                        <span>
-                                            Habrá una barra libre disponible durante la recepción.
                                         </span>
                                     </li>
                                 </ul>

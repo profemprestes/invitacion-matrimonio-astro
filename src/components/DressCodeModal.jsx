@@ -48,13 +48,13 @@ function DressCodeModal() {
                                         <span>
                                             Para hacer de nuestro día especial un evento aún más memorable, les solicitamos amablemente que sigan el siguiente código de vestimenta:
                                         </span>
-                                        <span>
+                                        <span className="font-semibold" >
                                             Hombres:
                                         </span>
                                         <span>
                                             Traje Formal: Se recomienda el uso de traje oscuro con camisa y corbata.
                                         </span>
-                                        <span>
+                                        <span className="font-semibold" >
                                             Mujeres:
                                         </span>
                                         <span>

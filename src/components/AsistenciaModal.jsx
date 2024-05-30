@@ -44,7 +44,7 @@ export default function AsistenciaModal({ type }) {
 
     return (
         <>
-            <button onClick={onOpen} className="w-[280px] desktop:w-[200px] mx-auto  bg-color01 text-color02 py-3 rounded-3xl">Confirmar Asistencia</button>
+            <button onClick={onOpen} className="w-[280px] hover:animate-pulsing desktop:w-[200px] mx-auto  bg-color01 text-color02 py-3 rounded-3xl">Confirmar Asistencia</button>
             <Modal
                 backdrop={'blur'}
                 isOpen={isOpen}
