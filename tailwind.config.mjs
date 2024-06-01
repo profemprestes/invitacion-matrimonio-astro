@@ -20,7 +20,7 @@ export default {
 
 			'desktop': '993px',
 			// => @media (min-width: 1280px) { ... }
-			'greater-desktop': '1201px',
+			'greater-desktop': '1745px',
 		},
 		colors: {
 			'color01': '#B97600',

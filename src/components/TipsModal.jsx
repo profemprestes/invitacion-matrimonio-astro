@@ -161,6 +161,39 @@ function TipsModal() {
                                     </li>
 
                                 </ul>
+                                <h3 style={title} >
+                                    Regalos
+                                </h3>
+                                <ul style={list} >
+                                <li style={li} >
+                                    Estamos muy emocionados de celebrar nuestro matrimonio con ustedes y estamos profundamente agradecidos por su amor y apoyo. Si desean honrarnos con un regalo, les agradecemos de antemano por su generosidad.
+                                    </li>
+                                    <li style={li} >
+
+                                        <span className="font-semibold">
+                                            Dahiana:
+                                        </span>
+                                        <span>
+                                            INTERBANK:
+                                            29519490244091
+                                            <br />
+                                            CCI:  00229511949024409146
+                                        </span>
+                                    </li>
+                                    <li style={li} >
+
+                                        <span className="font-semibold">
+                                            Johan:
+                                        </span>
+                                        <span>
+                                            BCP:
+                                            8983305997546
+                                            <br />
+                                            CCI:  00389801330599754645
+                                        </span>
+                                    </li>
+
+                                </ul>
                                 <div className="flex flex-col gap-1 justify-end items-end " >
 
                                     <span className="font-parisienne text-color01 text-lg font-bold">

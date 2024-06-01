@@ -61,7 +61,7 @@ function DressCodeModal() {
                                             Vestido de Cóctel o Gala: Vestidos largos o cortos elegantes son bienvenidos.
                                         </span>
                                         <span>
-                                            Color Sugerido: Evitar el blanco, por favor.
+                                            Color Sugerido: Evitar el blanco y perla.
                                         </span>
                                         <span>
                                             Agradecemos de antemano su comprensión y colaboración para que todos luzcan espectaculares en esta ocasión tan especial.
