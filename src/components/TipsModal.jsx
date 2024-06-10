@@ -165,8 +165,8 @@ function TipsModal() {
                                     Regalos
                                 </h3>
                                 <ul style={list} >
-                                <li style={li} >
-                                    Estamos muy emocionados de celebrar nuestro matrimonio con ustedes y estamos profundamente agradecidos por su amor y apoyo. Si desean honrarnos con un regalo, les agradecemos de antemano por su generosidad.
+                                    <li style={li} >
+                                        Estamos muy emocionados de celebrar nuestro matrimonio con ustedes y estamos profundamente agradecidos por su amor y apoyo. Si desean honrarnos con un regalo, les agradecemos de antemano por su generosidad.
                                     </li>
                                     <li style={li} >
 
@@ -175,9 +175,9 @@ function TipsModal() {
                                         </span>
                                         <span>
                                             INTERBANK:
-                                            29519490244091
+                                            8983305997546
                                             <br />
-                                            CCI:  00229511949024409146
+                                            CCI:  00389801330599754645
                                         </span>
                                     </li>
                                     <li style={li} >
@@ -187,9 +187,9 @@ function TipsModal() {
                                         </span>
                                         <span>
                                             BCP:
-                                            8983305997546
+                                            29519490244091 
                                             <br />
-                                            CCI:  00389801330599754645
+                                            CCI:  00229511949024409146
                                         </span>
                                     </li>
 
