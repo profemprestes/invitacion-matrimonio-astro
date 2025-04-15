@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background: #fff9f5;
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.background-decoration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 214, 214, 0.3) 0%, transparent 30%),
+        radial-gradient(circle at 90% 30%, rgba(255, 234, 195, 0.3) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(255, 222, 173, 0.2) 0%, transparent 50%);
+    background-size: 100% 100%;
+    opacity: 0.7;
+}
+
+/* Add confetti-like dots */
+.background-decoration::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(#FFB6C1 1px, transparent 1px),
+        radial-gradient(#FFD700 1px, transparent 1px),
+        radial-gradient(#87CEFA 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px, 12px 12px;
+    opacity: 0.2;
+}
+
+/* Add floating animation for decorative elements */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Add subtle pulse animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

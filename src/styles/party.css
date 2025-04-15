@@ -1,0 +1,136 @@
+/* Party section styles */
+.party-section {
+  position: relative;
+  padding: 2rem 0;
+  overflow: hidden;
+}
+
+/* Background decorations */
+.party-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(#FFB6C1 1px, transparent 1px),
+    radial-gradient(#FFD700 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+/* Title styling */
+.party-title {
+  position: relative;
+  display: inline-block;
+}
+
+.party-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #FF9494, #FFD166);
+  border-radius: 3px;
+}
+
+/* Party cards container */
+.party-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Party card styling */
+.party-card {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  max-width: 320px;
+  width: 100%;
+}
+
+.party-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Card header with icon */
+.party-card-icon {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+.party-card-icon img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.party-card:hover .party-card-icon img {
+  transform: scale(1.1);
+}
+
+/* Card title */
+.party-card-title {
+  font-family: 'Parisienne', cursive;
+  font-size: 1.8rem;
+  color: #FF6B8B;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+/* Card description */
+.party-card-description {
+  padding: 1rem 1.5rem 2rem;
+  text-align: center;
+  font-family: 'Rubik', sans-serif;
+  color: #6F6F6E;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Button styling */
+.party-card-button {
+  display: block;
+  width: 80%;
+  margin: 0 auto 1.5rem;
+  padding: 0.8rem 1.5rem;
+  background-color: #95C998;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.party-card-button:hover {
+  background-color: #7AB37E;
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .party-cards-container {
+    gap: 1.5rem;
+  }
+  
+  .party-card {
+    max-width: 100%;
+  }
+}

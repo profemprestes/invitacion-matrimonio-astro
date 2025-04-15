@@ -3,27 +3,51 @@ import Layout from "@/layouts/Layout.astro";
 import Hero from "@/sections/Hero.astro";
 import Countdown from "@/sections/Countdown.astro";
 import PrincipalDate from "@/sections/PrincipalDate.astro";
-import Message from "@/sections/Message.astro";
 import Party from "@/sections/Party.astro";
 import Instagram from "@/sections/Instagram.astro";
-import Footer from "@/sections/Footer.astro";
-
+import Intro from "@/sections/Intro.astro";
+import "../styles/index.css";
 ---
 
-<Layout title="Boda de Johan y Dahiana">
-	<div id="hero" 
-	class="hidden"
-	>
+<Layout title="Cumple de Galia">
+	<div id="intro-section">
+		<Intro />
+		<div class="enter-button-container">
+			<button id="enter-button" class="enter-button">
+				Entrar a la Fiesta
+			</button>
+		</div>
+	</div>
 
-			<Hero />
-			<section class="p-4">
-				<Countdown />
-				<PrincipalDate />
-				<Message />
-				<Party />
-				<Instagram />
-				<Footer />
-			</section>
-
+	<div id="main-content" class="hidden">
+		<Hero />
+		<section class="p-4">
+			<Countdown />
+			<PrincipalDate />
+			<Party />
+		</section>
 	</div>
 </Layout>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const enterButton = document.getElementById('enter-button');
+		const introSection = document.getElementById('intro-section');
+		const mainContent = document.getElementById('main-content');
+
+		enterButton.addEventListener('click', () => {
+			// Add fade-out animation to intro
+			introSection.style.animation = 'fadeOut 0.8s forwards';
+			
+			// After animation completes, hide intro and show main content
+			setTimeout(() => {
+				introSection.classList.add('hidden');
+				mainContent.classList.remove('hidden');
+				
+				// Add fade-in animation to main content
+				mainContent.style.animation = 'fadeIn 1s forwards';
+				mainContent.classList.add('visible');
+			}, 700);
+		});
+	});
+</script>

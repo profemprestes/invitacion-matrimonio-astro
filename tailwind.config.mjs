@@ -23,9 +23,9 @@ export default {
 			'greater-desktop': '1745px',
 		},
 		colors: {
-			'color01': '#B97600',
-			'color02': '#FFFFFF',
-			'color03': '#6F6F6E',
+			'color01': '#95C998FF',
+			'color02': '#5F6934FF',
+			'color03': '#3D6679FF',
 			transparent: 'transparent',
 			current: 'currentColor',
 			'red-500': '#ef4444',

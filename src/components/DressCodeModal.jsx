@@ -1,24 +1,22 @@
 
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link } from "@nextui-org/react";
-import { Radio, RadioGroup } from "@nextui-org/react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure } from "@nextui-org/react";
+import "../styles/DressCodeModal.css";
 
-function DressCodeModal() {
+function DressCodeModal({ buttonClassName, buttonText }) {
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
-
 
     return (
         <>
-            <button onClick={onOpen} className="bg-color01 min-w-52 max-w-52 text-color02 py-3 rounded-3xl">
-                Ver más
+            <button onClick={onOpen} className={buttonClassName || "bg-color01 min-w-52 max-w-52 text-color02 py-3 rounded-3xl"}>
+                {buttonText || "Conocer Más"}
             </button>
             <Modal
                 backdrop={'blur'}
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement="center"
-                isDismissable={false} isKeyboardDismissDisabled={true}
+                isDismissable={false} 
+                isKeyboardDismissDisabled={true}
                 size='xl'
                 className='p-8'
             >
@@ -27,7 +25,7 @@ function DressCodeModal() {
                         <>
                             <ModalHeader className="flex 
                             font-parisienne
-                            text-color01
+                            text-pink-500
                             font-light
                             text-5xl
                             phone:text-[34px]
@@ -35,55 +33,66 @@ function DressCodeModal() {
                             desktop:text-5xl
                             text-center
                             my-4
-                            flex-col gap-1">
-                                Dress Code
-
+                            flex-col gap-1 about-me-title">
+                                Un Poquito Sobre Mí
                             </ModalHeader>
                             <ModalBody>
-                                <div className=" text-sm flex flex-col  gap-4 " >
-                                    <span className="font-semibold font-rubik" >
-                                        Queridos invitados,
-                                    </span>
-                                    <div className="flex flex-col gap-2 font-rubik" >
-                                        <span>
-                                            Para hacer de nuestro día especial un evento aún más memorable, les solicitamos amablemente que sigan el siguiente código de vestimenta:
-                                        </span>
-                                        <span className="font-semibold" >
-                                            Hombres:
-                                        </span>
-                                        <span>
-                                            Traje Formal: Se recomienda el uso de traje oscuro con camisa y corbata.
-                                        </span>
-                                        <span className="font-semibold" >
-                                            Mujeres:
-                                        </span>
-                                        <span>
-                                            Vestido de Cóctel o Gala: Vestidos largos o cortos elegantes son bienvenidos.
-                                        </span>
-                                        <span>
-                                            Color Sugerido: Evitar el blanco y perla.
-                                        </span>
-                                        <span>
-                                            Agradecemos de antemano su comprensión y colaboración para que todos luzcan espectaculares en esta ocasión tan especial.
-                                        </span>
-
+                                <div className="about-me-container">
+                                    <div className="about-me-photo-container">
+                                        <img src="/img/Galia.png" alt="Foto de Galia" className="about-me-photo" />
                                     </div>
-                                    <div className="flex flex-col gap-1 justify-end items-end " >
-                                          
-                                        <span className="font-parisienne text-color01 text-lg font-bold">
-                                            Johan y Dahiana
+                                    
+                                    <div className="about-me-sections">
+                                        <div className="about-me-section">
+                                            <h3 className="section-title">Mis Medidas</h3>
+                                            <ul className="section-list">
+                                                <li>Ropita 12-18 meses</li>
+                                                <li>Zapatos Talla 4</li>
+                                                <li>Pañales Talla 4</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div className="about-me-section">
+                                            <h3 className="section-title">Lo Que Me Encanta</h3>
+                                            <ul className="section-list">
+                                                <li>Pelotitas</li>
+                                                <li>Cuentos</li>
+                                                <li>Música</li>
+                                                <li>Juguetes</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div className="about-me-section">
+                                            <h3 className="section-title">Mis Comidas Favoritas</h3>
+                                            <ul className="section-list">
+                                                <li>Puré de calabaza</li>
+                                                <li>Banana</li>
+                                                <li>Yogur</li>
+                                                <li>Galletitas</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="about-me-footer">
+                                        <span className="font-parisienne text-pink-500 text-lg font-bold">
+                                            ¡Gracias por conocerme mejor!
                                         </span>
+                                        <Button 
+                                            color="primary" 
+                                            onPress={onClose}
+                                            className="close-button"
+                                        >
+                                            Cerrar
+                                        </Button>
                                     </div>
                                 </div>
-
                             </ModalBody>
-
                         </>
                     )}
                 </ModalContent>
-            </Modal >
+            </Modal>
         </>
-    )
+    );
 }
 
-export default DressCodeModal
+export default DressCodeModal;

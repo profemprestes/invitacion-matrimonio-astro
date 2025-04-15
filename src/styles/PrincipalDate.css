@@ -1,0 +1,320 @@
+/* Main styles for the Principal Date section */
+.principal-date-section {
+  padding: 3rem 0;
+  position: relative;
+}
+
+/* Decorative elements */
+.principal-date-section::before,
+.principal-date-section::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+.principal-date-section::before {
+  top: 20px;
+  left: 5%;
+  background-image: url("/balloon.svg");
+  animation: float 6s ease-in-out infinite;
+}
+
+.principal-date-section::after {
+  bottom: 20px;
+  right: 5%;
+  background-image: url("/cake.svg");
+  animation: float 7s ease-in-out infinite 1s;
+}
+
+/* Flower icon styling */
+.flower-icon {
+  width: 120px;
+  margin: 0 auto 1.5rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  animation: pulse 4s infinite ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+.flower-icon:hover {
+  transform: rotate(15deg) scale(1.05);
+}
+
+/* Title styling */
+.title-container {
+  position: relative;
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+}
+
+.title-container::before,
+.title-container::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 500px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 107, 139, 0.3), transparent);
+}
+
+.title-container::before {
+  top: 0;
+}
+
+.title-container::after {
+  bottom: 0;
+}
+
+.birthday-title {
+  font-family: 'Parisienne', cursive;
+  font-size: 3.5rem;
+  color: #FF6B8B;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  animation: colorShift 4s infinite alternate;
+}
+
+/* Grid layout for info cards */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.info-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.info-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.info-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+}
+
+.info-label {
+  font-size: 1.75rem;
+  color: #6F6F6E;
+  font-weight: 600;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+}
+
+.info-label::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FF6B8B, transparent);
+}
+
+.info-value {
+  font-size: 1.25rem;
+  color: #8A8A89;
+  margin: 0;
+}
+
+/* Action buttons styling */
+.action-button {
+  display: inline-block;
+  background-color: #FF6B8B;
+  color: white;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(255, 107, 139, 0.3);
+  transition: all 0.3s ease;
+  width: auto;
+  min-width: 160px;
+  max-width: 200px;
+  margin: 0.75rem auto 0;
+  border: none;
+  cursor: pointer;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.7s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
+  background-color: #FF5277;
+}
+
+.action-button:hover::before {
+  left: 100%;
+}
+
+.action-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(255, 107, 139, 0.3);
+}
+
+/* Responsive button adjustments */
+@media (min-width: 992px) {
+  .action-button {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .action-button {
+    min-width: 140px;
+    padding: 0.7rem 1.5rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .action-button {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .info-card {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-grid {
+    gap: 1.25rem;
+  }
+  
+  .info-card {
+    padding: 1rem;
+  }
+  
+  .action-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Animations */
+@keyframes colorShift {
+  0% {
+    color: #FF6B8B;
+  }
+  50% {
+    color: #FF9E7A;
+  }
+  100% {
+    color: #FFD166;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .birthday-title {
+    font-size: 4rem;
+  }
+  
+  .info-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .birthday-title {
+    font-size: 2.75rem;
+  }
+  
+  .info-label {
+    font-size: 1.5rem;
+  }
+  
+  .info-value {
+    font-size: 1.1rem;
+  }
+  
+  .info-grid {
+    gap: 1.5rem;
+  }
+}

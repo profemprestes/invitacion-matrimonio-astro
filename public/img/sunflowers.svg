@@ -1,0 +1,72 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Animated Sunflower 1 -->
+  <g transform="translate(100,100)">
+    <!-- Petals -->
+    <g>
+      <animateTransform attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        from="0 0 0"
+        to="360 0 0"
+        dur="20s"
+        repeatCount="indefinite"/>
+      
+      <path d="M0,-30 C10,-30 10,-10 0,-10 C-10,-10 -10,-30 0,-30" 
+        fill="#FFD700" transform="rotate(0)"/>
+      <use href="#petal" transform="rotate(45)"/>
+      <use href="#petal" transform="rotate(90)"/>
+      <use href="#petal" transform="rotate(135)"/>
+      <use href="#petal" transform="rotate(180)"/>
+      <use href="#petal" transform="rotate(225)"/>
+      <use href="#petal" transform="rotate(270)"/>
+      <use href="#petal" transform="rotate(315)"/>
+    </g>
+    
+    <!-- Center -->
+    <circle r="10" fill="#8B4513">
+      <animate attributeName="r"
+        values="10;12;10"
+        dur="2s"
+        repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Animated Sunflower 2 -->
+  <g transform="translate(300,200)">
+    <!-- Petals -->
+    <g>
+      <animateTransform attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        from="360 0 0"
+        to="0 0 0"
+        dur="15s"
+        repeatCount="indefinite"/>
+      
+      <path d="M0,-30 C10,-30 10,-10 0,-10 C-10,-10 -10,-30 0,-30" 
+        fill="#FFA500" transform="rotate(0)"/>
+      <use href="#petal" transform="rotate(45)"/>
+      <use href="#petal" transform="rotate(90)"/>
+      <use href="#petal" transform="rotate(135)"/>
+      <use href="#petal" transform="rotate(180)"/>
+      <use href="#petal" transform="rotate(225)"/>
+      <use href="#petal" transform="rotate(270)"/>
+      <use href="#petal" transform="rotate(315)"/>
+    </g>
+    
+    <!-- Center -->
+    <circle r="10" fill="#654321">
+      <animate attributeName="r"
+        values="10;12;10"
+        dur="3s"
+        repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Petal Definition -->
+  <defs>
+    <path id="petal" 
+      d="M0,-30 C10,-30 10,-10 0,-10 C-10,-10 -10,-30 0,-30"
+      fill="#FFD700"/>
+  </defs>
+</svg>

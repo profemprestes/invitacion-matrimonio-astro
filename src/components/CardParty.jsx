@@ -1,6 +1,6 @@
 
 import { Card } from "@nextui-org/react";
-import MusicaModal from "./MusicaModal";
+import MensajesmostrarModal from "./MensajesmostrarModal";
 import DressCodeModal from "./DressCodeModal";
 import TipsModal from "./TipsModal";
 
@@ -8,33 +8,33 @@ export default function CardParty({
     title,
     guid,
     description,
-    icon
+    icon,
+    buttonClassName,
+    buttonText
 }) {
     return (
-        <Card shadow="md" className="p-0 py-10 max-w-sm  w-full desktop:max-w-72 text-center flex items-center justify-center">
-            <p className="font-semibold  text-2xl text-color03 " >
+        <Card shadow="md" className="party-card">
+            <div className="party-card-icon">
+                <img src={`/${icon}.gif`} alt={`Icono de ${title}`} />
+            </div>
+            
+            <h3 className="party-card-title">
                 {title}
-            </p>
+            </h3>
 
-            <img src={`/${icon}.gif`} className="w-24 mt-6" alt={`Icono de sección fiesta - ${icon}`} />
-
-
-            <span className="h-32 p-6  text-gray-400 font-medium flex justify-center items-center" >
+            <div className="party-card-description">
                 {description}
-            </span>
+            </div>
 
             {
                 guid == 1 ? (
-                    <MusicaModal  />
+                    <MensajesmostrarModal buttonClassName="party-card-button" buttonText="Enviar Mensaje" />
                 ): (
                     guid == 2 ? (
-                        <DressCodeModal  />
-                    ) :(
-                        <TipsModal  />
-                    )
+                        <DressCodeModal buttonClassName="party-card-button" buttonText="Conocer Más" />
+                    ) : null
                 )
             }
-       
         </Card>
     );
 }

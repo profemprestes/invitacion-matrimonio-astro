@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Petals -->
+    <g id="petals">
+        <path d="M100,30 Q120,50 100,70 Q80,50 100,30" fill="white" stroke="#FFECB3" stroke-width="2" transform="rotate(0,100,100)"/>
+        <path d="M100,30 Q120,50 100,70 Q80,50 100,30" fill="white" stroke="#FFECB3" stroke-width="2" transform="rotate(45,100,100)"/>
+        <path d="M100,30 Q120,50 100,70 Q80,50 100,30" fill="white" stroke="#FFECB3" stroke-width="2" transform="rotate(90,100,100)"/>
+        <path d="M100,30 Q120,50 100,70 Q80,50 100,30" fill="white" stroke="#FFECB3" stroke-width="2" transform="rotate(135,100,100)"/>
+        <path d="M100,30 Q120,50 100,70 Q80,50 100,30" fill="white" stroke="#FFECB3" stroke-width="2" transform="rotate(180,100,100)"/>
+        <path d="M100,30 Q120,50 100,70 Q80,50 100,30" fill="white" stroke="#FFECB3" stroke-width="2" transform="rotate(225,100,100)"/>
+        <path d="M100,30 Q120,50 100,70 Q80,50 100,30" fill="white" stroke="#FFECB3" stroke-width="2" transform="rotate(270,100,100)"/>
+        <path d="M100,30 Q120,50 100,70 Q80,50 100,30" fill="white" stroke="#FFECB3" stroke-width="2" transform="rotate(315,100,100)"/>
+    </g>
+
+    <!-- Center -->
+    <circle cx="100" cy="100" r="20" fill="#EF9651"/>
+    <circle cx="100" cy="100" r="18" fill="#EC5228"/>
+    
+    <!-- Center Pattern -->
+    <g id="center-pattern">
+        <circle cx="100" cy="90" r="3" fill="#EF9651"/>
+        <circle cx="110" cy="100" r="3" fill="#EF9651"/>
+        <circle cx="100" cy="110" r="3" fill="#EF9651"/>
+        <circle cx="90" cy="100" r="3" fill="#EF9651"/>
+        <circle cx="95" cy="95" r="2" fill="#EF9651"/>
+        <circle cx="105" cy="95" r="2" fill="#EF9651"/>
+        <circle cx="105" cy="105" r="2" fill="#EF9651"/>
+        <circle cx="95" cy="105" r="2" fill="#EF9651"/>
+    </g>
+
+    <!-- Subtle Shadow -->
+    <circle cx="100" cy="100" r="25" fill="rgba(0,0,0,0.1)" style="filter: blur(5px)" />
+</svg>

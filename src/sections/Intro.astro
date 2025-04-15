@@ -1,25 +1,35 @@
 ---
-import ControlMusic from '@/components/ControlMusic.jsx'
+import IntroGallery from '@/components/IntroGallery.jsx'
 ---
 
-<main id="landing-intro" >
-    <section class="max-w-[650px] text-center animate-blurred-fade-in">
-        <h1
-            style="line-height: 45px;"
-            class="text-center font-medium font-parisienne text-[#B97600] text-[65px] desktop:text-[50px]"
-        >
-            Bienvenidos
-        </h1>
-        <p class="text-[#6F6F6E] mt-4 desktop:text-2xl text-lg">
-            Queremos contar contigo en el día mas especial de nuestras vidas
+<main id="landing-intro">
+    <div class="floating-balloons">
+        <img src="/img/balloon1.svg" class="balloon balloon-1" alt="balloon" />
+        <img src="/img/balloon2.svg" class="balloon balloon-2" alt="balloon" />
+        <img src="/img/balloon3.svg" class="balloon balloon-3" alt="balloon" />
+    </div>
+    
+    <section class="max-w-[750px] text-center animate-blurred-fade-in intro-container">
+        <div class="birthday-header">
+            <h1
+                class="text-center font-medium font-parisienne text-[#B97600] text-[75px] desktop:text-[65px]"
+            >
+                ¡Celebra conmigo!
+            </h1>
+            <div class="birthday-badge">
+                <span>1</span>
+                <span>añito</span>
+            </div>
+        </div>
+        
+        <p class="text-[#6F6F6E] mt-6 desktop:text-2xl text-xl leading-relaxed">
+            Galia está cumpliendo su primer añito y quiere compartir este día tan especial contigo
         </p>
 
-        <div class="desktop:mt-5 mt-3">
-            <ControlMusic client:load />
-       
-        </div>
+        <IntroGallery client:idle />
     </section>
 </main>
+
 <style>
     #landing-intro {
         display: flex;
@@ -28,23 +38,117 @@ import ControlMusic from '@/components/ControlMusic.jsx'
         height: 100vh;
         position: relative;
         @apply mx-8;
+        background: linear-gradient(to bottom, #fff8f0, #fff);
+        overflow: hidden;
     }
-    .btn-music {
-        background-color: #b97600;
+    
+    .intro-container {
+        background-color: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(5px);
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 25px rgba(185, 118, 0, 0.1);
+        border: 1px solid rgba(185, 118, 0, 0.1);
+    }
+    
+    .birthday-header {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+    
+    .birthday-badge {
+        position: absolute;
+        top: -15px;
+        right: 0;
+        background-color: #FF9494;
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         color: white;
-
-        @apply px-10;
-        @apply py-3;
-        @apply rounded-3xl;
-        @apply shadow-md;
-        @apply font-medium;
-        margin: 8px;
+        font-weight: bold;
+        transform: rotate(15deg);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        animation: pulse 2s infinite;
     }
+    
+    .birthday-badge span:first-child {
+        font-size: 2rem;
+        line-height: 1;
+    }
+    
+    .birthday-badge span:last-child {
+        font-size: 0.9rem;
+    }
+    
+    .floating-balloons {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+    
+    .balloon {
+        position: absolute;
+        width: 80px;
+        opacity: 0.8;
+    }
+    
+    .balloon-1 {
+        top: 10%;
+        left: 10%;
+        animation: float 8s ease-in-out infinite;
+    }
+    
+    .balloon-2 {
+        top: 15%;
+        right: 15%;
+        animation: float 10s ease-in-out infinite;
+    }
+    
+    .balloon-3 {
+        bottom: 20%;
+        left: 20%;
+        animation: float 9s ease-in-out infinite 1s;
+    }
+    
+    @keyframes float {
+        0% {
+            transform: translateY(0) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-20px) rotate(5deg);
+        }
+        100% {
+            transform: translateY(0) rotate(0deg);
+        }
+    }
+    
+    @keyframes pulse {
+        0% {
+            transform: rotate(15deg) scale(1);
+        }
+        50% {
+            transform: rotate(15deg) scale(1.05);
+        }
+        100% {
+            transform: rotate(15deg) scale(1);
+        }
+    }
+    
     @media (max-width: 1023px) {
-        .btn-music {
-            @apply text-xs;
-            @apply px-8;
-            @apply py-3;
+        .balloon {
+            width: 60px;
+        }
+        
+        .birthday-badge {
+            width: 60px;
+            height: 60px;
+            top: -10px;
+            right: 10px;
         }
     }
 </style>
