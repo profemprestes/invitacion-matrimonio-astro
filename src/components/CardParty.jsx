@@ -2,7 +2,6 @@
 import { Card } from "@nextui-org/react";
 import MensajesmostrarModal from "./MensajesmostrarModal";
 import DressCodeModal from "./DressCodeModal";
-import TipsModal from "./TipsModal";
 
 export default function CardParty({
     title,
