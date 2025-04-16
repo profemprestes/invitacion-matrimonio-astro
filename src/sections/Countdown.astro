@@ -1,49 +1,44 @@
 ---
 import Divider from "@/components/Divider.astro";
 import Title from "@/components/Title.astro";
+import "../styles/Countdown.css";
 
-const TIMESTAMP_END = new Date('2025-05-10').getTime();
+// Set the date to May 10, 2025 at 13:00 (1 PM)
+const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
 ---
 
-<section
-    class="max-w-6xl desktop:px-16 pt-20 pb-10 text-center mx-auto flex flex-col items-center justify-center"
->
-        <Title title="Falta" />
-    <div data-date={TIMESTAMP_END} class="flex flex-row mt-5">
-        <div class="border-r-[1px] flex flex-col px-5 border-[#6F6F6E]">
-            <span data-days class="text-[#89713E] text-4xl desktop:text-5xl">
-                00
-            </span>
-            <span class="text-[#6F6F6E] desktop:text-[25px] "> DIAS </span>
+<section class="countdown-section max-w-6xl desktop:px-16 pt-20 pb-10 text-center mx-auto flex flex-col items-center justify-center">
+    <Title title="Falta" />
+    <div data-date={TIMESTAMP_END} class="countdown-container">
+        <div class="countdown-unit">
+            <span data-days class="countdown-number">00</span>
+            <span class="countdown-label">DÍAS</span>
         </div>
 
-        <div class="border-r-[1px] flex flex-col px-5 border-[#6F6F6E]">
-            <span data-hours class="text-[#89713E] text-4xl desktop:text-5xl">
-                00
-            </span>
-            <span class="text-[#6F6F6E] desktop:text-[25px]"> HS </span>
+        <div class="countdown-unit">
+            <span data-hours class="countdown-number">00</span>
+            <span class="countdown-label">HS</span>
         </div>
 
-        <div class="border-r-[1px] flex flex-col px-5 border-[#6F6F6E]">
-            <span data-minutes class="text-[#89713E] text-4xl desktop:text-5xl"
-                >00
-            </span>
-            <span class="text-[#6F6F6E] desktop:text-[25px]"> MIN </span>
+        <div class="countdown-unit">
+            <span data-minutes class="countdown-number">00</span>
+            <span class="countdown-label">MIN</span>
         </div>
-        <div class="px-5 flex flex-col">
-            <span data-seconds class="text-[#89713E] text-4xl desktop:text-5xl">
-                00
-            </span>
-            <span class="text-[#6F6F6E] desktop:text-[25px]"> SEG </span>
+        
+        <div class="countdown-unit">
+            <span data-seconds class="countdown-number">00</span>
+            <span class="countdown-label">SEG</span>
         </div>
     </div>
     <Divider />
 </section>
+
 <script>
     const SECOND = 1000; //1000ms
     const MINUTE = SECOND * 60; // 60s -> 60000ms
     const HOUR = MINUTE * 60; // 60m -> 3600s -> 360000ms
     const DAY = HOUR * 24;
+    
     function init() {
         const $countdown = document.querySelector("[data-date]");
         if (!$countdown) return;
@@ -79,7 +74,9 @@ const TIMESTAMP_END = new Date('2025-05-10').getTime();
             }
         }
 
+        updateCountdown(); // Run immediately once
         setInterval(updateCountdown, SECOND);
     }
+    
     init();
 </script>
