@@ -1,105 +1,306 @@
-/* Party section styles */
+/* Estilos generales de la sección "party" */
 .party-section {
+    padding: 3rem 0;
+    text-align: center;
     position: relative;
-    padding: 4rem 0;
-    overflow: hidden;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
 }
 
-/* Background decorations */
-.party-section::before {
+.party-section::before,
+.party-section::after {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(#FFB6C1 1px, transparent 1px),
-        radial-gradient(#FFD700 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: 0 0, 20px 20px;
-    opacity: 0.1;
+    width: 120px;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.2;
     z-index: -1;
-    animation: floatingDots 20s linear infinite;
 }
 
-/* Header section */
+.party-section::before {
+    top: 20px;
+    left: 5%;
+    background-image: url("/balloon.svg");
+    animation: float 6s ease-in-out infinite;
+}
+
+.party-section::after {
+    bottom: 20px;
+    right: 5%;
+    background-image: url("/cake.svg");
+    animation: float 7s ease-in-out infinite 1s;
+}
+
 .party-header {
-    max-width: 1140px;
-    margin: 0 auto 3rem;
-    padding: 0 1rem;
-    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .party-title {
-    margin-bottom: 1.5rem;
-    position: relative;
-    display: inline-block;
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #FF6B8B;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    animation: colorShift 4s infinite alternate;
+    font-family: 'Parisienne', cursive;
 }
 
 .party-subtitle {
-    display: block;
-    font-family: 'Rubik', sans-serif;
     font-size: 1.25rem;
-    color: #666;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
+    color: #8A8A89;
 }
 
-/* Content section */
 .party-content {
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 2rem;
 }
 
 .party-cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    justify-items: center;
-    align-items: start;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
+.party-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.party-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.party-card:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+
+.party-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+}
+
+.party-card-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    animation: pulse 4s infinite ease-in-out;
+    transition: transform 0.3s ease;
+}
+
+.party-card-icon:hover {
+     transform: rotate(15deg) scale(1.05);
+}
+
+
+.party-card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.party-card-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #6F6F6E;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.party-card-title::before,
+.party-card-title::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 500px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 139, 0.3), transparent);
+}
+
+.party-card-title::before {
+    top: 0;
+}
+
+.party-card-title::after {
+    bottom: 0;
+}
+
+
+.party-card-description {
+    text-align: center;
+    color: #8A8A89;
+    line-height: 1.6;
+}
+
+.button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.party-card-button {
+    display: inline-block;
+    background-color: #FF6B8B;
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(255, 107, 139, 0.3);
+    transition: all 0.3s ease;
+    width: auto;
+    min-width: 160px;
+    max-width: 200px;
+    margin: 0.75rem auto 0;
+    border: none;
+    cursor: pointer;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.party-card-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.party-card-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
+    background-color: #FF5277;
+}
+
+.party-card-button:hover::before {
+    left: 100%;
+}
+
+.party-card-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(255, 107, 139, 0.3);
+}
+
+
 /* Animations */
-@keyframes floatingDots {
+@keyframes colorShift {
     0% {
-        background-position: 0 0, 20px 20px;
+        color: #FF6B8B;
+    }
+    50% {
+        color: #FF9E7A;
     }
     100% {
-        background-position: 40px 40px, 60px 60px;
+        color: #FFD166;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .party-section {
-        padding: 3rem 0;
-    }
-
-    .party-subtitle {
-        font-size: 1.1rem;
-        padding: 0 1rem;
-    }
-
-    .party-cards-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-}
-
 @media (max-width: 576px) {
-    .party-section {
-        padding: 2rem 0;
+    .party-card {
+        padding: 1.25rem;
     }
 
-    .party-header {
-        margin-bottom: 2rem;
+    .party-card-title {
+        font-size: 1.5rem;
     }
 
     .party-subtitle {
         font-size: 1rem;
+    }
+
+    .party-cards-container {
+        gap: 1.25rem;
+    }
+
+    .party-card-button {
+        width: 100%;
+        max-width: 100%;
+        padding: 0.65rem 1rem;
+        font-size: 0.95rem;
+    }
+    .party-title{
+        font-size: 2.75rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .party-title {
+        font-size: 4rem;
+    }
+
+    .party-cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .party-card-button {
+        padding: 0.75rem 2rem;
+        font-size: 1.1rem;
+    }
+     .party-cards-container {
+        grid-template-columns: repeat(3, 1fr);
     }
 }

@@ -1,4 +1,6 @@
-onlyBuiltDependencies:
+ignoredBuiltDependencies:
   - '@heroui/shared-utils'
-  - esbuild
   - sharp
+
+onlyBuiltDependencies:
+  - esbuild

@@ -12,7 +12,7 @@
     overflow: hidden;
 }
 
-.hover-effect:hover {
+.party-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
@@ -44,32 +44,30 @@
     line-height: 1.6;
 }
 
+.button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
 .party-card-button {
-    &.custom-modal-button {
-      background-color: var(--color01);
-      color: var(--color02);
-      min-width: 13rem;
-      max-width: 13rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-  }
-    .custom-modal-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(185, 118, 0, 0.2);
-        opacity: 0.9;
-    }
+    background-color: var(--color01);
+    color: var(--color02);
+    min-width: 13rem;
+    max-width: 13rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+}
 
-    .button-wrapper {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-    }
-
+.party-card-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(185, 118, 0, 0.2);
+    opacity: 0.9;
+}
 
 
 /* Animations */

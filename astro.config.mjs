@@ -1,14 +1,25 @@
 import { defineConfig } from 'astro/config';
-import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
+import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
 import netlify from '@astrojs/netlify';
 
 export default defineConfig({
-  integrations: [react(), tailwind()],
+  integrations: [
+    react(),
+    tailwind({
+      applyBaseStyles: false,
+    }),
+  ],
   output: 'server',
   adapter: netlify({
-    edgeMiddleware: true,
-    functionPerRoute: false
+    edgeMiddleware: false,
+    functionPerRoute: false,
   }),
-  // Remove experimental config since viewTransitions is now stable
+  vite: {
+    css: {
+      modules: {
+        localsConvention: 'camelCaseOnly',
+      },
+    },
+  },
 });
