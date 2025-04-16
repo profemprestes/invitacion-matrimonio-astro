@@ -1,5 +1,6 @@
 ---
 import Loader from "@/components/Loader.jsx";
+import AsistenciaModal from "@/components/AsistenciaModal.jsx"; // Add this import
 import "@fontsource/parisienne";
 interface Props {
 	title: string;
@@ -28,6 +29,7 @@ const { title } = Astro.props;
 	<body>
 		<Loader client:load />
 		<div class="background-decoration"></div>
+		<AsistenciaModal client:load /> <!-- Ensure this component is correctly imported -->
 		<slot />
 	</body>
 </html>

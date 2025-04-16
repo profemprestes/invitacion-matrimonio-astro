@@ -1,8 +1,7 @@
 import { useState } from "react";
-// Cambiar esta línea
 import { Modal, ModalContent, ModalHeader, ModalBody, Input, Button } from "@heroui/react";
 import { useForm } from "react-hook-form";
-import "../styles/PrincipalDate.css";
+
 
 const AsistenciaModal = ({ type }) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -10,13 +9,13 @@ const AsistenciaModal = ({ type }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [totalPersonas, setTotalPersonas] = useState(0);
 
-  // Función para enviar el mensaje de WhatsApp
+  // Function to send WhatsApp message
   const handleConfirmar = (data) => {
     const mensaje = `Nos va a encantar asistir al cumple de Galia, vamos a asistir ${data.cantidadPersonas} personas.`;
-    const numeroWhatsApp = "598097338241"; // Número de WhatsApp para enviar el mensaje
+    const numeroWhatsApp = "598097338241"; // WhatsApp number
     const enlace = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
     
-    // Redirigir al usuario a WhatsApp con el mensaje predefinido
+    // Redirect user to WhatsApp with predefined message
     window.open(enlace, "_blank");
 
     setSend(true);
