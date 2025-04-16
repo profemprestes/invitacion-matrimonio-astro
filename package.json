@@ -11,21 +11,21 @@
   },
   "dependencies": {
     "@astrojs/netlify": "^6.3.0",
-    "@astrojs/react": "^3.3.4",
-    "@astrojs/tailwind": "^5.1.0",
-    "@fontsource-variable/raleway": "^5.0.20",
-    "@fontsource-variable/rubik": "^5.0.22",
-    "@fontsource/parisienne": "^5.0.13",
+    "@astrojs/react": "^3.6.3",
+    "@astrojs/tailwind": "^5.1.5",
+    "@fontsource-variable/raleway": "^5.2.5",
+    "@fontsource-variable/rubik": "^5.2.5",
+    "@fontsource/parisienne": "^5.2.5",
     "@heroui/react": "^2.7.6",
     "@midudev/tailwind-animations": "^0.0.7",
-    "@types/react": "^18.3.2",
-    "@types/react-dom": "^18.3.0",
-    "astro": "^4.8.6",
-    "framer-motion": "^11.2.4",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "astro": "^4.16.18",
+    "framer-motion": "^11.18.2",
     "papaparse": "^5.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.51.5",
-    "tailwindcss": "^3.4.3"
+    "react-hook-form": "^7.55.0",
+    "tailwindcss": "^3.4.17"
   }
 }

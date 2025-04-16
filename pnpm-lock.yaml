@@ -12,19 +12,19 @@ importers:
         specifier: ^6.3.0
         version: 6.3.0(astro@4.16.18(rollup@4.40.0)(typescript@5.8.3))(jiti@1.21.7)(rollup@4.40.0)(yaml@2.7.1)
       '@astrojs/react':
-        specifier: ^3.3.4
+        specifier: ^3.6.3
         version: 3.6.3(@types/react-dom@18.3.6(@types/react@18.3.20))(@types/react@18.3.20)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@astrojs/tailwind':
-        specifier: ^5.1.0
+        specifier: ^5.1.5
         version: 5.1.5(astro@4.16.18(rollup@4.40.0)(typescript@5.8.3))(tailwindcss@3.4.17)
       '@fontsource-variable/raleway':
-        specifier: ^5.0.20
+        specifier: ^5.2.5
         version: 5.2.5
       '@fontsource-variable/rubik':
-        specifier: ^5.0.22
+        specifier: ^5.2.5
         version: 5.2.5
       '@fontsource/parisienne':
-        specifier: ^5.0.13
+        specifier: ^5.2.5
         version: 5.2.5
       '@heroui/react':
         specifier: ^2.7.6
@@ -33,16 +33,16 @@ importers:
         specifier: ^0.0.7
         version: 0.0.7(tailwindcss@3.4.17)
       '@types/react':
-        specifier: ^18.3.2
+        specifier: ^18.3.20
         version: 18.3.20
       '@types/react-dom':
-        specifier: ^18.3.0
+        specifier: ^18.3.6
         version: 18.3.6(@types/react@18.3.20)
       astro:
-        specifier: ^4.8.6
+        specifier: ^4.16.18
         version: 4.16.18(rollup@4.40.0)(typescript@5.8.3)
       framer-motion:
-        specifier: ^11.2.4
+        specifier: ^11.18.2
         version: 11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       papaparse:
         specifier: ^5.5.2
@@ -54,10 +54,10 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-hook-form:
-        specifier: ^7.51.5
+        specifier: ^7.55.0
         version: 7.55.0(react@18.3.1)
       tailwindcss:
-        specifier: ^3.4.3
+        specifier: ^3.4.17
         version: 3.4.17
 
 packages:
@@ -5883,7 +5883,7 @@ snapshots:
       '@react-aria/ssr': 3.9.8(react@18.3.1)
       '@react-stately/flags': 3.1.1
       '@react-stately/utils': 3.10.6(react@18.3.1)
-      '@react-types/shared': 3.28.0(react@18.3.1)
+      '@react-types/shared': 3.29.0(react@18.3.1)
       '@swc/helpers': 0.5.17
       clsx: 2.1.1
       react: 18.3.1
