@@ -17,6 +17,9 @@ importers:
       '@astrojs/tailwind':
         specifier: 5.1.5
         version: 5.1.5(astro@5.7.0(@netlify/blobs@8.1.2)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.8.3)(yaml@2.7.1))(tailwindcss@3.4.1)
+      '@astrojs/ts-plugin':
+        specifier: ^1.10.4
+        version: 1.10.4
       '@fontsource-variable/raleway':
         specifier: ^5.2.5
         version: 5.2.5
@@ -47,6 +50,9 @@ importers:
       papaparse:
         specifier: ^5.5.2
         version: 5.5.2
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -114,8 +120,14 @@ packages:
     resolution: {integrity: sha512-wxhSKRfKugLwLlr4OFfcqovk+LIFtKwLyGPqMsv+9/ibqqnW3Gv7tBhtKEb0gAyUAC4G9BTVQeQahqnQAhd6IQ==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
 
+  '@astrojs/ts-plugin@1.10.4':
+    resolution: {integrity: sha512-rapryQINgv5VLZF884R/wmgX3mM9eH1PC/I3kkPV9rP6lEWrRN1YClF3bGcDHFrf8EtTLc0Wqxne1Uetpevozg==}
+
   '@astrojs/underscore-redirects@0.6.0':
     resolution: {integrity: sha512-dnJgFpaM955IFNIkEEmMaaIdWXRdeZs1ID6mlGBqdjh6NiCXfKmOdq7L4fd9Dd/tr18fkLrOJ25IUJSxRAEhjQ==}
+
+  '@astrojs/yaml2ts@0.2.2':
+    resolution: {integrity: sha512-GOfvSr5Nqy2z5XiwqTouBBpy5FyI6DEe+/g/Mk5am9SjILN1S5fOEvYK0GuWHg98yS/dobP4m8qyqw/URW35fQ==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -1941,6 +1953,15 @@ packages:
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0
 
+  '@volar/language-core@2.4.12':
+    resolution: {integrity: sha512-RLrFdXEaQBWfSnYGVxvR2WrO6Bub0unkdHYIdC31HzIEqATIuuhRRzYu76iGPZ6OtA4Au1SnW0ZwIqPP217YhA==}
+
+  '@volar/source-map@2.4.12':
+    resolution: {integrity: sha512-bUFIKvn2U0AWojOaqf63ER0N/iHIBYZPpNGogfLPQ68F5Eet6FnLlyho7BS0y2HJ1jFhSif7AcuTx1TqsCzRzw==}
+
+  '@volar/typescript@2.4.12':
+    resolution: {integrity: sha512-HJB73OTJDgPc80K30wxi3if4fSsZZAOScbj2fcicMuOPoOkcf9NNAINb33o+DzhBdF9xTKC1gnPmIRDous5S0g==}
+
   abbrev@3.0.1:
     resolution: {integrity: sha512-AO2ac6pjRB3SJmGJo+v5/aK6Omggp6fsLrs6wN9bd35ulu4cCwaAU9+7ZhXjeqHVkaHThLuzH0nZr0YpCDhygg==}
     engines: {node: ^18.17.0 || >=20.5.0}
@@ -2556,6 +2577,10 @@ packages:
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
 
+  loose-envify@1.4.0:
+    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
+
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
@@ -2843,6 +2868,9 @@ packages:
   parse5@7.2.1:
     resolution: {integrity: sha512-BuBYQYlv1ckiPdQi/ohiivi9Sagc9JG+Ozs0r7b/0iK3sKmrb0b9FdWdBbOdx6hBCM/F9Ir82ofnBhtZOjCRPQ==}
 
+  path-browserify@1.0.1:
+    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
+
   path-key@3.1.1:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
     engines: {node: '>=8'}
@@ -2926,6 +2954,9 @@ packages:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
 
+  prop-types@15.8.1:
+    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
+
   property-information@6.5.0:
     resolution: {integrity: sha512-PgTgs/BlvHxOu8QuEN7wi5A0OmXaBcHpmCSTehcs6Uuu9IkDIEo13Hy7n898RHfrQ49vKCoGeWZSaAK01nwVig==}
 
@@ -2948,6 +2979,9 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
+
+  react-is@16.13.1:
+    resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
   react-refresh@0.17.0:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
@@ -3416,6 +3450,12 @@ packages:
       vite:
         optional: true
 
+  vscode-languageserver-textdocument@1.0.12:
+    resolution: {integrity: sha512-cxWNPesCnQCcMPeenjKKsOCKQZ/L6Tv19DTRIGuLWe32lyzWhihGVJ/rcckZXJxfdKCFvRLS3fpBIsV/ZGX4zA==}
+
+  vscode-uri@3.1.0:
+    resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
+
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
 
@@ -3613,7 +3653,21 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@astrojs/ts-plugin@1.10.4':
+    dependencies:
+      '@astrojs/compiler': 2.11.0
+      '@astrojs/yaml2ts': 0.2.2
+      '@jridgewell/sourcemap-codec': 1.5.0
+      '@volar/language-core': 2.4.12
+      '@volar/typescript': 2.4.12
+      semver: 7.7.1
+      vscode-languageserver-textdocument: 1.0.12
+
   '@astrojs/underscore-redirects@0.6.0': {}
+
+  '@astrojs/yaml2ts@0.2.2':
+    dependencies:
+      yaml: 2.7.1
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -6363,6 +6417,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@volar/language-core@2.4.12':
+    dependencies:
+      '@volar/source-map': 2.4.12
+
+  '@volar/source-map@2.4.12': {}
+
+  '@volar/typescript@2.4.12':
+    dependencies:
+      '@volar/language-core': 2.4.12
+      path-browserify: 1.0.1
+      vscode-uri: 3.1.0
+
   abbrev@3.0.1: {}
 
   acorn-import-attributes@1.9.5(acorn@8.14.1):
@@ -7059,6 +7125,10 @@ snapshots:
 
   longest-streak@3.1.0: {}
 
+  loose-envify@1.4.0:
+    dependencies:
+      js-tokens: 4.0.0
+
   lru-cache@10.4.3: {}
 
   lru-cache@11.1.0: {}
@@ -7512,6 +7582,8 @@ snapshots:
     dependencies:
       entities: 4.5.0
 
+  path-browserify@1.0.1: {}
+
   path-key@3.1.1: {}
 
   path-parse@1.0.7: {}
@@ -7580,6 +7652,12 @@ snapshots:
       kleur: 3.0.3
       sisteransi: 1.0.5
 
+  prop-types@15.8.1:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+
   property-information@6.5.0: {}
 
   property-information@7.0.0: {}
@@ -7596,6 +7674,8 @@ snapshots:
   react-hook-form@7.55.0(react@19.1.0):
     dependencies:
       react: 19.1.0
+
+  react-is@16.13.1: {}
 
   react-refresh@0.17.0: {}
 
@@ -8108,6 +8188,10 @@ snapshots:
   vitefu@1.0.6(vite@6.2.6(jiti@1.21.7)(yaml@2.7.1)):
     optionalDependencies:
       vite: 6.2.6(jiti@1.21.7)(yaml@2.7.1)
+
+  vscode-languageserver-textdocument@1.0.12: {}
+
+  vscode-uri@3.1.0: {}
 
   web-namespaces@2.0.1: {}
 

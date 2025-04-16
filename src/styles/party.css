@@ -1,168 +1,105 @@
 /* Party section styles */
 .party-section {
-  position: relative;
-  padding: 2rem 0;
-  overflow: hidden;
+    position: relative;
+    padding: 4rem 0;
+    overflow: hidden;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
 }
 
 /* Background decorations */
 .party-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(#FFB6C1 1px, transparent 1px),
-    radial-gradient(#FFD700 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
-  opacity: 0.1;
-  z-index: -1;
-}
-
-/* Title styling */
-.party-title {
-  position: relative;
-  display: inline-block;
-}
-
-.party-title::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 3px;
-  background: linear-gradient(90deg, #FF9494, #FFD166);
-  border-radius: 3px;
-}
-
-/* Party cards container */
-.party-cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-/* Party card styling */
-.party-card {
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  max-width: 320px;
-  width: 100%;
-}
-
-.party-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-}
-
-/* Card header with icon */
-.party-card-icon {
-  display: flex;
-  justify-content: center;
-  padding: 1.5rem 0;
-}
-
-.party-card-icon img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.party-card:hover .party-card-icon img {
-  transform: scale(1.1);
-}
-
-/* Card title */
-.party-card-title {
-  font-family: 'Parisienne', cursive;
-  font-size: 1.8rem;
-  color: #FF6B8B;
-  text-align: center;
-  margin: 0.5rem 0;
-}
-
-/* Card description */
-.party-card-description {
-  padding: 1rem 1.5rem 2rem;
-  text-align: center;
-  font-family: 'Rubik', sans-serif;
-  color: #6F6F6E;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-/* Button styling */
-.party-card-button {
-  display: block;
-  width: 80%;
-  margin: 0 auto 1.5rem;
-  padding: 0.8rem 1.5rem;
-  background-color: #FF6B8B;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  font-family: 'Rubik', sans-serif;
-  font-weight: 500;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(255, 107, 139, 0.3);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.party-card-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.7s ease;
-}
-
-.party-card-button:hover {
-  background-color: #FF5277;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
-}
-
-.party-card-button:hover::before {
-  left: 100%;
-}
-
-.party-card-button:active {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgba(255, 107, 139, 0.3);
-}
-
-/* Responsive adjustments for buttons */
-@media (max-width: 768px) {
-  .party-card-button {
-    width: 90%;
-    padding: 0.7rem 1.2rem;
-    font-size: 0.95rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .party-card-button {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 0.65rem 1rem;
-    font-size: 0.9rem;
-  }
+    height: 100%;
+    background-image: 
+        radial-gradient(#FFB6C1 1px, transparent 1px),
+        radial-gradient(#FFD700 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+    opacity: 0.1;
+    z-index: -1;
+    animation: floatingDots 20s linear infinite;
+}
+
+/* Header section */
+.party-header {
+    max-width: 1140px;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.party-title {
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.party-subtitle {
+    display: block;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.25rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Content section */
+.party-content {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.party-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+    align-items: start;
+}
+
+/* Animations */
+@keyframes floatingDots {
+    0% {
+        background-position: 0 0, 20px 20px;
+    }
+    100% {
+        background-position: 40px 40px, 60px 60px;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .party-section {
+        padding: 3rem 0;
+    }
+
+    .party-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+
+    .party-cards-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .party-section {
+        padding: 2rem 0;
+    }
+
+    .party-header {
+        margin-bottom: 2rem;
+    }
+
+    .party-subtitle {
+        font-size: 1rem;
+    }
 }

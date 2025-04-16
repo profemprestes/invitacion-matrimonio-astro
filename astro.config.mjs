@@ -9,5 +9,6 @@ export default defineConfig({
   adapter: netlify({
     edgeMiddleware: true,
     functionPerRoute: false
-  })
+  }),
+  // Remove experimental config since viewTransitions is now stable
 });
