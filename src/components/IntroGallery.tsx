@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-// import { Button } from '@/components/ui/button';  // Asegúrate de que la ruta sea correcta
 import { ChevronLeft, ChevronRight } from 'lucide-react'; // Importa los íconos
-// import { cn } from "@/lib/utils"; // Importa la utilidad para combinar clases
 import '../styles/introgallery.css';
 
 interface ImageData {

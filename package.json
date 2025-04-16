@@ -23,6 +23,7 @@
     "@types/react-dom": "latest",
     "astro": "latest",
     "framer-motion": "latest",
+    "lucide-react": "^0.488.0",
     "papaparse": "latest",
     "prop-types": "latest",
     "react": "latest",
