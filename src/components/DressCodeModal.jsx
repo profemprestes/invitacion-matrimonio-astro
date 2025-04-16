@@ -1,5 +1,6 @@
 
-import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure } from "@nextui-org/react";
+// Cambiar esta línea
+import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure } from "@heroui/react";
 import "../styles/DressCodeModal.css";
 
 function DressCodeModal({ buttonClassName, buttonText }) {

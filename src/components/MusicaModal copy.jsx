@@ -1,6 +1,7 @@
 
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link, Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { Radio, RadioGroup } from "@nextui-org/react";
+// Cambiar esta línea
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link, Autocomplete, AutocompleteItem } from "@heroui/react";
+import { Radio, RadioGroup } from "@heroui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 

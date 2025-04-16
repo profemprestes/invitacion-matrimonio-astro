@@ -1,5 +1,6 @@
 
-import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
+// Cambiar esta línea
+import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure, Input, Textarea } from "@heroui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import "../styles/MensajesmostrarModal.css";

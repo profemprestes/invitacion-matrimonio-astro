@@ -1,12 +1,14 @@
 // tailwind.config.cjs
-const { nextui } = require("@nextui-org/react");
+// Importar heroui en lugar de nextui
+const { heroui } = require("@heroui/react");
 import animations from '@midudev/tailwind-animations'
 const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
-		"./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+		// Actualizar esta línea para usar heroui
+		"./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
 	],
 	theme: {
 		screens: {
@@ -48,5 +50,6 @@ export default {
 		extend: {},
 	},
 
-	plugins: [nextui(),animations]
+	// Usar heroui() en lugar de nextui()
+	plugins: [heroui(), animations]
 }

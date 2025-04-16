@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, Input, Button } from "@nextui-org/react";
+// Cambiar esta línea
+import { Modal, ModalContent, ModalHeader, ModalBody, Input, Button } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import "../styles/PrincipalDate.css";
 

@@ -10,14 +10,14 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/netlify": "^6.3.0",
     "@astrojs/react": "^3.3.4",
     "@astrojs/tailwind": "^5.1.0",
-    "@astrojs/vercel": "^8.0.4",
     "@fontsource-variable/raleway": "^5.0.20",
     "@fontsource-variable/rubik": "^5.0.22",
     "@fontsource/parisienne": "^5.0.13",
+    "@heroui/react": "^2.7.6",
     "@midudev/tailwind-animations": "^0.0.7",
-    "@nextui-org/react": "^2.3.6",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "astro": "^4.8.6",

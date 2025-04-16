@@ -1,5 +1,6 @@
 
-import { Card } from "@nextui-org/react";
+// Cambiar esta línea
+import { Card } from "@heroui/react";
 import MensajesmostrarModal from "./MensajesmostrarModal";
 import DressCodeModal from "./DressCodeModal";
 
