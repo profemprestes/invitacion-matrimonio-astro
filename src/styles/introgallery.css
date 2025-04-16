@@ -1,24 +1,20 @@
 .gallery-container {
-  width: 100%;
-  height: 250px;
   position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.gallery-container.loaded {
-  opacity: 1;
-  transform: translateY(0);
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .gallery-wrapper {
-  width: 100%;
-  height: 100%;
   position: relative;
+  width: 100%;
+  max-width: 600px; /* Ajusta según sea necesario */
+  height: 400px; /* Altura fija para la galería */
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .gallery-image {
@@ -29,73 +25,34 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  transition: transform 0.8s ease;
-  border-radius: 12px;
-}
-
-.gallery-image::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 0;
+  transform: translateX(100%);
 }
 
 .gallery-image.active {
-  z-index: 1;
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.gallery-dots {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  z-index: 2;
-}
-
-.gallery-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.gallery-dot.active {
-  background-color: white;
-  transform: scale(1.2);
-}
 
 .gallery-nav-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   background-color: rgba(255, 255, 255, 0.7);
-  border: none;
+  color: #333;
+  border-radius: 50%;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
   z-index: 2;
-  opacity: 0;
-  transition: opacity 0.3s ease, background-color 0.3s ease;
-}
-
-.gallery-container:hover .gallery-nav-button {
-  opacity: 1;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: none;
 }
 
 .gallery-nav-button:hover {
@@ -103,61 +60,70 @@
 }
 
 .gallery-nav-button.prev {
-  left: 10px;
+  left: 1rem;
 }
 
 .gallery-nav-button.next {
-  right: 10px;
+  right: 1rem;
 }
 
-.gallery-nav-button::before {
-  content: '';
-  display: block;
-  width: 10px;
-  height: 10px;
-  border-top: 2px solid #b97600;
-  border-right: 2px solid #b97600;
+.gallery-nav-button svg {
+  width: 24px;
+  height: 24px;
 }
 
-.gallery-nav-button.prev::before {
-  transform: rotate(-135deg);
-  margin-left: 5px;
-}
-
-.gallery-nav-button.next::before {
-  transform: rotate(45deg);
-  margin-right: 5px;
-}
-
-/* Animation for image transitions */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.gallery-image.active {
-  animation: fadeIn 0.5s forwards;
-}
-
-/* Polaroid-style frame effect */
-.gallery-container {
-  padding: 10px 10px 30px 10px;
-  background-color: white;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
 
 .gallery-caption {
-  position: absolute;
-  bottom: 5px;
-  left: 0;
-  right: 0;
+  margin-top: 1rem;
   text-align: center;
-  font-family: 'Parisienne', cursive;
-  color: #b97600;
-  font-size: 1.2rem;
-  z-index: 2;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.gallery-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border: none;
+  padding: 0;
+}
+
+.gallery-dot:hover,
+.gallery-dot.active {
+  background-color: #FF6B8B;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gallery-wrapper {
+      max-width: 95%;
+      height: 300px;
+  }
+  .gallery-nav-button {
+      width: 35px;
+      height: 35px;
+  }
+  .gallery-nav-button svg{
+      width: 20px;
+      height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-wrapper {
+      height: 200px;
+  }
+  .gallery-caption{
+      font-size: 0.9rem;
+  }
 }
