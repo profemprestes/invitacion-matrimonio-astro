@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '@heroui/react';
 import PropTypes from 'prop-types';
-import styles from './CardParty.module.css'; // Import CSS Module
+import '../styles/CardParty.css';
 
 interface CardPartyProps {
     title: string;
@@ -17,7 +17,7 @@ const CardParty: React.FC<CardPartyProps> = ({
     guid,
     description,
     icon,
-    buttonClassName = "party-card-button",
+    buttonClassName = "",
     buttonText = "Ver más",
 }) => {
     // Renderiza condicionalmente los modales basados en el 'guid'
@@ -25,28 +25,36 @@ const CardParty: React.FC<CardPartyProps> = ({
         switch (guid) {
             case "1":
                 return (
-                    <button className={`${styles.customModalButton} ${buttonClassName}`} >Enviar Mensaje</button>
+                    <button className={`custom-modal-button message-button ${buttonClassName}`}>
+                        {buttonText}
+                    </button>
                 );
             case "2":
                 return (
-                    <button  className={`${styles.customModalButton} ${buttonClassName}`} >Conocer Más</button>
+                    <button className={`custom-modal-button about-button ${buttonClassName}`}>
+                        {buttonText}
+                    </button>
                 );
             default:
-                return null;
+                return (
+                    <button className={`custom-modal-button ${buttonClassName}`}>
+                        {buttonText}
+                    </button>
+                );
         }
     };
 
     return (
-        <Card shadow="md" className={`${styles.partyCard} ${styles.hoverEffect}`}>
-            <div className={`${styles.partyCardIcon} ${styles.bounce}`}>
+        <div className="party-card">
+            <div className="party-card-icon bounce">
                 <img src={`/${icon}.gif`} alt={`Icono de ${title}`} />
             </div>
-            <h3 className={`${styles.partyCardTitle} ${styles.fadeIn}`}>{title}</h3>
-            <div className={`${styles.partyCardDescription} ${styles.slideUp}`}>{description}</div>
-            <div className={`${styles.buttonWrapper} ${styles.fadeInUp}`}>
+            <h3 className="party-card-title fadeIn">{title}</h3>
+            <div className="party-card-description slideUp">{description}</div>
+            <div className="button-wrapper fadeInUp">
                 {renderModal()}
             </div>
-        </Card>
+        </div>
     );
 };
 
