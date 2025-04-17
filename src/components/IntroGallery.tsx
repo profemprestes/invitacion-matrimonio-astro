@@ -12,15 +12,36 @@ const IntroGallery = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+    const galleryRef = useRef<HTMLDivElement>(null);
     const intervalRef = useRef<number | null>(null);
 
     // List of images from the public/img directory with captions
     const images: ImageData[] = [
-        { src: '/galia1.webp', caption: 'Mi primer añito' },
-        { src: '/galia2.webp', caption: 'Momentos especiales' },
-        { src: '/galia3.webp', caption: 'Sonrisas de Galia' },
-        { src: '/galia4.webp', caption: 'Celebrando juntos' },
+        { src: '/galia4.webp', caption: 'Mi primer añito' },
+        { src: '/galia/galiamaurogimeplaya.webp', caption: 'Momentos especiales' },
+        { src: '/galia/galiarisa.webp', caption: 'Sonrisas de Galia' },
+        { src: '/galia/galiahamaca.webp', caption: 'Celebrando juntos' },
     ];
+
+    // Update dimensions on resize
+    useEffect(() => {
+        const updateDimensions = () => {
+            if (galleryRef.current) {
+                setDimensions({
+                    width: galleryRef.current.offsetWidth,
+                    height: galleryRef.current.offsetHeight
+                });
+            }
+        };
+
+        updateDimensions();
+        window.addEventListener('resize', updateDimensions);
+        
+        return () => {
+            window.removeEventListener('resize', updateDimensions);
+        };
+    }, []);
 
     // Memoized navigation functions to prevent unnecessary re-renders
     const goToImage = useCallback((index: number) => {
@@ -79,8 +100,24 @@ const IntroGallery = () => {
         }
     }, [isPaused]);
 
+    // Handle keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowLeft') {
+                goToPrevious();
+            } else if (e.key === 'ArrowRight') {
+                goToNext();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [goToNext, goToPrevious]);
+
     return (
-        <div className="gallery-container mt-6">
+        <div className="gallery-container mt-6" ref={galleryRef}>
             <div className="gallery-wrapper">
                 <AnimatePresence initial={false} mode="wait">
                     {images.map((image, index) => (
