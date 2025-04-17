@@ -1,0 +1,55 @@
+src/
+    env.d.ts
+    components/
+        AsistenciaModal.jsx
+        Card.astro
+        CardParty.module.css
+        CardParty.tsx
+        ControlMusic.jsx
+        Divider.astro
+        DressCodeModal.jsx
+        intro.jsx
+        IntroGallery.tsx
+        Loader.jsx
+        MensajesmostrarModal.jsx
+        MessageCard.astro
+        MessageRegistroAsistencia.jsx
+        MusicaModal copy.jsx
+        TipsModal.jsx
+        Title.astro
+        dist/
+            CardParty.js
+            IntroGallery.js
+    data/
+        Datos - Confirmacion.csv
+        Datos - Datos.csv
+    icons/
+        IconPlayMusic.astro
+        IconStopMusic.astro
+        InstagramIcon.astro
+    layouts/
+        Layout.astro
+    pages/
+        index.astro
+    sections/
+        Countdown.astro
+        Footer.astro
+        Hero.astro
+        Instagram.astro
+        Intro.astro
+        Message.astro
+        Party.astro
+        PrincipalDate.astro
+    styles/
+        CardParty.css
+        Countdown.css
+        DressCodeModal.css
+        hero.css
+        index.css
+        intro.css
+        introgallery.css
+        layout.css
+        loader.css
+        MensajesmostrarModal.css
+        party.css
+        PrincipalDate.css

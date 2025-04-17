@@ -1,0 +1,4884 @@
+src/
+    env.d.ts
+
+    --- Contenido de env.d.ts ---
+    /// <reference path="../.astro/types.d.ts" />
+    /// <reference types="astro/client" />
+    --- Fin de env.d.ts ---
+
+    components/
+        AsistenciaModal.jsx
+
+        --- Contenido de AsistenciaModal.jsx ---
+        import { useState } from "react";
+        import { Modal, ModalContent, ModalHeader, ModalBody, Input, Button } from "@heroui/react";
+        import { useForm } from "react-hook-form";
+        
+        
+        const AsistenciaModal = ({ type }) => {
+          const { register, handleSubmit, reset, formState: { errors } } = useForm();
+          const [send, setSend] = useState(false);
+          const [isOpen, setIsOpen] = useState(false);
+          const [totalPersonas, setTotalPersonas] = useState(0);
+        
+          // Function to send WhatsApp message
+          const handleConfirmar = (data) => {
+            const mensaje = `Nos va a encantar asistir al cumple de Galia, vamos a asistir ${data.cantidadPersonas} personas.`;
+            const numeroWhatsApp = "598097338241"; // WhatsApp number
+            const enlace = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+            
+            // Redirect user to WhatsApp with predefined message
+            window.open(enlace, "_blank");
+        
+            setSend(true);
+            setIsOpen(false);
+            setTotalPersonas(data.cantidadPersonas);
+          };
+        
+          return (
+            <div>
+              <button 
+                onClick={() => {
+                  setIsOpen(true);
+                  setSend(false);
+                }} 
+                className="action-button"
+              >
+                Confirmar Asistencia
+              </button>
+        
+              <Modal
+                backdrop="blur"
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                size="xl"
+                isDismissable={false}
+                isKeyboardDismissDisabled={true}
+                className="p-8"
+              >
+                <ModalContent>
+                  <ModalHeader className="font-parisienne text-[#FF6B8B] font-light text-5xl text-center my-4">
+                    ¿Vas a asistir al cumple de Galia?
+                  </ModalHeader>
+                  <ModalBody>
+                    <form onSubmit={handleSubmit(handleConfirmar)}>
+                      <div className="flex flex-col gap-6 p-4">
+                        <div className="mb-2">
+                          <Input
+                            {...register("nombre", { required: "Campo requerido" })}
+                            label="Nombre"
+                            placeholder="Tu nombre completo"
+                            variant="bordered"
+                            classNames={{
+                              label: "text-[#FF6B8B]",
+                              input: "text-gray-700",
+                            }}
+                          />
+                          {errors.nombre && (
+                            <span className="text-red-500 text-xs mt-1">{errors.nombre.message}</span>
+                          )}
+                        </div>
+        
+                        <div className="mb-2">
+                          <Input
+                            {...register("cantidadPersonas", { 
+                              required: "Campo requerido", 
+                              pattern: { value: /^[0-9]+$/, message: "Debe ser un número válido" } 
+                            })}
+                            label="Cantidad de personas"
+                            placeholder="Cantidad de personas que asistirán"
+                            variant="bordered"
+                            type="number"
+                            classNames={{
+                              label: "text-[#FF6B8B]",
+                              input: "text-gray-700",
+                            }}
+                          />
+                          {errors.cantidadPersonas && (
+                            <span className="text-red-500 text-xs mt-1">{errors.cantidadPersonas.message}</span>
+                          )}
+                        </div>
+        
+                        <Button
+                          type="submit"
+                          className="action-button mx-auto mt-4"
+                        >
+                          Confirmar
+                        </Button>
+                      </div>
+                    </form>
+                  </ModalBody>
+                </ModalContent>
+              </Modal>
+        
+              {send && (
+                <div className="text-center mt-4 p-3 bg-[#FFF8E1] rounded-lg border border-[#FFD166] animate-fadeIn">
+                  <p className="text-xl font-rubik text-[#FF6B8B]">¡Gracias por confirmar! 🎉</p>
+                  <p className="text-sm text-gray-600">Se enviará un mensaje de confirmación al número de WhatsApp.</p>
+                </div>
+              )}
+            </div>
+          );
+        };
+        
+        export default AsistenciaModal;
+        --- Fin de AsistenciaModal.jsx ---
+
+        Card.astro
+
+        --- Contenido de Card.astro ---
+        ---
+        interface Props {
+        	title: string;
+        	body: string;
+        	href: string;
+        }
+        
+        const { href, title, body } = Astro.props;
+        ---
+        
+        <li class="link-card">
+        	<a href={href}>
+        		<h2>
+        			{title}
+        			<span>&rarr;</span>
+        		</h2>
+        		<p>
+        			{body}
+        		</p>
+        	</a>
+        </li>
+        <style>
+        	.link-card {
+        		list-style: none;
+        		display: flex;
+        		padding: 1px;
+        		background-color: #23262d;
+        		background-image: none;
+        		background-size: 400%;
+        		border-radius: 7px;
+        		background-position: 100%;
+        		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        	}
+        	.link-card > a {
+        		width: 100%;
+        		text-decoration: none;
+        		line-height: 1.4;
+        		padding: calc(1.5rem - 1px);
+        		border-radius: 8px;
+        		color: white;
+        		background-color: #23262d;
+        		opacity: 0.8;
+        	}
+        	h2 {
+        		margin: 0;
+        		font-size: 1.25rem;
+        		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        	}
+        	p {
+        		margin-top: 0.5rem;
+        		margin-bottom: 0;
+        	}
+        	.link-card:is(:hover, :focus-within) {
+        		background-position: 0;
+        		background-image: var(--accent-gradient);
+        	}
+        	.link-card:is(:hover, :focus-within) h2 {
+        		color: rgb(var(--accent-light));
+        	}
+        </style>
+        --- Fin de Card.astro ---
+
+        CardParty.module.css
+
+        --- Contenido de CardParty.module.css ---
+        .party-card {
+            position: relative;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        
+        .party-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .party-card-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .party-card-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .party-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color01);
+            text-align: center;
+        }
+        
+        .party-card-description {
+            text-align: center;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .button-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .party-card-button {
+            background-color: var(--color01);
+            color: var(--color02);
+            min-width: 13rem;
+            max-width: 13rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .party-card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(185, 118, 0, 0.2);
+            opacity: 0.9;
+        }
+        
+        
+        /* Animations */
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.7s ease-out;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .party-card {
+                padding: 1.5rem;
+            }
+        
+            .party-card-icon {
+                width: 60px;
+                height: 60px;
+            }
+        
+            .party-card-title {
+                font-size: 1.25rem;
+            }
+        }
+        --- Fin de CardParty.module.css ---
+
+        CardParty.tsx
+
+        --- Contenido de CardParty.tsx ---
+        import React from 'react';
+        import { Card } from '@heroui/react';
+        import PropTypes from 'prop-types';
+        import '../styles/CardParty.css';
+        
+        interface CardPartyProps {
+            title: string;
+            guid: string;
+            description: string;
+            icon: string;
+            buttonClassName?: string;
+            buttonText?: string;
+        }
+        
+        const CardParty: React.FC<CardPartyProps> = ({
+            title,
+            guid,
+            description,
+            icon,
+            buttonClassName = "",
+            buttonText = "Ver más",
+        }) => {
+            // Renderiza condicionalmente los modales basados en el 'guid'
+            const renderModal = () => {
+                switch (guid) {
+                    case "1":
+                        return (
+                            <button className={`custom-modal-button message-button ${buttonClassName}`}>
+                                {buttonText}
+                            </button>
+                        );
+                    case "2":
+                        return (
+                            <button className={`custom-modal-button about-button ${buttonClassName}`}>
+                                {buttonText}
+                            </button>
+                        );
+                    default:
+                        return (
+                            <button className={`custom-modal-button ${buttonClassName}`}>
+                                {buttonText}
+                            </button>
+                        );
+                }
+            };
+        
+            return (
+                <div className="party-card">
+                    <div className="party-card-icon bounce">
+                        <img src={`/${icon}.gif`} alt={`Icono de ${title}`} />
+                    </div>
+                    <h3 className="party-card-title fadeIn">{title}</h3>
+                    <div className="party-card-description slideUp">{description}</div>
+                    <div className="button-wrapper fadeInUp">
+                        {renderModal()}
+                    </div>
+                </div>
+            );
+        };
+        
+        CardParty.propTypes = {
+            title: PropTypes.string.isRequired,
+            guid: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            icon: PropTypes.string.isRequired,
+            buttonClassName: PropTypes.string,
+            buttonText: PropTypes.string,
+        };
+        
+        export default CardParty;
+        --- Fin de CardParty.tsx ---
+
+        ControlMusic.jsx
+
+        --- Contenido de ControlMusic.jsx ---
+        
+        import  { useRef, useState } from 'react';
+        
+        const ControlMusic = () => {
+            const audioRef = useRef(null);
+            const [isPlaying, setIsPlaying] = useState(true);
+        
+            const handlePlayMusic = () => {
+                if (isPlaying) {
+                    audioRef.current.play();
+                }
+                setIsPlaying(!isPlaying);
+                audioRef.current.volume = 0.2;
+            };
+        
+            const handleStop = () => {
+                if (!isPlaying) {
+                    audioRef.current.pause();
+                }
+                setIsPlaying(!isPlaying);
+            };
+        
+            return (
+                <>
+                    <audio ref={audioRef}  loop>
+                        <source src="/cancion-fondo.mp3" type="audio/mpeg" />
+                    </audio>
+                    <button className="btn-music m-2 font-medium shadow-md rounded-3xl py-3 px-10 bg-color01 text-white" onClick={handlePlayMusic}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="icon icon-tabler icons-tabler-outline icon-tabler-music-heart"
+                        ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+                            d="M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path><path d="M9 17v-13h10v7"
+                            ></path><path d="M9 8h10"></path><path
+                                d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z"
+                            ></path></svg >
+        
+                    </button>
+                    <button className="btn-music m-2 font-medium shadow-md rounded-3xl py-3 px-10 bg-color01 text-white" onClick={handleStop}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#ffffff"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="icon icon-tabler icons-tabler-outline icon-tabler-music-cancel"
+                        ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                        ></path><path d="M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"
+                        ></path><path d="M9 17v-13h10v8"></path><path d="M9 8h10"
+                        ></path><path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"
+                        ></path><path d="M17 21l4 -4"></path></svg>
+                    </button>
+                </>
+            );
+        };
+        
+        export default ControlMusic;
+        --- Fin de ControlMusic.jsx ---
+
+        Divider.astro
+
+        --- Contenido de Divider.astro ---
+        <div class="divider"></div>
+        <style>
+            .divider {
+                position: relative;
+                top: 0;
+                right: 0;
+                left: 0;
+                margin: 2rem auto;
+                width: 80%;
+                height: 120px;
+                background-image: url("/divider.png");
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: center center;
+                opacity: 0.8;
+                transition: opacity 0.3s ease;
+            }
+            
+            .divider:hover {
+                opacity: 1;
+            }
+        </style>
+        --- Fin de Divider.astro ---
+
+        DressCodeModal.jsx
+
+        --- Contenido de DressCodeModal.jsx ---
+        
+        // Cambiar esta línea
+        import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure } from "@heroui/react";
+        import "../styles/DressCodeModal.css";
+        
+        function DressCodeModal({ buttonClassName, buttonText }) {
+            const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+        
+            return (
+                <>
+                    <button onClick={onOpen} className={buttonClassName || "bg-color01 min-w-52 max-w-52 text-color02 py-3 rounded-3xl"}>
+                        {buttonText || "Conocer Más"}
+                    </button>
+                    <Modal
+                        backdrop={'blur'}
+                        isOpen={isOpen}
+                        onOpenChange={onOpenChange}
+                        placement="center"
+                        isDismissable={false} 
+                        isKeyboardDismissDisabled={true}
+                        size='xl'
+                        className='p-8'
+                    >
+                        <ModalContent>
+                            {(onClose) => (
+                                <>
+                                    <ModalHeader className="flex 
+                                    font-parisienne
+                                    text-pink-500
+                                    font-light
+                                    text-5xl
+                                    phone:text-[34px]
+                                    p-0
+                                    desktop:text-5xl
+                                    text-center
+                                    my-4
+                                    flex-col gap-1 about-me-title">
+                                        Un Poquito Sobre Mí
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        <div className="about-me-container">
+                                            <div className="about-me-photo-container">
+                                                <img src="/img/Galia.png" alt="Foto de Galia" className="about-me-photo" />
+                                            </div>
+                                            
+                                            <div className="about-me-sections">
+                                                <div className="about-me-section">
+                                                    <h3 className="section-title">Mis Medidas</h3>
+                                                    <ul className="section-list">
+                                                        <li>Ropita 12-18 meses</li>
+                                                        <li>Zapatos Talla 4</li>
+                                                        <li>Pañales Talla 4</li>
+                                                    </ul>
+                                                </div>
+                                                
+                                                <div className="about-me-section">
+                                                    <h3 className="section-title">Lo Que Me Encanta</h3>
+                                                    <ul className="section-list">
+                                                        <li>Pelotitas</li>
+                                                        <li>Cuentos</li>
+                                                        <li>Música</li>
+                                                        <li>Juguetes</li>
+                                                    </ul>
+                                                </div>
+                                                
+                                                <div className="about-me-section">
+                                                    <h3 className="section-title">Mis Comidas Favoritas</h3>
+                                                    <ul className="section-list">
+                                                        <li>Puré de calabaza</li>
+                                                        <li>Banana</li>
+                                                        <li>Yogur</li>
+                                                        <li>Galletitas</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="about-me-footer">
+                                                <span className="font-parisienne text-pink-500 text-lg font-bold">
+                                                    ¡Gracias por conocerme mejor!
+                                                </span>
+                                                <Button 
+                                                    color="primary" 
+                                                    onPress={onClose}
+                                                    className="close-button"
+                                                >
+                                                    Cerrar
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </ModalBody>
+                                </>
+                            )}
+                        </ModalContent>
+                    </Modal>
+                </>
+            );
+        }
+        
+        export default DressCodeModal;
+        --- Fin de DressCodeModal.jsx ---
+
+        intro.jsx
+
+        --- Contenido de intro.jsx ---
+        --- Fin de intro.jsx ---
+
+        IntroGallery.tsx
+
+        --- Contenido de IntroGallery.tsx ---
+        import React, { useState, useEffect, useRef, useCallback } from 'react';
+        import { motion, AnimatePresence } from 'framer-motion';
+        import { ChevronLeft, ChevronRight } from 'lucide-react';
+        import '../styles/introgallery.css';
+        
+        interface ImageData {
+            src: string;
+            caption: string;
+        }
+        
+        const IntroGallery = () => {
+            const [currentImageIndex, setCurrentImageIndex] = useState(0);
+            const [isLoaded, setIsLoaded] = useState(false);
+            const [isPaused, setIsPaused] = useState(false);
+            const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+            const galleryRef = useRef<HTMLDivElement>(null);
+            const intervalRef = useRef<number | null>(null);
+        
+            // List of images from the public/img directory with captions
+            const images: ImageData[] = [
+                { src: '/galia4.webp', caption: 'Mi primer añito' },
+                { src: '/galia/galiamaurogimeplaya.webp', caption: 'Momentos especiales' },
+                { src: '/galia/galiarisa.webp', caption: 'Sonrisas de Galia' },
+                { src: '/galia/galiahamaca.webp', caption: 'Celebrando juntos' },
+            ];
+        
+            // Update dimensions on resize
+            useEffect(() => {
+                const updateDimensions = () => {
+                    if (galleryRef.current) {
+                        setDimensions({
+                            width: galleryRef.current.offsetWidth,
+                            height: galleryRef.current.offsetHeight
+                        });
+                    }
+                };
+        
+                updateDimensions();
+                window.addEventListener('resize', updateDimensions);
+                
+                return () => {
+                    window.removeEventListener('resize', updateDimensions);
+                };
+            }, []);
+        
+            // Memoized navigation functions to prevent unnecessary re-renders
+            const goToImage = useCallback((index: number) => {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                }
+                setCurrentImageIndex(index);
+                setIsPaused(true);
+            }, []);
+        
+            const goToPrevious = useCallback(() => {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                }
+                setCurrentImageIndex((prevIndex) =>
+                    prevIndex === 0 ? images.length - 1 : prevIndex - 1
+                );
+                setIsPaused(true);
+            }, [images.length]);
+        
+            const goToNext = useCallback(() => {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                }
+                setCurrentImageIndex((prevIndex) =>
+                    (prevIndex + 1) % images.length
+                );
+                setIsPaused(true);
+            }, [images.length]);
+        
+            // Auto-rotate images
+            useEffect(() => {
+                setIsLoaded(true);
+        
+                if (!isPaused) {
+                    intervalRef.current = window.setInterval(() => {
+                        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+                    }, 4000);
+                }
+        
+                return () => {
+                    if (intervalRef.current) {
+                        clearInterval(intervalRef.current);
+                    }
+                };
+            }, [images.length, isPaused]);
+        
+            // Reset auto-rotation after 10 seconds of inactivity
+            useEffect(() => {
+                if (isPaused) {
+                    const pauseTimer = setTimeout(() => {
+                        setIsPaused(false);
+                    }, 10000);
+                    
+                    return () => clearTimeout(pauseTimer);
+                }
+            }, [isPaused]);
+        
+            // Handle keyboard navigation
+            useEffect(() => {
+                const handleKeyDown = (e: KeyboardEvent) => {
+                    if (e.key === 'ArrowLeft') {
+                        goToPrevious();
+                    } else if (e.key === 'ArrowRight') {
+                        goToNext();
+                    }
+                };
+        
+                window.addEventListener('keydown', handleKeyDown);
+                return () => {
+                    window.removeEventListener('keydown', handleKeyDown);
+                };
+            }, [goToNext, goToPrevious]);
+        
+            return (
+                <div className="gallery-container mt-6" ref={galleryRef}>
+                    <div className="gallery-wrapper">
+                        <AnimatePresence initial={false} mode="wait">
+                            {images.map((image, index) => (
+                                <motion.div
+                                    key={index}
+                                    className={`gallery-image ${index === currentImageIndex ? 'active' : ''}`}
+                                    style={{ backgroundImage: `url(${image.src})` }}
+                                    initial={{ opacity: 0, scale: 1.05 }}
+                                    animate={{
+                                        opacity: index === currentImageIndex ? 1 : 0,
+                                        scale: index === currentImageIndex ? 1 : 1.05,
+                                        x: `${(index - currentImageIndex) * 100}%`,
+                                        transition: { duration: 0.7, ease: "easeInOut" },
+                                    }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                />
+                            ))}
+                        </AnimatePresence>
+                    </div>
+        
+                    <button
+                        className="gallery-nav-button prev"
+                        onClick={goToPrevious}
+                        aria-label="Previous image"
+                    >
+                        <ChevronLeft className="h-6 w-6" />
+                    </button>
+                    <button
+                        className="gallery-nav-button next"
+                        onClick={goToNext}
+                        aria-label="Next image"
+                    >
+                        <ChevronRight className="h-6 w-6" />
+                    </button>
+        
+                    <motion.div 
+                        className="gallery-caption"
+                        key={currentImageIndex}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        {images[currentImageIndex].caption}
+                    </motion.div>
+        
+                    <div className="gallery-dots">
+                        {images.map((_, index) => (
+                            <button
+                                key={index}
+                                className={`gallery-dot ${index === currentImageIndex ? 'active' : ''}`}
+                                onClick={() => goToImage(index)}
+                                aria-label={`View image ${index + 1}`}
+                            />
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+        
+        export default IntroGallery;
+        
+        --- Fin de IntroGallery.tsx ---
+
+        Loader.jsx
+
+        --- Contenido de Loader.jsx ---
+        import React, { useEffect, useState } from 'react';
+        import '../styles/loader.css';
+        
+        function Loader() {
+            const [loading, setLoading] = useState(true);
+            const [progress, setProgress] = useState(0);
+        
+            // Create confetti elements
+            const createConfetti = () => {
+                const confetti = [];
+                for (let i = 0; i < 30; i++) {
+                    const left = Math.random() * 100;
+                    const animationDuration = 3 + Math.random() * 2;
+                    const animationDelay = Math.random() * 3;
+                    
+                    confetti.push(
+                        <div 
+                            key={i}
+                            className="confetti"
+                            style={{
+                                left: `${left}%`,
+                                animationDuration: `${animationDuration}s`,
+                                animationDelay: `${animationDelay}s`
+                            }}
+                        />
+                    );
+                }
+                return confetti;
+            };
+        
+            useEffect(() => {
+                // Simulate loading progress
+                const interval = setInterval(() => {
+                    setProgress(prev => {
+                        const newProgress = prev + 10;
+                        if (newProgress >= 100) {
+                            clearInterval(interval);
+                            // Add a small delay before hiding loader
+                            setTimeout(() => {
+                                setLoading(false);
+                            }, 500);
+                            return 100;
+                        }
+                        return newProgress;
+                    });
+                }, 100);
+        
+                return () => clearInterval(interval);
+            }, []);
+        
+            return (
+                <>
+                    {loading && (
+                        <div className={`loader-container ${progress === 100 ? 'loader-exit' : ''}`}>
+                            {createConfetti()}
+                            <div className="loader-content">
+                                <img className="loader-image" src="/margarita.gif" alt="Loading" />
+                                <div className="loader-text">¡Galia cumple 1 añito!</div>
+                                <div className="loader-progress">
+                                    <div 
+                                        className="loader-progress-bar" 
+                                        style={{ width: `${progress}%` }}
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </>
+            );
+        }
+        
+        export default Loader;
+        --- Fin de Loader.jsx ---
+
+        MensajesmostrarModal.jsx
+
+        --- Contenido de MensajesmostrarModal.jsx ---
+        
+        import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure, Input, Textarea } from "@heroui/react";
+        import { useState } from "react";
+        import { useForm } from "react-hook-form";
+        import "../styles/MensajesmostrarModal.css";
+        
+        function MensajesmostrarModal({ buttonClassName, buttonText }) {
+            const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+            const [error, setError] = useState("");
+            const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
+            const [send, setSend] = useState(false);
+            
+            const handleGuardarForm = handleSubmit(async (data) => {
+                try {
+                    setTimeout(() => {
+                        reset();
+                        setSend(true);
+                        setError("");
+                    }, 1000);
+                } catch (err) {
+                    setError("Ocurrió un error al enviar tu mensaje. Inténtalo de nuevo.");
+                }
+            });
+        
+            return (
+                <>
+                    <button onClick={onOpen} className={buttonClassName}>
+                        {buttonText}
+                    </button>
+                    <Modal
+                        backdrop={'blur'}
+                        isOpen={isOpen}
+                        onOpenChange={onOpenChange}
+                        placement="center"
+                        size='xl'
+                        isDismissable={false}
+                        className="message-modal"
+                    >
+                        <ModalContent>
+                            {(onClose) => (
+                                <>
+                                    <ModalHeader className="message-modal-header">
+                                        Mensaje para Galia
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        {!send ? (
+                                            <form onSubmit={handleGuardarForm} className="message-form">
+                                                <div className="message-form-container">
+                                                    <Input
+                                                        {...register("nombre", { required: "El nombre es requerido" })}
+                                                        type="text"
+                                                        label="Tu nombre"
+                                                        placeholder="Escribe tu nombre"
+                                                        variant="bordered"
+                                                        isInvalid={!!errors.nombre}
+                                                        errorMessage={errors.nombre?.message}
+                                                        className="message-input"
+                                                    />
+                                                    
+                                                    <Textarea
+                                                        {...register("mensaje", { 
+                                                            required: "El mensaje es requerido",
+                                                            minLength: {
+                                                                value: 5,
+                                                                message: "El mensaje debe tener al menos 5 caracteres"
+                                                            }
+                                                        })}
+                                                        label="Tu mensaje para Galia"
+                                                        placeholder="Escribe un mensaje especial para el día de su fiesta"
+                                                        variant="bordered"
+                                                        minRows={3}
+                                                        maxRows={5}
+                                                        isInvalid={!!errors.mensaje}
+                                                        errorMessage={errors.mensaje?.message}
+                                                        className="message-textarea"
+                                                    />
+                                                    
+                                                    {error && <p className="error-message">{error}</p>}
+                                                    
+                                                    <div className="message-actions">
+                                                        <Button color="danger" variant="light" onPress={onClose}>
+                                                            Cancelar
+                                                        </Button>
+                                                        <Button type="submit" className="submit-button" isLoading={isSubmitting}>
+                                                            Enviar Mensaje
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        ) : (
+                                            <div className="success-container">
+                                                <h3>¡Gracias por tu mensaje!</h3>
+                                                <p>Tu mensaje ha sido enviado y será leído en la fiesta de Galia.</p>
+                                                <Button onPress={onClose} className="close-button">
+                                                    Cerrar
+                                                </Button>
+                                            </div>
+                                        )}
+                                    </ModalBody>
+                                </>
+                            )}
+                        </ModalContent>
+                    </Modal>
+                </>
+            );
+        }
+        
+        export default MensajesmostrarModal;
+        --- Fin de MensajesmostrarModal.jsx ---
+
+        MessageCard.astro
+
+        --- Contenido de MessageCard.astro ---
+        ---
+        const { person, image, message } = Astro.props;
+        ---
+        
+        <div class="max-w-sm w-full shadow-lg desktop:max-w-lg desktop:flex">
+            <div
+                class="h-48 desktop:h-auto desktop:w-48 flex-none bg-cover rounded-t desktop:rounded-t-none desktop:rounded-l text-center overflow-hidden"
+                style={`background-image: url('/photos/${image} ')`}
+                title="Woman holding a mug"
+            >
+            </div>
+            <div
+                class="border-r border-b border-l border-gray-400 desktop:border-l-0 desktop:border-t desktop:border-gray-400 bg-white rounded-b desktop:rounded-b-none desktop:rounded-r p-4 flex flex-col justify-between leading-normal"
+            >
+                <div class="mb-8">
+                    <p class="text-sm text-gray-600 flex items-center">
+                        ♥ Solo para ti
+                    </p>
+                    <div class="text-gray-900 font-bold text-xl mb-2">
+                        Mensaje de {person}
+                    </div>
+                    <p class="text-gray-700 text-base">
+                        {message}
+                    </p>
+                </div>
+            </div>
+        </div>
+        --- Fin de MessageCard.astro ---
+
+        MessageRegistroAsistencia.jsx
+
+        --- Contenido de MessageRegistroAsistencia.jsx ---
+        import React from 'react'
+        
+        function MessageRegistroAsistencia() {
+        
+        
+            return (
+                <div className='w-full flex flex-col gap-5 items-center justify-center' >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-28 text-green-400 ">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                    </svg>
+                    <p className='  font-rubik text-center  text-xl ' >
+                        ¡Registro realizado con éxito!
+                    </p>
+                </div>
+            )
+        }
+        
+        export default MessageRegistroAsistencia
+        --- Fin de MessageRegistroAsistencia.jsx ---
+
+        MusicaModal copy.jsx
+
+        --- Contenido de MusicaModal copy.jsx ---
+        
+        // Cambiar esta línea
+        import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link, Autocomplete, AutocompleteItem } from "@heroui/react";
+        import { Radio, RadioGroup } from "@heroui/react";
+        import { useState } from "react";
+        import { useForm } from "react-hook-form";
+        
+        
+        const generosmusicales = [
+            "Pop",
+            "Cumbia",
+            "Salsa",
+            "Bolero",
+            "Valse Criollo",
+            "Marinera",
+            "Reggaetón",
+            "Jazz",
+            "Soul",
+            "R&B",
+            "Blues",
+            "Otros"
+        ]
+        
+        function MusicaModal(
+        
+        ) {
+            const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+            const [error, setError] = useState("");
+            const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
+            const [send, setSend] = useState(false);
+            const handleGuardarForm = handleSubmit(async (data) => {
+        
+                const datos = {
+                    ...data,
+        
+                }
+        
+                const response = await fetch('https://eae-api.pedagogicos.pe/api/recomendacionmusica', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(datos)
+        
+                })
+                const res = await response.json()
+                if (res.status === 201) {
+                    reset()
+                    setSend(true)
+                    setError("")
+                } else {
+                    setError(res.message)
+        
+                }
+            })
+        
+            return (
+                <>
+                    <button onClick={onOpen} className="bg-color01 min-w-52 max-w-52 text-color02 py-3 rounded-3xl">
+                        Sugerir canción
+                    </button>
+                    <Modal
+                        backdrop={'blur'}
+                        isOpen={isOpen}
+                        onOpenChange={onOpenChange}
+                        placement="center"
+                        size='xl'
+                        isDismissable={false} isKeyboardDismissDisabled={true}
+                        className='p-8'
+                    >
+                        <ModalContent>
+                            {(onClose) => (
+                                <>
+                                    <ModalHeader className="flex 
+                                    font-parisienne
+                                    text-color01
+                                    font-light
+                                    text-5xl
+                                    phone:text-[34px]
+                                    p-0
+                                    desktop:text-5xl
+                                    text-center
+                                    my-4
+                                    flex-col gap-1">
+                                        Sugerir Canción
+        
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        {
+                                            !send ? (<form onSubmit={handleGuardarForm} >
+        
+        
+                                                {
+                                                    error && (
+                                                        <div className="text-center">
+                                                            <span className="text-red-500 text-center text-xs">{error}</span>
+                                                        </div>
+                                                    )
+                                                }
+        
+        
+                                                <div className="flex flex-col mt-5 gap-4" >
+                                                    <div>
+        
+                                                        <Autocomplete
+                                                            {...register('T_Categoria', {
+                                                                required: {
+                                                                    value: true,
+                                                                    message: 'Campo es requerido'
+                                                                }
+                                                            })}
+                                                            variant={"bordered"}
+                                                            defaultItems={generosmusicales}
+                                                            labelPlacement={'inside'}
+                                                            label="Selecciona un género musical"
+                                                            className="max-w-full"
+                                                        >
+                                                            {
+                                                                generosmusicales.map((item, index) => (
+                                                                    <AutocompleteItem key={index}>{item}</AutocompleteItem>
+                                                                ))
+                                                            }
+        
+                                                        </Autocomplete>
+                                                        {
+                                                            errors.T_Categoria && (
+                                                                <span className="text-red-500 text-xs">{errors.T_Categoria.message}</span>
+                                                            )
+                                                        }
+                                                    </div>
+                                                    <div>
+                                                        <Input
+                                                            {...register('T_Cantante', {
+                                                                required: {
+                                                                    value: true,
+                                                                    message: 'Campo es requerido'
+                                                                }
+                                                            })}
+                                                            label="Cantante/Grupo"
+                                                            placeholder="Ingresa la Canción o Grupo"
+                                                            variant="bordered"
+                                                        />
+                                                        {
+                                                            errors.T_Cantante && (
+                                                                <span className="text-red-500 text-xs">{errors.T_Cantante.message}</span>
+                                                            )
+                                                        }
+                                                    </div>
+                                                    <div>
+                                                        <Input
+                                                            {...register('T_Nombre_Cancion', {
+                                                                required: {
+                                                                    value: true,
+                                                                    message: 'Campo es requerido'
+                                                                }
+                                                            })}
+                                                            label="Canción"
+        
+                                                            placeholder="Ingresa la canción"
+                                                            variant="bordered"
+                                                        />
+                                                        {
+                                                            errors.T_Nombre_Cancion && (
+                                                                <span className="text-red-500 text-xs">{errors.T_Nombre_Cancion.message}</span>
+                                                            )
+                                                        }
+                                                    </div>
+        
+                                                    {
+                                                        isSubmitting ? (
+                                                            <button disabled className='bg-color01 disabled:bg-color03 text-color02 py-3  w-[280px] mx-auto desktop:w-[200px] rounded-3xl'>
+                                                                Enviando ..
+                                                            </button>
+                                                        ) : (
+                                                            <button className='bg-color01 text-color02 py-3  w-[280px] mx-auto desktop:w-[200px] rounded-3xl'>
+                                                                Sugerir canción
+                                                            </button>
+                                                        )
+                                                    }
+        
+                                                </div>
+        
+                                            </form>) : (
+                                                <>
+                                                    <div className='w-full flex flex-col gap-5 items-center justify-center' >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-28 text-color01 ">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                                                        </svg>
+                                                        <p className='  font-rubik text-center  text-xl ' >
+                                                            ¡Gracias por tu recomendación!
+                                                        </p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => {
+                                                            reset()
+                                                            onClose()
+                                                            setSend(false)
+                                                        }}
+                                                        className='bg-color01 mt-5 text-color02 py-3  w-[280px] mx-auto desktop:w-[200px] rounded-3xl'>
+                                                        Salir
+                                                    </button>
+                                                </>
+                                            )
+                                        }
+                                    </ModalBody>
+        
+                                </>
+                            )}
+                        </ModalContent>
+                    </Modal >
+                </>
+            )
+        }
+        
+        export default MusicaModal
+        --- Fin de MusicaModal copy.jsx ---
+
+        TipsModal.jsx
+
+        --- Contenido de TipsModal.jsx ---
+        
+        // Cambiar esta línea
+        import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link } from "@heroui/react";
+        import { Radio, RadioGroup } from "@heroui/react";
+        import { useState } from "react";
+        import { useForm } from "react-hook-form";
+        
+        
+        
+        function TipsModal() {
+            const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+        
+            const title = {
+                fontWeight: 'bold',
+                fontSize: '1rem',
+            }
+            const list = {
+                display: 'flex',
+                gap: '8px',
+                marginLeft: '15px',
+                flexDirection: 'column',
+            }
+            const li = {
+                display: 'flex',
+                gap: '3px',
+                fontSize: '0.8rem',
+                flexDirection: 'column',
+            }
+        
+            const [error, setError] = useState("");
+            const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
+            const [send, setSend] = useState(false);
+            const [asistenciaCheck, setAsistenciaCheck] = useState("");
+            const handleGuardarForm = handleSubmit(async (data) => {
+                if (asistenciaCheck === "") {
+                    setError("Debes seleccionar una opción de asistencia")
+                    return
+                }
+                const datos = {
+                    ...data,
+                    Flag_Asistencia: asistenciaCheck,
+                    T_Tipo_Sede: type,
+                }
+        
+                const response = await fetch('http://127.0.0.1:8000/api/asistencia', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer 12|SjaqxYBCTstwlZndGdS7IKUjTW7nKnZRayAVsKzA4fcc3c0c'
+                    },
+                    body: JSON.stringify(datos)
+        
+                })
+                const res = await response.json()
+                if (res.status === 201) {
+                    reset()
+                    setSend(true)
+                    setError("")
+                } else {
+                    setError(res.message)
+        
+                }
+            })
+        
+            return (
+                <>
+                    <button onClick={onOpen} className="bg-color01 min-w-52 max-w-52 text-color02 py-3 rounded-3xl">
+                        + Info
+                    </button>
+                    <Modal
+                        backdrop={'blur'}
+                        isOpen={isOpen}
+                        isDismissable={false} isKeyboardDismissDisabled={true}
+                        onOpenChange={onOpenChange}
+                        placement="center"
+        
+                        size='xl'
+                        className='p-8 phone:max-h-[60vh] max-h-[60vh] desktop:max-h-[90vh] overflow-y-auto'
+                    >
+                        <ModalContent>
+                            {(onClose) => (
+                                <>
+                                    <ModalHeader className="flex 
+                                    font-parisienne
+                                    text-color01
+                                    font-light
+                                    text-5xl
+                                    phone:text-[34px]
+                                    p-0
+                                    desktop:text-5xl
+        
+                                    text-center
+                                    my-4
+                                    flex-col gap-1">
+                                        Tips y Notas
+        
+                                    </ModalHeader>
+                                    <ModalBody className="font-rubik">
+                                        <h3 style={title} >
+                                            Actividades y Horarios
+                                        </h3>
+                                        <ul style={list} >
+                                            <li style={li} >
+        
+                                                <span className="font-semibold">
+                                                    Ceremonia Religiosa:
+                                                </span>
+                                                <span>   Comienza puntualmente a las 15:00 horas, así que por favor, llega al menos 15 minutos antes.</span>
+        
+                                            </li>
+                                            <li style={li} >
+                                                <span className="font-semibold">
+                                                    Ceremonia Civil:
+                                                </span>
+        
+                                                <span>La ceremonia civil será a las 16:30 horas.</span>
+                                            </li>
+                                            <li style={li} >
+                                                <span className="font-semibold">
+                                                    Fiesta:
+                                                </span>
+                                                <span>Se realizará una vez culmine la ceremonia Civil. </span>
+                                            </li>
+                                        </ul>
+        
+                                        <h3 style={title} >
+                                            Comidas y Bebidas
+                                        </h3>
+                                        <ul style={list} >
+                                            <li style={li} >
+        
+                                                <span className="font-semibold">
+                                                    Menú:
+                                                </span>
+                                                <span>
+                                                    Esperamos que disfrutes de la cena que hemos preparado para ti.
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <h3 style={title} >
+                                            Reglas
+                                        </h3>
+                                        <ul style={list} >
+                                            <li style={li} >
+        
+                                                <span className="font-semibold">
+                                                    Solo Adultos:
+                                                </span>
+                                                <span>
+                                                    Para garantizar que todos nuestros invitados puedan disfrutar plenamente de la celebración, amablemente solicitamos que este sea un evento para adultos. Apreciamos mucho su comprensión y apoyo en esta decisión.
+                                                </span>
+                                            </li>
+                                            <li style={li} >
+        
+                                                <span className="font-semibold">
+                                                    Fotografía:
+                                                </span>
+        
+                                                <span>
+                                                    Te pedimos que evites tomar fotografias que puedan interferir con el desarrollo de la ceremonia, luego de ello, siéntete libre de tomar las fotos que desees. No olvides etiquetarnos en tus redes sociales con el hashtag #JohanYDahiana
+                                                </span>
+                                            </li>
+        
+                                        </ul>
+                                        <h3 style={title} >
+                                            Regalos
+                                        </h3>
+                                        <ul style={list} >
+                                            <li style={li} >
+                                                Estamos muy emocionados de celebrar nuestro matrimonio con ustedes y estamos profundamente agradecidos por su amor y apoyo. Si desean honrarnos con un regalo, les agradecemos de antemano por su generosidad.
+                                            </li>
+                                            <li style={li} >
+        
+                                                <span className="font-semibold">
+                                                    Dahiana:
+                                                </span>
+                                                <span>
+                                                    INTERBANK:
+                                                    8983305997546
+                                                    <br />
+                                                    CCI:  00389801330599754645
+                                                </span>
+                                            </li>
+                                            <li style={li} >
+        
+                                                <span className="font-semibold">
+                                                    Johan:
+                                                </span>
+                                                <span>
+                                                    BCP:
+                                                    29519490244091 
+                                                    <br />
+                                                    CCI:  00229511949024409146
+                                                </span>
+                                            </li>
+        
+                                        </ul>
+                                        <div className="flex flex-col gap-1 justify-end items-end " >
+        
+                                            <span className="font-parisienne text-color01 text-lg font-bold">
+                                                Johan y Dahiana
+                                            </span>
+                                        </div>
+                                    </ModalBody>
+        
+                                </>
+                            )}
+                        </ModalContent>
+                    </Modal >
+                </>
+            )
+        }
+        
+        export default TipsModal
+        --- Fin de TipsModal.jsx ---
+
+        Title.astro
+
+        --- Contenido de Title.astro ---
+        ---
+        const { title } = Astro.props;
+        ---
+        
+        <h2 class="font-parisienne desktop:text-6xl text-color01 text-5xl phone:text-5xl text-center">
+            {title}
+        </h2>
+        --- Fin de Title.astro ---
+
+        dist/
+            CardParty.js
+
+            --- Contenido de CardParty.js ---
+            "use strict";
+            exports.__esModule = true;
+            var react_1 = require("react");
+            var prop_types_1 = require("prop-types");
+            require("../styles/CardParty.css");
+            var CardParty = function (_a) {
+                var title = _a.title, guid = _a.guid, description = _a.description, icon = _a.icon, _b = _a.buttonClassName, buttonClassName = _b === void 0 ? "" : _b, _c = _a.buttonText, buttonText = _c === void 0 ? "Ver más" : _c;
+                // Renderiza condicionalmente los modales basados en el 'guid'
+                var renderModal = function () {
+                    switch (guid) {
+                        case "1":
+                            return (react_1["default"].createElement("button", { className: "custom-modal-button message-button " + buttonClassName }, buttonText));
+                        case "2":
+                            return (react_1["default"].createElement("button", { className: "custom-modal-button about-button " + buttonClassName }, buttonText));
+                        default:
+                            return (react_1["default"].createElement("button", { className: "custom-modal-button " + buttonClassName }, buttonText));
+                    }
+                };
+                return (react_1["default"].createElement("div", { className: "party-card" },
+                    react_1["default"].createElement("div", { className: "party-card-icon bounce" },
+                        react_1["default"].createElement("img", { src: "/" + icon + ".gif", alt: "Icono de " + title })),
+                    react_1["default"].createElement("h3", { className: "party-card-title fadeIn" }, title),
+                    react_1["default"].createElement("div", { className: "party-card-description slideUp" }, description),
+                    react_1["default"].createElement("div", { className: "button-wrapper fadeInUp" }, renderModal())));
+            };
+            CardParty.propTypes = {
+                title: prop_types_1["default"].string.isRequired,
+                guid: prop_types_1["default"].string.isRequired,
+                description: prop_types_1["default"].string.isRequired,
+                icon: prop_types_1["default"].string.isRequired,
+                buttonClassName: prop_types_1["default"].string,
+                buttonText: prop_types_1["default"].string
+            };
+            exports["default"] = CardParty;
+            --- Fin de CardParty.js ---
+
+            IntroGallery.js
+
+            --- Contenido de IntroGallery.js ---
+            "use strict";
+            exports.__esModule = true;
+            var react_1 = require("react");
+            var framer_motion_1 = require("framer-motion");
+            var lucide_react_1 = require("lucide-react");
+            require("../styles/introgallery.css");
+            var IntroGallery = function () {
+                var _a = react_1.useState(0), currentImageIndex = _a[0], setCurrentImageIndex = _a[1];
+                var _b = react_1.useState(false), isLoaded = _b[0], setIsLoaded = _b[1];
+                var _c = react_1.useState(false), isPaused = _c[0], setIsPaused = _c[1];
+                var _d = react_1.useState({ width: 0, height: 0 }), dimensions = _d[0], setDimensions = _d[1];
+                var galleryRef = react_1.useRef(null);
+                var intervalRef = react_1.useRef(null);
+                // List of images from the public/img directory with captions
+                var images = [
+                    { src: '/galia4.webp', caption: 'Mi primer añito' },
+                    { src: '/galia/galiamaurogimeplaya.webp', caption: 'Momentos especiales' },
+                    { src: '/galia/galiarisa.webp', caption: 'Sonrisas de Galia' },
+                    { src: '/galia/galiahamaca.webp', caption: 'Celebrando juntos' },
+                ];
+                // Update dimensions on resize
+                react_1.useEffect(function () {
+                    var updateDimensions = function () {
+                        if (galleryRef.current) {
+                            setDimensions({
+                                width: galleryRef.current.offsetWidth,
+                                height: galleryRef.current.offsetHeight
+                            });
+                        }
+                    };
+                    updateDimensions();
+                    window.addEventListener('resize', updateDimensions);
+                    return function () {
+                        window.removeEventListener('resize', updateDimensions);
+                    };
+                }, []);
+                // Memoized navigation functions to prevent unnecessary re-renders
+                var goToImage = react_1.useCallback(function (index) {
+                    if (intervalRef.current) {
+                        clearInterval(intervalRef.current);
+                    }
+                    setCurrentImageIndex(index);
+                    setIsPaused(true);
+                }, []);
+                var goToPrevious = react_1.useCallback(function () {
+                    if (intervalRef.current) {
+                        clearInterval(intervalRef.current);
+                    }
+                    setCurrentImageIndex(function (prevIndex) {
+                        return prevIndex === 0 ? images.length - 1 : prevIndex - 1;
+                    });
+                    setIsPaused(true);
+                }, [images.length]);
+                var goToNext = react_1.useCallback(function () {
+                    if (intervalRef.current) {
+                        clearInterval(intervalRef.current);
+                    }
+                    setCurrentImageIndex(function (prevIndex) {
+                        return (prevIndex + 1) % images.length;
+                    });
+                    setIsPaused(true);
+                }, [images.length]);
+                // Auto-rotate images
+                react_1.useEffect(function () {
+                    setIsLoaded(true);
+                    if (!isPaused) {
+                        intervalRef.current = window.setInterval(function () {
+                            setCurrentImageIndex(function (prevIndex) { return (prevIndex + 1) % images.length; });
+                        }, 4000);
+                    }
+                    return function () {
+                        if (intervalRef.current) {
+                            clearInterval(intervalRef.current);
+                        }
+                    };
+                }, [images.length, isPaused]);
+                // Reset auto-rotation after 10 seconds of inactivity
+                react_1.useEffect(function () {
+                    if (isPaused) {
+                        var pauseTimer_1 = setTimeout(function () {
+                            setIsPaused(false);
+                        }, 10000);
+                        return function () { return clearTimeout(pauseTimer_1); };
+                    }
+                }, [isPaused]);
+                // Handle keyboard navigation
+                react_1.useEffect(function () {
+                    var handleKeyDown = function (e) {
+                        if (e.key === 'ArrowLeft') {
+                            goToPrevious();
+                        }
+                        else if (e.key === 'ArrowRight') {
+                            goToNext();
+                        }
+                    };
+                    window.addEventListener('keydown', handleKeyDown);
+                    return function () {
+                        window.removeEventListener('keydown', handleKeyDown);
+                    };
+                }, [goToNext, goToPrevious]);
+                return (react_1["default"].createElement("div", { className: "gallery-container mt-6", ref: galleryRef },
+                    react_1["default"].createElement("div", { className: "gallery-wrapper" },
+                        react_1["default"].createElement(framer_motion_1.AnimatePresence, { initial: false, mode: "wait" }, images.map(function (image, index) { return (react_1["default"].createElement(framer_motion_1.motion.div, { key: index, className: "gallery-image " + (index === currentImageIndex ? 'active' : ''), style: { backgroundImage: "url(" + image.src + ")" }, initial: { opacity: 0, scale: 1.05 }, animate: {
+                                opacity: index === currentImageIndex ? 1 : 0,
+                                scale: index === currentImageIndex ? 1 : 1.05,
+                                x: (index - currentImageIndex) * 100 + "%",
+                                transition: { duration: 0.7, ease: "easeInOut" }
+                            }, exit: { opacity: 0, scale: 0.95 } })); }))),
+                    react_1["default"].createElement("button", { className: "gallery-nav-button prev", onClick: goToPrevious, "aria-label": "Previous image" },
+                        react_1["default"].createElement(lucide_react_1.ChevronLeft, { className: "h-6 w-6" })),
+                    react_1["default"].createElement("button", { className: "gallery-nav-button next", onClick: goToNext, "aria-label": "Next image" },
+                        react_1["default"].createElement(lucide_react_1.ChevronRight, { className: "h-6 w-6" })),
+                    react_1["default"].createElement(framer_motion_1.motion.div, { className: "gallery-caption", key: currentImageIndex, initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5 } }, images[currentImageIndex].caption),
+                    react_1["default"].createElement("div", { className: "gallery-dots" }, images.map(function (_, index) { return (react_1["default"].createElement("button", { key: index, className: "gallery-dot " + (index === currentImageIndex ? 'active' : ''), onClick: function () { return goToImage(index); }, "aria-label": "View image " + (index + 1) })); }))));
+            };
+            exports["default"] = IntroGallery;
+            --- Fin de IntroGallery.js ---
+
+    data/
+        Datos - Confirmacion.csv
+
+        --- Contenido de Datos - Confirmacion.csv ---
+        Celular,CantidadConfirmada
+        097338241,1
+        097338241,1
+        097338241,1
+        097338241,1
+        --- Fin de Datos - Confirmacion.csv ---
+
+        Datos - Datos.csv
+
+        --- Contenido de Datos - Datos.csv ---
+        Celular,Nombre,CantidadInvitaciones
+        097338241,Matias,1
+        092900160,Camila,1
+        092475455,Mauro,1
+        099438628,Gime,1
+        099434821,INES Y HECTOR,2
+        ,Andres y Jose,2
+        ,Matias y Mayra,2
+        ,Damian Machin,1
+        ,Carito y Cachete,2
+        ,Caro,1
+        ,Anita,1
+        ,Sthep,1
+        ,Fede y Jenni,2
+        ,Melo y Seba,2
+        ,Sofia y Ale,2
+        ,Luzy,1
+        ,Fredy y Maria,2
+        ,Parama,1
+        ,Guada,2
+        ,Karen,1
+        ,Silvi,1
+        ,Bevi y Gerardo,2
+        ,Gisse,1
+        ,Pili y Guzman,2
+        ,Carla y Alejo,2
+        ,Santi,1
+        ,Sara y Maxi,2
+        ,Guille Luli y Memelos,4
+        ,Naika y Gabi,2
+        ,Nacho y Joha,3
+        098373644,Joha ,2
+        ,Gonza,2
+        ,Mica Raul y Margot,3
+        ,Eli y Jairo,2
+        ,Andrea,1
+        ,Lilian Martin Maia,3
+        --- Fin de Datos - Datos.csv ---
+
+    icons/
+        IconPlayMusic.astro
+
+        --- Contenido de IconPlayMusic.astro ---
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-music-heart"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+                d="M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path><path d="M9 17v-13h10v7"
+            ></path><path d="M9 8h10"></path><path
+                d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z"
+            ></path></svg
+        >
+        --- Fin de IconPlayMusic.astro ---
+
+        IconStopMusic.astro
+
+        --- Contenido de IconStopMusic.astro ---
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#ffffff"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-music-cancel"
+        ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+        ></path><path d="M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"
+        ></path><path d="M9 17v-13h10v8"></path><path d="M9 8h10"
+        ></path><path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"
+        ></path><path d="M17 21l4 -4"></path></svg>
+        --- Fin de IconStopMusic.astro ---
+
+        InstagramIcon.astro
+
+        --- Contenido de InstagramIcon.astro ---
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class={Astro.props.class}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#b16d20"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+                d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"
+            ></path><path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path
+                d="M16.5 7.5l0 .01"></path></svg
+        >
+        --- Fin de InstagramIcon.astro ---
+
+    layouts/
+        Layout.astro
+
+        --- Contenido de Layout.astro ---
+        ---
+        import Loader from "@/components/Loader.jsx";
+        import { ViewTransitions } from "astro:transitions";
+        import "@fontsource-variable/raleway";
+        import "@fontsource/parisienne";
+        import "@fontsource-variable/rubik";
+        import "../styles/layout.css";
+        
+        interface Props {
+        	title: string;
+        }
+        
+        const { title } = Astro.props;
+        ---
+        
+        <!doctype html>
+        <html lang="es">
+        	<head>
+        		<meta charset="UTF-8" />
+        		<meta name="description" content="Invitación para el cumple de Galia" />
+        		<meta name="viewport" content="width=device-width" />
+        		<meta name="theme-color" content="#FFB6C1" />
+        		<meta name="apple-mobile-web-app-capable" content="yes" />
+        		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        		<meta property="og:title" content={title} />
+        		<meta property="og:description" content="Invitación para el cumple de Galia" />
+        		<meta property="og:type" content="website" />
+        		
+        		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        		<link rel="manifest" href="/manifest.json" />
+        		
+        		<title>{title}</title>
+        		<ViewTransitions />
+        
+        		<!-- Preload critical assets -->
+        		<link rel="preload" href="/herogalia.gif" as="image" />
+        		<link rel="preconnect" href="https://fonts.googleapis.com" />
+        		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        	</head>
+        	<body>
+        		<Loader client:load />
+        		<div class="background-decoration"></div>
+        
+        		<slot />
+        	</body>
+        </html>
+        --- Fin de Layout.astro ---
+
+    pages/
+        index.astro
+
+        --- Contenido de index.astro ---
+        ---
+        import Layout from "@/layouts/Layout.astro";
+        import Hero from "@/sections/Hero.astro";
+        import Countdown from "@/sections/Countdown.astro";
+        import PrincipalDate from "@/sections/PrincipalDate.astro";
+        import Party from "@/sections/Party.astro";
+        import Intro from "@/sections/Intro.astro";
+        import "../styles/index.css";
+        ---
+        
+        <Layout title="Cumple de Galia">
+        	<div id="intro-section">
+        		<Intro />
+        		
+        	</div>
+        
+        	<div id="main-content" class="hidden">
+        		<Hero />
+        		<section class="p-4">
+        			<Countdown />
+        			<PrincipalDate />
+        			<Party />
+        		</section>
+        	</div>
+        </Layout>
+        
+        <script>
+        	document.addEventListener('DOMContentLoaded', () => {
+        		const enterButton = document.getElementById('enter-button');
+        		const introSection = document.getElementById('intro-section');
+        		const mainContent = document.getElementById('main-content');
+        
+        		enterButton.addEventListener('click', () => {
+        			// Add fade-out animation to intro
+        			introSection.style.animation = 'fadeOut 0.8s forwards';
+        			
+        			// After animation completes, hide intro and show main content
+        			setTimeout(() => {
+        				introSection.classList.add('hidden');
+        				mainContent.classList.remove('hidden');
+        				
+        				// Add fade-in animation to main content
+        				mainContent.style.animation = 'fadeIn 1s forwards';
+        				mainContent.classList.add('visible');
+        			}, 700);
+        		});
+        	});
+        </script>
+        --- Fin de index.astro ---
+
+    sections/
+        Countdown.astro
+
+        --- Contenido de Countdown.astro ---
+        ---
+        import Divider from "@/components/Divider.astro";
+        import Title from "@/components/Title.astro";
+        import "../styles/Countdown.css";
+        
+        // Set the date to May 10, 2025 at 13:00 (1 PM)
+        const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
+        ---
+        
+        <section class="countdown-section">
+            <div class="countdown-wrapper">
+                <Title title="Falta" />
+                <div data-date={TIMESTAMP_END} class="countdown-container">
+                    <div class="countdown-unit">
+                        <div class="countdown-card">
+                            <span data-days class="countdown-number">00</span>
+                        </div>
+                        <span class="countdown-label">DÍAS</span>
+                    </div>
+        
+                    <div class="countdown-separator">:</div>
+        
+                    <div class="countdown-unit">
+                        <div class="countdown-card">
+                            <span data-hours class="countdown-number">00</span>
+                        </div>
+                        <span class="countdown-label">HS</span>
+                    </div>
+        
+                    <div class="countdown-separator">:</div>
+        
+                    <div class="countdown-unit">
+                        <div class="countdown-card">
+                            <span data-minutes class="countdown-number">00</span>
+                        </div>
+                        <span class="countdown-label">MIN</span>
+                    </div>
+                    
+                    <div class="countdown-separator">:</div>
+                    
+                    <div class="countdown-unit">
+                        <div class="countdown-card">
+                            <span data-seconds class="countdown-number">00</span>
+                        </div>
+                        <span class="countdown-label">SEG</span>
+                    </div>
+                </div>
+                <Divider />
+            </div>
+        </section>
+        
+        <script>
+            const SECOND = 1000; //1000ms
+            const MINUTE = SECOND * 60; // 60s -> 60000ms
+            const HOUR = MINUTE * 60; // 60m -> 3600s -> 360000ms
+            const DAY = HOUR * 24;
+            
+            function init() {
+                const $countdown = document.querySelector("[data-date]");
+                if (!$countdown) return;
+                const $days = $countdown.querySelector("[data-days]");
+                const $hours = $countdown.querySelector("[data-hours]");
+                const $minutes = $countdown.querySelector("[data-minutes]");
+                const $seconds = $countdown.querySelector("[data-seconds]");
+        
+                const timestamp = $countdown.getAttribute("data-date");
+                if (!timestamp) return;
+        
+                const date = new Date(+timestamp).getTime();
+        
+                const formatTime = (time: number) => {
+                    return Math.floor(time).toString().padStart(2, "0");
+                };
+        
+                function updateCountdown() {
+                    const now = Date.now();
+                    const diff = date - now;
+                    
+                    // Ensure we don't show negative values if the date has passed
+                    const remainingTime = Math.max(diff, 0);
+        
+                    if ($days instanceof HTMLElement) {
+                        const newDays = formatTime(remainingTime / DAY);
+                        if ($days.innerText !== newDays) {
+                            $days.parentElement?.classList.add('flip');
+                            $days.innerText = newDays;
+                            setTimeout(() => {
+                                $days.parentElement?.classList.remove('flip');
+                            }, 500);
+                        }
+                    }
+                    if ($hours instanceof HTMLElement) {
+                        const newHours = formatTime((remainingTime % DAY) / HOUR);
+                        if ($hours.innerText !== newHours) {
+                            $hours.parentElement?.classList.add('flip');
+                            $hours.innerText = newHours;
+                            setTimeout(() => {
+                                $hours.parentElement?.classList.remove('flip');
+                            }, 500);
+                        }
+                    }
+                    if ($minutes instanceof HTMLElement) {
+                        const newMinutes = formatTime((remainingTime % HOUR) / MINUTE);
+                        if ($minutes.innerText !== newMinutes) {
+                            $minutes.parentElement?.classList.add('flip');
+                            $minutes.innerText = newMinutes;
+                            setTimeout(() => {
+                                $minutes.parentElement?.classList.remove('flip');
+                            }, 500);
+                        }
+                    }
+                    if ($seconds instanceof HTMLElement) {
+                        const newSeconds = formatTime((remainingTime % MINUTE) / SECOND);
+                        if ($seconds.innerText !== newSeconds) {
+                            $seconds.parentElement?.classList.add('flip');
+                            $seconds.innerText = newSeconds;
+                            setTimeout(() => {
+                                $seconds.parentElement?.classList.remove('flip');
+                            }, 500);
+                        }
+                    }
+                }
+        
+                updateCountdown(); // Run immediately once
+                setInterval(updateCountdown, SECOND);
+            }
+            
+            init();
+        </script>
+        --- Fin de Countdown.astro ---
+
+        Footer.astro
+
+        --- Contenido de Footer.astro ---
+        <footer>
+            <div class="flex flex-row justify-between max-w-6xl mx-auto p-4 gap-10 desktop:p-12" >
+                <p class="text-gray-400">@2024 - Alexander Moscol Bravo - 
+                    <br class="desktop:hidden block">
+                    "Con amor para johan y dahiana"</p>
+                <a href="https://www.instagram.com/alexander_brav/" target="_blank">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#969696"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram"
+                        ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+                            d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"
+                        ></path><path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"
+                        ></path><path d="M16.5 7.5l0 .01"></path></svg
+                    >
+                </a>
+            </div>
+        </footer>
+        --- Fin de Footer.astro ---
+
+        Hero.astro
+
+        --- Contenido de Hero.astro ---
+        ---
+        import "../styles/hero.css";
+        ---
+        
+        <section
+            class="greater-desktop:h-screen desktop:h-[670px] h-[670px] hero-section desktop:w-full w-full flex justify-center items-center bg-fixed bg-cover bg-no-repeat bg-center"
+        >
+            <div class="hero-background-container">
+                <img src="/herogalia.gif" id="parallax-hero" alt="hero-parallax" />
+            </div>
+            
+            <div class="info-hero">
+                <div class="hero-content">
+                    <div class="hero-name">Soy Galia</div>
+                    <h1 class="married-hero">
+                        Festejo Mi
+                        <span>Primer Añito</span>
+                    </h1>
+                    <div class="date-hero">
+                        10 de Mayo de 2024
+                    </div>
+                    <div class="quote-container">
+                        <img src="/mark_open.svg" alt="Quote open" />
+                        <p>
+                            Me encantaría que vinieras a celebrar mi primer año. ¡Será especial contigo!
+                        </p>
+                        <img src="/mark_close.svg" alt="Quote close" />
+                    </div>
+                </div>
+                <div class="scroll-indicator">
+                    <img src="/arrow_down.gif" alt="Scroll down" />
+                </div>
+            </div>
+        </section>
+        --- Fin de Hero.astro ---
+
+        Instagram.astro
+
+        --- Contenido de Instagram.astro ---
+        ---
+        
+        import Title from "@/components/Title.astro";
+        import InstagramIcon from "@/icons/InstagramIcon.astro";
+        ---
+        
+        <section>
+            <div
+                class="max-w-[1140px] phone:w-full phone:px-2 mx-auto mb-12 mt-12 desktop:mb-14 desktop:mt-24 text-color01 flex gap-3 justify-center items-center flex-col"
+            >
+                <Title title="Compartimos este día junto a ti" />
+                <span
+                    class="font-rubik desktop:text-xl text-center font-extralight text-gray-400"
+                >
+                    Comparte tus fotos y videos de este hermoso día
+                </span>
+                <InstagramIcon class="w-16 mt-6" />
+                <p class="font-raleway text-4xl text-color03 desktop:text-6xl">
+                    @dahilua
+                </p>
+                <a
+                    href="https://www.instagram.com/dahilua/"
+                    class="bg-color01 mt-10 translate-x-2 transition max-w-40 min-w-40 text-center text-color02 py-3 rounded-3xl"
+                    target="_blank"
+                >
+                    Ver en Instagram
+                </a>
+            </div>
+        </section>
+        
+        <style>
+         
+            a:hover {
+                background-color: rgb(195 128 11 / 73%);
+                @apply animate-pulsing;
+            }
+        </style>
+        --- Fin de Instagram.astro ---
+
+        Intro.astro
+
+        --- Contenido de Intro.astro ---
+        ---
+        import IntroGallery from '@/components/IntroGallery.tsx'
+        import '../styles/intro.css'
+        ---
+        
+        <main id="landing-intro">
+            <div class="floating-balloons">
+                <img src="/img/balloon1.svg" class="balloon balloon-1" alt="balloon" />
+                <img src="/img/balloon2.svg" class="balloon balloon-2" alt="balloon" />
+                <img src="/img/balloon3.svg" class="balloon balloon-3" alt="balloon" />
+            </div>
+            
+            <section class="max-w-[750px] text-center animate-blurred-fade-in intro-container">
+                <div class="birthday-header">
+                    <h1 class="birthday-title">
+                        ¡Celebra conmigo!
+                    </h1>
+                    <div class="birthday-badge">
+                        <span>1</span>
+                        <span>añito</span>
+                    </div>
+                </div>
+                
+                <p class="birthday-description">
+                    Galia está cumpliendo su primer añito y quiere compartir este día tan especial contigo
+                </p>
+            
+                <div class="gallery-section">
+                    <IntroGallery client:idle />
+                </div>
+                
+                <div class="enter-button-container">
+                    <button id="enter-button" class="enter-button">
+                        Entrar a la Fiesta
+                    </button>
+                </div>
+            </section>
+        </main>
+        
+        --- Fin de Intro.astro ---
+
+        Message.astro
+
+        --- Contenido de Message.astro ---
+        ---
+        import MessageCard from "@/components/MessageCard.astro";
+        import Divider from "@/components/Divider.astro";
+        import Title from "@/components/Title.astro";
+        ---
+        
+        <section>
+            <div
+                class="max-w-[1140px] phone:w-full phone:px-2 mx-auto mb-12 mt-12 desktop:mb-14 desktop:mt-24 text-color01 flex gap-3 justify-center items-center flex-col"
+            >
+                <Title title="Mensaje de los novios" />
+                <span
+                    class="font-rubik desktop:text-xl text-center font-extralight text-gray-400"
+                >
+                    Un minuto, un segundo, un instante que queda en la eternidad
+                </span>
+                <img src="/heard-message.gif" class="w-28 mx-auto" title="gift de corazón" />
+            </div>
+            <div
+                class="max-w-[1140px] flex flex-row flex-wrap gap-8 desktop:gap-4 mx-auto justify-center items-center"
+            >
+                <MessageCard
+                    person="Dahiana"
+                    message={`Queremos compartir con cada uno de ustedes un día muy especial para nosotros, una de las decisiones más importantes de nuestra vida. Nos vamos a sentir afortunados de estar rodeados de nuestros seres queridos y amistades, con quienes hemos tenido la oportunidad de compartir momentos inolvidables. Esperamos que nos puedan acompañar y pasen una noche memorable.`}
+                    image="novia.jpg"
+                />
+        
+                <MessageCard
+                    person="Johan"
+                    message={`
+        Cada minuto es importante y especial, como aquellos que hemos vivido en algún momento, y este no tiene por qué ser diferente. Pensamos en ti y en cómo formas parte de nuestra historia. Por ello, espero que nos puedas acompañar en un día muy especial para nosotros y tener, una vez más, la oportunidad de pasar un momento de dicha y felicidad ante una decisión tan importante. ¡Te esperamos!
+                `}
+                    image="novio.jpg"
+                />
+            </div>
+            <Divider />
+        </section>
+        --- Fin de Message.astro ---
+
+        Party.astro
+
+        --- Contenido de Party.astro ---
+        ---
+        import CardParty from "@/components/CardParty.tsx";
+        import Divider from "@/components/Divider.astro";
+        import Title from "@/components/Title.astro";
+        import "../styles/party.css";
+        ---
+        
+        <section class="party-section">
+            <div class="party-decorations">
+                <div class="decoration balloon-left"></div>
+                <div class="decoration balloon-right"></div>
+                <div class="decoration confetti-1"></div>
+                <div class="decoration confetti-2"></div>
+            </div>
+            
+            <div class="party-container">
+                <div class="party-header">
+                    <div class="party-title-wrapper">
+                        <Title title="Mi Fiesta" />
+                    </div>
+                    <p class="party-subtitle">
+                        ¡Estoy muy emocionada por compartir mi primer añito contigo!
+                    </p>
+                </div>
+                
+                <div class="party-content">
+                    <div class="party-cards-container">
+                        <CardParty
+                            guid="1"
+                            title="Envíame un Mensaje"
+                            icon="enviarmensaje"
+                            description="¿Quieres dejarme un mensaje especial para el día de mi fiesta? ¡Me encantaría leerlo!"
+                            buttonText="Enviar mensaje"
+                            buttonClassName="message-button"
+                            client:visible
+                        />
+                        <CardParty
+                            guid="2"
+                            title="Datos Sobre Mí"
+                            icon="sobremi"
+                            description="¿Quieres conocer un poco más sobre mí? ¡Descubre mis gustos y lo que me hace feliz!"
+                            buttonText="Conocer más"
+                            buttonClassName="about-button"
+                            client:visible
+                        />
+                    </div>
+                </div>
+            </div>
+            
+            <Divider />
+        </section>
+        --- Fin de Party.astro ---
+
+        PrincipalDate.astro
+
+        --- Contenido de PrincipalDate.astro ---
+        ---
+        import Divider from "@/components/Divider.astro";
+        import AsistenciaModal from "@/components/AsistenciaModal.jsx";
+        import "../styles/PrincipalDate.css";
+        ---
+        
+        <section class="principal-date-section">
+          <div class="principal-date-container">
+            <div class="flower-decoration">
+              <img src="/daisy.svg" class="flower-icon" alt="icono margarita" />
+            </div>
+            
+            <div class="title-container">
+              <h3 class="birthday-title">¡Galia cumple 1 añito!</h3>
+            </div>
+            
+            <div class="info-grid">
+              <div class="info-card">
+                <div class="info-card-inner">
+                  <p class="info-label">Cuándo</p>
+                  <span class="info-value">
+                    Sábado 10 de mayo de 2025 - 13:00 hs
+                  </span>
+                  <a
+                    href="https://calendar.app.google/8n2HQ1SNYk4jMCJcA"
+                    target="_blank"
+                    class="action-button calendar-button"
+                  >
+                    <span class="button-icon">📅</span>
+                    <span class="button-text">Agendar</span>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="info-card">
+                <div class="info-card-inner">
+                  <p class="info-label">Dónde</p>
+                  <span class="info-value">
+                    Club Ciclista Juanico, Calle San Marcos
+                  </span>
+                  <a href="https://maps.app.goo.gl/nB1U1MJTKiEXN33A6" target="_blank" class="action-button location-button">
+                    <span class="button-icon">📍</span>
+                    <span class="button-text">¿Cómo llegar?</span>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="info-card">
+                <div class="info-card-inner">
+                  <p class="info-label">Confirma asistencia</p>
+                  <span class="info-value">
+                    Me gustaría que confirmes tu asistencia
+                  </span>
+                  <div class="modal-wrapper">
+                    <AsistenciaModal type="cumpleaños" client:visible />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <Divider />
+        
+        <script
+          type="text/javascript"
+          src="https://cdn.addevent.com/libs/atc/1.6.1/atc.min.js"
+          async
+          defer></script>
+        --- Fin de PrincipalDate.astro ---
+
+    styles/
+        CardParty.css
+
+        --- Contenido de CardParty.css ---
+        .party-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 148, 148, 0.2);
+            height: 100%;
+        }
+        
+        .party-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #FF6B8B, #FFD166);
+        }
+        
+        .party-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .party-card-icon {
+            width: 90px;
+            height: 90px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .party-card-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+            transition: transform 0.5s ease;
+        }
+        
+        .party-card:hover .party-card-icon img {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .party-card-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #FF6B8B;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 1rem;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .party-card-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background-color: rgba(255, 107, 139, 0.3);
+            transition: width 0.3s ease;
+        }
+        
+        .party-card:hover .party-card-title::after {
+            width: 80px;
+        }
+        
+        .party-card-description {
+            text-align: center;
+            color: #6F6F6E;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .button-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: auto;
+        }
+        
+        .custom-modal-button {
+            background-color: #FF6B8B;
+            color: white;
+            font-weight: 600;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 139, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .custom-modal-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .custom-modal-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 139, 0.4);
+            background-color: #FF5277;
+        }
+        
+        .custom-modal-button:hover::before {
+            left: 100%;
+        }
+        
+        .custom-modal-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(255, 107, 139, 0.3);
+        }
+        
+        .message-button {
+            background-color: #FF6B8B;
+        }
+        
+        .message-button:hover {
+            background-color: #FF5277;
+        }
+        
+        .about-button {
+            background-color: #FFB347;
+        }
+        
+        .about-button:hover {
+            background-color: #FFA726;
+            box-shadow: 0 8px 20px rgba(255, 179, 71, 0.4);
+        }
+        
+        /* Animation classes */
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        .fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .slideUp {
+            animation: slideUp 0.8s ease-out forwards;
+        }
+        
+        .fadeInUp {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .party-card {
+                padding: 1.75rem;
+            }
+            
+            .party-card-title {
+                font-size: 1.5rem;
+            }
+            
+            .party-card-icon {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .custom-modal-button {
+                padding: 0.7rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .party-card {
+                padding: 1.5rem;
+            }
+            
+            .party-card-title {
+                font-size: 1.35rem;
+            }
+            
+            .party-card-description {
+                font-size: 0.95rem;
+            }
+            
+            .party-card-icon {
+                width: 70px;
+                height: 70px;
+                margin-bottom: 1.25rem;
+            }
+            
+            .custom-modal-button {
+                padding: 0.6rem 1.3rem;
+                font-size: 0.95rem;
+            }
+        }
+        --- Fin de CardParty.css ---
+
+        Countdown.css
+
+        --- Contenido de Countdown.css ---
+        .countdown-section {
+            max-width: 1152px;
+            padding: 5rem 1rem 2.5rem;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .countdown-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .countdown-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255, 148, 148, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+            top: -75px;
+            left: -75px;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .countdown-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(185, 118, 0, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            bottom: -60px;
+            right: -60px;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 0.25rem;
+        }
+        
+        .countdown-card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 0.5rem;
+            min-width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(185, 118, 0, 0.1);
+        }
+        
+        .countdown-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+        }
+        
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #B97600;
+            text-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6F6F6E;
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+        }
+        
+        .countdown-separator {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #B97600;
+            margin: 0 -0.25rem;
+            opacity: 0.7;
+            align-self: flex-start;
+            margin-top: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Flip animation */
+        .countdown-card.flip {
+            animation: flipAnimation 0.5s ease-in-out;
+            transform-style: preserve-3d;
+        }
+        
+        @keyframes flipAnimation {
+            0% {
+                transform: perspective(400px) rotateX(0);
+            }
+            50% {
+                transform: perspective(400px) rotateX(90deg);
+            }
+            100% {
+                transform: perspective(400px) rotateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+        
+        /* Responsive styles */
+        @media (min-width: 1024px) {
+            .countdown-section {
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
+            
+            .countdown-container {
+                gap: 1rem;
+            }
+            
+            .countdown-card {
+                min-width: 100px;
+                height: 100px;
+            }
+            
+            .countdown-number {
+                font-size: 3rem;
+            }
+            
+            .countdown-label {
+                font-size: 0.9rem;
+            }
+            
+            .countdown-separator {
+                font-size: 2.5rem;
+                margin-top: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .countdown-container {
+                gap: 0.25rem;
+            }
+            
+            .countdown-card {
+                min-width: 70px;
+                height: 70px;
+            }
+            
+            .countdown-number {
+                font-size: 2.2rem;
+            }
+            
+            .countdown-separator {
+                font-size: 1.8rem;
+                margin-top: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .countdown-section {
+                padding-top: 3rem;
+            }
+            
+            .countdown-container {
+                margin: 1.5rem 0;
+            }
+            
+            .countdown-card {
+                min-width: 60px;
+                height: 60px;
+                padding: 0.3rem;
+            }
+            
+            .countdown-number {
+                font-size: 1.8rem;
+            }
+            
+            .countdown-label {
+                font-size: 0.7rem;
+                margin-top: 0.3rem;
+            }
+            
+            .countdown-separator {
+                font-size: 1.5rem;
+                margin-top: 1rem;
+            }
+        }
+        
+        /* Additional animations */
+        .countdown-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Decorative elements */
+        .countdown-container::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(185, 118, 0, 0.2), transparent);
+            bottom: -20px;
+        }
+        --- Fin de Countdown.css ---
+
+        DressCodeModal.css
+
+        --- Contenido de DressCodeModal.css ---
+        /* About Me Modal Styles */
+        .about-me-title {
+          position: relative;
+          display: inline-block;
+          animation: colorShift 4s infinite alternate;
+        }
+        
+        .about-me-title::after {
+          content: "✨";
+          position: absolute;
+          right: -30px;
+          top: 0;
+          animation: twinkle 1.5s infinite;
+        }
+        
+        .about-me-title::before {
+          content: "✨";
+          position: absolute;
+          left: -30px;
+          top: 0;
+          animation: twinkle 1.5s infinite 0.5s;
+        }
+        
+        .about-me-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          font-family: 'Rubik', sans-serif;
+          padding: 0.5rem;
+        }
+        
+        .about-me-photo-container {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 1rem;
+        }
+        
+        .about-me-photo {
+          width: 180px;
+          height: 180px;
+          object-fit: cover;
+          border-radius: 50%;
+          border: 4px solid #FFD166;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          animation: float 3s ease-in-out infinite;
+        }
+        
+        .about-me-sections {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        
+        .about-me-section {
+          background-color: rgba(255, 182, 193, 0.1);
+          border-radius: 12px;
+          padding: 1rem;
+          border-left: 4px solid #FF6B8B;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .about-me-section:nth-child(2) {
+          border-left-color: #FFD166;
+          animation-delay: 0.2s;
+        }
+        
+        .about-me-section:nth-child(3) {
+          border-left-color: #95C998;
+          animation-delay: 0.4s;
+        }
+        
+        .about-me-section:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: #FF6B8B;
+          margin-bottom: 0.75rem;
+          position: relative;
+          display: inline-block;
+        }
+        
+        .about-me-section:nth-child(2) .section-title {
+          color: #FFD166;
+        }
+        
+        .about-me-section:nth-child(3) .section-title {
+          color: #95C998;
+        }
+        
+        .section-list {
+          list-style-type: none;
+          padding-left: 0.5rem;
+        }
+        
+        .section-list li {
+          margin-bottom: 0.5rem;
+          position: relative;
+          padding-left: 1.5rem;
+          font-size: 0.95rem;
+          color: #4a4a4a;
+        }
+        
+        .section-list li::before {
+          content: "•";
+          position: absolute;
+          left: 0;
+          color: #FF6B8B;
+          font-size: 1.2rem;
+        }
+        
+        .about-me-section:nth-child(2) .section-list li::before {
+          color: #FFD166;
+        }
+        
+        .about-me-section:nth-child(3) .section-list li::before {
+          color: #95C998;
+        }
+        
+        .about-me-footer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+          margin-top: 1rem;
+        }
+        
+        .close-button {
+          background-color: #FF6B8B !important;
+          color: white !important;
+          border-radius: 50px !important;
+          padding: 0.5rem 2rem !important;
+          font-weight: 500 !important;
+          transition: transform 0.2s ease !important;
+        }
+        
+        .close-button:hover {
+          transform: scale(1.05);
+          background-color: #FF5277 !important;
+        }
+        
+        /* Animations */
+        @keyframes float {
+          0% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes twinkle {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+        
+        @keyframes colorShift {
+          0% {
+            color: #FF6B8B;
+          }
+          50% {
+            color: #FFD166;
+          }
+          100% {
+            color: #95C998;
+          }
+        }
+        
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+          .about-me-sections {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+          
+          .about-me-section {
+            flex: 1;
+            min-width: 200px;
+          }
+        }
+        --- Fin de DressCodeModal.css ---
+
+        hero.css
+
+        --- Contenido de hero.css ---
+        /* Hero section main styles */
+        .hero-section {
+          position: relative;
+          height: 670px;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-attachment: fixed;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          overflow: hidden;
+        }
+        
+        /* Hero container for the background image */
+        .hero-background-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        
+        /* Parallax hero image */
+        #parallax-hero {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          animation: subtle-zoom 20s infinite alternate ease-in-out;
+        }
+        
+        /* Overlay for better text readability */
+        .hero-section::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            to bottom,
+            rgba(29, 29, 27, 0.4) 0%,
+            rgba(29, 29, 27, 0.3) 50%,
+            rgba(29, 29, 27, 0.5) 100%
+          );
+          z-index: 0;
+          top: 0;
+          left: 0;
+        }
+        
+        /* Hero content container */
+        .info-hero {
+          z-index: 50;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          text-align: center;
+          margin: 0 auto;
+          max-width: 80%;
+          height: 100%;
+        }
+        
+        .hero-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          animation: fade-in-up 1.2s ease-out forwards;
+          background-color: rgba(255, 255, 255, 0.25);
+          backdrop-filter: blur(8px);
+          padding: 2.5rem;
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Hero name styling */
+        .hero-name {
+          font-family: 'Parisienne', cursive;
+          font-size: 2.5rem;
+          color: #FF6B8B;
+          margin-bottom: 0.5rem;
+          text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.5);
+          animation: float 3s ease-in-out infinite;
+          letter-spacing: 1px;
+        }
+        
+        /* Date display styling */
+        .date-hero {
+          font-size: 1.5rem;
+          color: #FFF8E1;
+          margin: 1.5rem 0;
+          font-family: 'Rubik', sans-serif;
+          font-weight: 600;
+          letter-spacing: 2px;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+          position: relative;
+          padding: 0 2.5rem;
+        }
+        
+        .date-hero::before,
+        .date-hero::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          width: 40px;
+          height: 2px;
+          background: #FFF8E1;
+          opacity: 0.9;
+        }
+        
+        /* Main title styling */
+        .married-hero {
+          font-size: 3.75rem;
+          color: #FFFFFF;
+          font-family: 'Parisienne', cursive;
+          display: flex;
+          flex-direction: column;
+          text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 107, 139, 0.5);
+          animation: glow 3s infinite alternate;
+          line-height: 1.2;
+          letter-spacing: 1px;
+        }
+        
+        .married-hero span {
+          font-size: 1.1em;
+          color: #FFD166;
+          margin-top: 0.1em;
+          animation: color-shift 4s infinite alternate;
+          text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 209, 102, 0.6);
+        }
+        
+        /* Quote section styling */
+        .quote-container {
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          margin-top: 1.75rem;
+          gap: 1rem;
+        }
+        
+        .quote-container p {
+          font-size: 1.25rem;
+          font-family: 'Rubik', sans-serif;
+          color: #FFFFFF;
+          line-height: 1.6;
+          max-width: 90%;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+          font-weight: 500;
+        }
+        
+        .quote-container img {
+          width: 2rem;
+          filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4)) brightness(1.1);
+          opacity: 0.95;
+        }
+        
+        /* Animations */
+        @keyframes glow {
+          from {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #FF6B8B, 0 0 20px #FF6B8B;
+          }
+          to {
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #FF6B8B, 0 0 40px #FF6B8B;
+          }
+        }
+        
+        @keyframes color-shift {
+          0% {
+            color: #FFD166;
+          }
+          50% {
+            color: #FF9E7A;
+          }
+          100% {
+            color: #FF6B8B;
+          }
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+          display: flex;
+          justify-content: center;
+          margin-top: 2rem;
+          animation: bounce 2s infinite;
+        }
+        
+        .scroll-indicator img {
+          width: 3.5rem;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        /* Animations */
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+          }
+          40% {
+            transform: translateY(-15px);
+          }
+          60% {
+            transform: translateY(-7px);
+          }
+        }
+        
+        @keyframes glow {
+          from {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #FF9494, 0 0 20px #FF9494;
+          }
+          to {
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #FF9494, 0 0 40px #FF9494;
+          }
+        }
+        
+        @keyframes subtle-zoom {
+          from {
+            transform: scale(1);
+          }
+          to {
+            transform: scale(1.05);
+          }
+        }
+        
+        @keyframes float {
+          0% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes color-shift {
+          0% {
+            color: #FFD700;
+          }
+          50% {
+            color: #FFA07A;
+          }
+          100% {
+            color: #FF9494;
+          }
+        }
+        
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+          .info-hero {
+            max-width: 36rem;
+          }
+          
+          .quote-container p {
+            font-size: 1.5rem;
+          }
+          
+          .hero-name {
+            font-size: 3rem;
+          }
+        }
+        
+        @media (min-width: 993px) {
+          #parallax-hero {
+            height: 100%;
+          }
+          
+          .hero-section::before {
+            height: 100%;
+          }
+          
+          .married-hero {
+            font-size: 4.5rem;
+          }
+        }
+        
+        @media (min-width: 1280px) {
+          .info-hero {
+            max-width: 42rem;
+          }
+          
+          .date-hero {
+            font-size: 1.5rem;
+          }
+          
+          .hero-content {
+            padding: 2.5rem;
+          }
+        }
+        
+        @media (min-width: 1745px) {
+          #parallax-hero {
+            height: 100%;
+          }
+          
+          .hero-section::before {
+            height: 100%;
+          }
+          
+          .hero-section {
+            height: 100vh;
+          }
+          
+          .info-hero {
+            height: 100vh;
+            max-width: 48rem;
+          }
+          
+          .married-hero {
+            font-size: 5rem;
+          }
+          
+          .quote-container p {
+            font-size: 1.5rem;
+          }
+          
+          .hero-name {
+            font-size: 3.5rem;
+          }
+        }
+        --- Fin de hero.css ---
+
+        index.css
+
+        --- Contenido de index.css ---
+        /* Main content styles */
+        #intro-section {
+          position: relative;
+          min-height: 100vh;
+          width: 100%;
+        }
+        
+        #main-content {
+          opacity: 0;
+          transition: opacity 1s ease;
+        }
+        
+        #main-content.visible {
+          opacity: 1;
+        }
+        
+        /* Enter button styles */
+        .enter-button-container {
+          position: absolute;
+          bottom: 10%;
+          left: 0;
+          right: 0;
+          display: flex;
+          justify-content: center;
+          z-index: 10;
+        }
+        
+        .enter-button {
+          background-color: #b97600;
+          color: white;
+          font-family: 'Raleway', sans-serif;
+          font-weight: 600;
+          padding: 1rem 2.5rem;
+          border-radius: 2rem;
+          border: none;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(185, 118, 0, 0.3);
+          transition: all 0.3s ease;
+          animation: pulse 2s infinite;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .enter-button::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          transition: all 0.6s;
+        }
+        
+        .enter-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 7px 15px rgba(185, 118, 0, 0.4);
+        }
+        
+        .enter-button:hover::before {
+          left: 100%;
+        }
+        
+        .enter-button:active {
+          transform: translateY(-1px);
+          box-shadow: 0 5px 10px rgba(185, 118, 0, 0.4);
+        }
+        
+        /* Utility classes */
+        .hidden {
+          display: none;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.05);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+        
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        /* Floating elements animation for main content */
+        .float-element {
+          animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-15px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+        
+        /* Page transitions */
+        .page-transition-enter {
+          opacity: 0;
+        }
+        
+        .page-transition-enter-active {
+          opacity: 1;
+          transition: opacity 800ms;
+        }
+        
+        .page-transition-exit {
+          opacity: 1;
+        }
+        
+        .page-transition-exit-active {
+          opacity: 0;
+          transition: opacity 800ms;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .enter-button {
+            padding: 0.8rem 2rem;
+            font-size: 0.9rem;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .enter-button-container {
+            bottom: 15%;
+          }
+          
+          .enter-button {
+            padding: 0.7rem 1.8rem;
+            font-size: 0.85rem;
+          }
+        }
+        --- Fin de index.css ---
+
+        intro.css
+
+        --- Contenido de intro.css ---
+        #landing-intro {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            margin-left: 2rem;
+            margin-right: 2rem;
+            background: linear-gradient(to bottom, #fff8f0, #fff);
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+        
+        .intro-container {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(185, 118, 0, 0.1);
+            border: 1px solid rgba(185, 118, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .birthday-header {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        
+        .birthday-title {
+            text-align: center;
+            font-weight: 500;
+            font-family: 'Parisienne', cursive;
+            color: #B97600;
+            font-size: 75px;
+        }
+        
+        .birthday-description {
+            color: #6F6F6E;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            line-height: 1.75;
+        }
+        
+        .gallery-section {
+            margin: 1rem 0 2rem;
+        }
+        
+        .birthday-badge {
+            position: absolute;
+            top: -15px;
+            right: 0;
+            background-color: #FF9494;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            transform: rotate(15deg);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        .birthday-badge span:first-child {
+            font-size: 2rem;
+            line-height: 1;
+        }
+        
+        .birthday-badge span:last-child {
+            font-size: 0.9rem;
+        }
+        
+        .floating-balloons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .balloon {
+            position: absolute;
+            width: 80px;
+            opacity: 0.8;
+        }
+        
+        .balloon-1 {
+            top: 10%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .balloon-2 {
+            top: 15%;
+            right: 15%;
+            animation: float 10s ease-in-out infinite;
+        }
+        
+        .balloon-3 {
+            bottom: 20%;
+            left: 20%;
+            animation: float 9s ease-in-out infinite 1s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: rotate(15deg) scale(1);
+            }
+            50% {
+                transform: rotate(15deg) scale(1.05);
+            }
+            100% {
+                transform: rotate(15deg) scale(1);
+            }
+        }
+        
+        /* Enhanced animations */
+        .intro-container {
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive styles */
+        @media (min-width: 1024px) {
+            .birthday-title {
+                font-size: 65px;
+            }
+            
+            .birthday-description {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 1023px) {
+            .balloon {
+                width: 60px;
+            }
+            
+            .birthday-badge {
+                width: 60px;
+                height: 60px;
+                top: -10px;
+                right: 10px;
+            }
+            
+            .birthday-description {
+                font-size: 1.25rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .intro-container {
+                padding: 1.5rem;
+            }
+            
+            .birthday-title {
+                font-size: 55px;
+            }
+            
+            .birthday-description {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Enter button styles */
+        .enter-button-container {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .enter-button {
+            background-color: #FF9494;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 148, 148, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .enter-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 148, 148, 0.4);
+            background-color: #ff8080;
+        }
+        
+        .enter-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(255, 148, 148, 0.4);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .intro-container {
+                padding: 2rem 1.5rem;
+                gap: 1rem;
+            }
+            
+            .gallery-section {
+                margin: 0.5rem 0 1.5rem;
+            }
+            
+            .enter-button-container {
+                margin-top: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            #landing-intro {
+                margin-left: 1rem;
+                margin-right: 1rem;
+                padding: 1rem 0;
+            }
+            
+            .intro-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .birthday-title {
+                font-size: 55px;
+            }
+            
+            .birthday-description {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .enter-button {
+                font-size: 1rem;
+                padding: 0.7rem 1.5rem;
+            }
+            
+            .gallery-section {
+                margin: 0.5rem 0 1rem;
+            }
+        }
+        --- Fin de intro.css ---
+
+        introgallery.css
+
+        --- Contenido de introgallery.css ---
+        .gallery-container {
+          position: relative;
+          width: 100%;
+          max-width: 800px;
+          height: 0;
+          padding-bottom: 56.25%; /* 16:9 aspect ratio */
+          margin: 0 auto;
+          overflow: hidden;
+          border-radius: 12px;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-wrapper {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        
+        .gallery-image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          will-change: transform, opacity;
+          object-fit: cover;
+        }
+        
+        .gallery-image.active {
+          z-index: 1;
+        }
+        
+        .gallery-nav-button {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 10;
+          background-color: rgba(255, 255, 255, 0.7);
+          border: none;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          opacity: 0.7;
+        }
+        
+        .gallery-nav-button:hover {
+          background-color: rgba(255, 255, 255, 0.9);
+          opacity: 1;
+          transform: translateY(-50%) scale(1.1);
+        }
+        
+        .gallery-nav-button.prev {
+          left: 15px;
+        }
+        
+        .gallery-nav-button.next {
+          right: 15px;
+        }
+        
+        .gallery-caption {
+          position: absolute;
+          bottom: 60px;
+          left: 0;
+          right: 0;
+          text-align: center;
+          color: white;
+          background-color: rgba(0, 0, 0, 0.5);
+          padding: 10px 20px;
+          margin: 0 auto;
+          max-width: 80%;
+          border-radius: 20px;
+          font-weight: 500;
+          backdrop-filter: blur(4px);
+          z-index: 5;
+          font-size: 1.1rem;
+        }
+        
+        .gallery-dots {
+          position: absolute;
+          bottom: 20px;
+          left: 0;
+          right: 0;
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          z-index: 5;
+        }
+        
+        .gallery-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: rgba(255, 255, 255, 0.5);
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          padding: 0;
+        }
+        
+        .gallery-dot.active {
+          background-color: white;
+          transform: scale(1.2);
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        
+        .gallery-dot:hover {
+          background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .gallery-container {
+            padding-bottom: 66.67%; /* 3:2 aspect ratio for tablets */
+          }
+          
+          .gallery-caption {
+            font-size: 0.9rem;
+            bottom: 50px;
+            max-width: 85%;
+          }
+          
+          .gallery-nav-button {
+            width: 35px;
+            height: 35px;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .gallery-container {
+            padding-bottom: 75%; /* 4:3 aspect ratio for mobile */
+            margin-bottom: 10px;
+          }
+          
+          .gallery-caption {
+            font-size: 0.8rem;
+            bottom: 45px;
+            max-width: 90%;
+            padding: 8px 15px;
+          }
+          
+          .gallery-nav-button {
+            width: 30px;
+            height: 30px;
+          }
+          
+          .gallery-dot {
+            width: 8px;
+            height: 8px;
+          }
+          
+          .gallery-dots {
+            bottom: 15px;
+            gap: 8px;
+          }
+        }
+        
+        /* Animation for active images */
+        .gallery-image.active {
+          animation: subtle-zoom 8s ease-in-out infinite alternate;
+        }
+        
+        @keyframes subtle-zoom {
+          from {
+            transform: scale(1);
+          }
+          to {
+            transform: scale(1.05);
+          }
+        }
+        
+        /* Button transitions */
+        .gallery-nav-button svg {
+          transition: transform 0.2s ease;
+        }
+        
+        .gallery-nav-button:hover svg {
+          transform: scale(1.2);
+        }
+        
+        /* Loading effect */
+        .gallery-container::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+          z-index: -1;
+          animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.5;
+          }
+          50% {
+            opacity: 0.8;
+          }
+        }
+        
+        /* Touch swipe indicator */
+        .gallery-container::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 50px;
+          height: 50px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14 5l7 7m0 0l-7 7m7-7H3'%3E%3C/path%3E%3C/svg%3E");
+          background-size: contain;
+          background-repeat: no-repeat;
+          opacity: 0;
+          z-index: 5;
+          transition: opacity 0.3s ease;
+        }
+        
+        .gallery-container:hover::after {
+          animation: swipe-hint 1.5s ease-in-out;
+        }
+        
+        @keyframes swipe-hint {
+          0%, 100% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 0.3;
+          }
+        }
+        
+        /* Preload images for smoother transitions */
+        .gallery-container {
+          background-color: #f8f8f8;
+        }
+        
+        /* Improve focus states for accessibility */
+        .gallery-nav-button:focus,
+        .gallery-dot:focus {
+          outline: 2px solid rgba(255, 148, 148, 0.5);
+          outline-offset: 2px;
+        }
+        --- Fin de introgallery.css ---
+
+        layout.css
+
+        --- Contenido de layout.css ---
+        * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            background: #fff9f5;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .background-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 214, 214, 0.3) 0%, transparent 30%),
+                radial-gradient(circle at 90% 30%, rgba(255, 234, 195, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(255, 222, 173, 0.2) 0%, transparent 50%);
+            background-size: 100% 100%;
+            opacity: 0.7;
+        }
+        
+        /* Add confetti-like dots */
+        .background-decoration::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(#FFB6C1 1px, transparent 1px),
+                radial-gradient(#FFD700 1px, transparent 1px),
+                radial-gradient(#87CEFA 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px, 12px 12px;
+            opacity: 0.2;
+        }
+        
+        /* Add floating animation for decorative elements */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        
+        /* Add subtle pulse animation */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        --- Fin de layout.css ---
+
+        loader.css
+
+        --- Contenido de loader.css ---
+        .loader-container {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #fff9f5 0%, #fff5f5 100%);
+          z-index: 9999;
+          transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+        
+        .loader-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1.5rem;
+        }
+        
+        .loader-image {
+          width: 120px;
+          height: auto;
+          animation: bounce 2s infinite;
+        }
+        
+        .loader-text {
+          font-family: 'Parisienne', cursive;
+          color: #b97600;
+          font-size: 2rem;
+          opacity: 0;
+          animation: fadeIn 1s ease-out forwards 0.5s;
+        }
+        
+        .loader-progress {
+          width: 200px;
+          height: 4px;
+          background-color: rgba(185, 118, 0, 0.2);
+          border-radius: 10px;
+          overflow: hidden;
+          margin-top: 1rem;
+        }
+        
+        .loader-progress-bar {
+          height: 100%;
+          background-color: #b97600;
+          border-radius: 10px;
+          animation: progress 1s ease-out forwards;
+        }
+        
+        .loader-exit {
+          opacity: 0;
+          visibility: hidden;
+        }
+        
+        @keyframes bounce {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-15px);
+          }
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes progress {
+          from {
+            width: 0;
+          }
+          to {
+            width: 100%;
+          }
+        }
+        
+        .confetti {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background-color: #ffb6c1;
+          animation: confetti-fall 3s linear infinite;
+        }
+        
+        .confetti:nth-child(2n) {
+          background-color: #ffd700;
+        }
+        
+        .confetti:nth-child(3n) {
+          background-color: #87cefa;
+        }
+        
+        .confetti:nth-child(4n) {
+          background-color: #ff9494;
+        }
+        
+        @keyframes confetti-fall {
+          0% {
+            transform: translateY(-100px) rotate(0deg);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(100vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        --- Fin de loader.css ---
+
+        MensajesmostrarModal.css
+
+        --- Contenido de MensajesmostrarModal.css ---
+        .message-modal {
+          padding: 2rem;
+        }
+        
+        .message-modal-header {
+          font-family: 'Parisienne', cursive;
+          font-size: 2.5rem;
+          color: var(--color01);
+          text-align: center;
+          margin: 1rem 0;
+        }
+        
+        .message-form-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          padding: 1.5rem;
+          background-color: white;
+          border-radius: 1rem;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .message-input,
+        .message-textarea {
+          width: 100%;
+        }
+        
+        .message-actions {
+          display: flex;
+          justify-content: flex-end;
+          gap: 1rem;
+          margin-top: 1rem;
+        }
+        
+        .submit-button,
+        .close-button {
+          background-color: var(--color01);
+          color: white;
+          border-radius: 2rem;
+          padding: 0.5rem 1.5rem;
+        }
+        
+        .error-message {
+          color: #dc2626;
+          font-size: 0.875rem;
+        }
+        
+        .success-container {
+          text-align: center;
+          padding: 2rem;
+        }
+        
+        .success-container h3 {
+          font-size: 1.5rem;
+          color: var(--color01);
+          margin-bottom: 1rem;
+        }
+        
+        .success-container p {
+          color: #666;
+          margin-bottom: 1.5rem;
+        }
+        
+        @media (max-width: 576px) {
+          .message-modal-header {
+            font-size: 2rem;
+          }
+          
+          .message-form-container {
+            padding: 1rem;
+          }
+        }
+        --- Fin de MensajesmostrarModal.css ---
+
+        party.css
+
+        --- Contenido de party.css ---
+        /* Party section styles */
+        .party-section {
+            padding: 5rem 1rem;
+            position: relative;
+            background: linear-gradient(to bottom, #fff9f9, #fff);
+            overflow: hidden;
+        }
+        
+        .party-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Decorative elements */
+        .party-decorations {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .decoration {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+        }
+        
+        .balloon-left {
+            top: 10%;
+            left: 5%;
+            width: 120px;
+            height: 120px;
+            background-image: url("/img/balloon1.svg");
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .balloon-right {
+            top: 15%;
+            right: 5%;
+            width: 100px;
+            height: 100px;
+            background-image: url("/img/balloon1.svg");
+            animation: float 7s ease-in-out infinite 1s;
+        }
+        
+        .confetti-1 {
+            bottom: 15%;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            background-image: url("/cake.svg");
+            animation: float 6s ease-in-out infinite 0.5s;
+        }
+        
+        .confetti-2 {
+            bottom: 20%;
+            right: 10%;
+            width: 90px;
+            height: 90px;
+            background-image: url("/cake.svg");
+            animation: float 9s ease-in-out infinite 1.5s;
+        }
+        
+        /* Header styles */
+        .party-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .party-title-wrapper {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .party-title-wrapper::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FF6B8B, transparent);
+        }
+        
+        .party-subtitle {
+            font-size: 1.25rem;
+            color: #8A8A89;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            animation: slideUp 0.8s ease-out forwards;
+        }
+        
+        /* Content styles */
+        .party-content {
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+        
+        .party-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .party-section {
+                padding: 4rem 1rem;
+            }
+            
+            .party-cards-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .party-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .decoration {
+                transform: scale(0.8);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .party-section {
+                padding: 3rem 1rem;
+            }
+            
+            .party-header {
+                margin-bottom: 2rem;
+            }
+            
+            .party-subtitle {
+                font-size: 1rem;
+            }
+            
+            .party-cards-container {
+                gap: 1.5rem;
+            }
+            
+            .decoration {
+                transform: scale(0.6);
+            }
+        }
+        --- Fin de party.css ---
+
+        PrincipalDate.css
+
+        --- Contenido de PrincipalDate.css ---
+        .principal-date-section {
+          padding: 4rem 1rem;
+          background-color: #fff9f9;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .principal-date-container {
+          max-width: 1152px;
+          margin: 0 auto;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          position: relative;
+          z-index: 2;
+        }
+        
+        /* Decorative elements */
+        .principal-date-section::before,
+        .principal-date-section::after {
+          content: '';
+          position: absolute;
+          border-radius: 50%;
+          opacity: 0.1;
+          z-index: 1;
+        }
+        
+        .principal-date-section::before {
+          width: 300px;
+          height: 300px;
+          background-color: #FF9494;
+          top: -150px;
+          right: -100px;
+        }
+        
+        .principal-date-section::after {
+          width: 200px;
+          height: 200px;
+          background-color: #FFD166;
+          bottom: -100px;
+          left: -50px;
+        }
+        
+        .flower-decoration {
+          position: relative;
+          margin-bottom: 1.5rem;
+        }
+        
+        .flower-icon {
+          width: 80px;
+          height: 80px;
+          animation: gentle-rotate 10s infinite linear;
+        }
+        
+        @keyframes gentle-rotate {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+        
+        .title-container {
+          margin-bottom: 3rem;
+          position: relative;
+        }
+        
+        .title-container::after {
+          content: '';
+          position: absolute;
+          bottom: -15px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 100px;
+          height: 3px;
+          background: linear-gradient(90deg, transparent, #FF9494, transparent);
+        }
+        
+        .birthday-title {
+          font-family: 'Parisienne', cursive;
+          font-size: 3.5rem;
+          color: #B97600;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          margin: 0;
+          line-height: 1.2;
+        }
+        
+        .info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2rem;
+          width: 100%;
+        }
+        
+        .info-card {
+          background-color: white;
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          position: relative;
+          border: 1px solid rgba(255, 148, 148, 0.2);
+        }
+        
+        .info-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-card-inner {
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          position: relative;
+          z-index: 1;
+        }
+        
+        .info-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 5px;
+          background: linear-gradient(90deg, #FF9494, #FFD166);
+          z-index: 0;
+        }
+        
+        .info-label {
+          font-weight: 700;
+          font-size: 1.2rem;
+          color: #FF9494;
+          margin-bottom: 1rem;
+          position: relative;
+          display: inline-block;
+        }
+        
+        .info-value {
+          font-size: 1.1rem;
+          color: #6F6F6E;
+          margin-bottom: 1.5rem;
+          flex-grow: 1;
+          line-height: 1.6;
+        }
+        
+        .action-button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #FF9494;
+          color: white;
+          font-weight: 600;
+          padding: 0.8rem 1.5rem;
+          border-radius: 30px;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          border: none;
+          cursor: pointer;
+          font-size: 1rem;
+          box-shadow: 0 4px 10px rgba(255, 148, 148, 0.3);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .action-button::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 5px;
+          height: 5px;
+          background: rgba(255, 255, 255, 0.5);
+          opacity: 0;
+          border-radius: 100%;
+          transform: scale(1, 1) translate(-50%);
+          transform-origin: 50% 50%;
+        }
+        
+        .action-button:hover {
+          background-color: #ff8080;
+          transform: translateY(-3px);
+          box-shadow: 0 6px 15px rgba(255, 148, 148, 0.4);
+        }
+        
+        .action-button:hover::after {
+          animation: ripple 1s ease-out;
+        }
+        
+        .button-icon {
+          margin-right: 0.5rem;
+          font-size: 1.2rem;
+        }
+        
+        .calendar-button {
+          background-color: #4285F4;
+          box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
+        }
+        
+        .calendar-button:hover {
+          background-color: #3367D6;
+          box-shadow: 0 6px 15px rgba(66, 133, 244, 0.4);
+        }
+        
+        .location-button {
+          background-color: #34A853;
+          box-shadow: 0 4px 10px rgba(52, 168, 83, 0.3);
+        }
+        
+        .location-button:hover {
+          background-color: #2E8B57;
+          box-shadow: 0 6px 15px rgba(52, 168, 83, 0.4);
+        }
+        
+        .modal-wrapper {
+          display: flex;
+          justify-content: center;
+        }
+        
+        @keyframes ripple {
+          0% {
+            transform: scale(0, 0);
+            opacity: 0.5;
+          }
+          100% {
+            transform: scale(20, 20);
+            opacity: 0;
+          }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 1024px) {
+          .birthday-title {
+            font-size: 3rem;
+          }
+          
+          .info-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .principal-date-section {
+            padding: 3rem 1rem;
+          }
+          
+          .birthday-title {
+            font-size: 2.5rem;
+          }
+          
+          .flower-icon {
+            width: 60px;
+            height: 60px;
+          }
+          
+          .info-card-inner {
+            padding: 1.5rem;
+          }
+          
+          .info-label {
+            font-size: 1.1rem;
+          }
+          
+          .info-value {
+            font-size: 1rem;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .principal-date-section {
+            padding: 2rem 0.75rem;
+          }
+          
+          .birthday-title {
+            font-size: 2rem;
+          }
+          
+          .title-container {
+            margin-bottom: 2rem;
+          }
+          
+          .info-grid {
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+          }
+          
+          .info-card-inner {
+            padding: 1.25rem;
+          }
+          
+          .action-button {
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+          }
+          
+          .flower-icon {
+            width: 50px;
+            height: 50px;
+          }
+        }
+        --- Fin de PrincipalDate.css ---
+

@@ -83,6 +83,25 @@
   backdrop-filter: blur(4px);
   z-index: 5;
   font-size: 1.1rem;
+  transition: bottom 0.3s ease; /* Add transition for smooth movement */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gallery-caption {
+    font-size: 0.9rem;
+    bottom: 50px;
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-caption {
+    font-size: 0.8rem;
+    bottom: 70px; /* Adjust bottom to avoid overlap */
+    max-width: 90%;
+    padding: 8px 15px;
+  }
 }
 
 .gallery-dots {

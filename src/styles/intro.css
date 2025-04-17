@@ -194,6 +194,8 @@
     margin-top: 1rem;
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 10; /* Ensure it is above other elements */
 }
 
 .enter-button {
@@ -234,17 +236,11 @@
     }
     
     .enter-button-container {
-        margin-top: 0.5rem;
+        margin-top: 1.5rem; /* Increase margin to avoid overlap */
     }
 }
 
 @media (max-width: 640px) {
-    #landing-intro {
-        margin-left: 1rem;
-        margin-right: 1rem;
-        padding: 1rem 0;
-    }
-    
     .intro-container {
         padding: 1.5rem 1rem;
     }
@@ -265,5 +261,9 @@
     
     .gallery-section {
         margin: 0.5rem 0 1rem;
+    }
+    
+    .enter-button-container {
+        margin-top: 2rem; /* Further increase margin for smaller screens */
     }
 }
