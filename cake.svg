@@ -1,0 +1,26 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Modern cake base layers -->
+  <g transform="translate(40, 30)">
+    <!-- Bottom layer -->
+    <path d="M10 120 L110 120 C120 120 130 110 130 100 L130 80 C130 70 120 60 110 60 L10 60 C0 60 -10 70 -10 80 L-10 100 C-10 110 0 120 10 120 Z" 
+          fill="#FF9ECD" stroke="#E77CB3" stroke-width="2"/>
+    
+    <!-- Middle layer -->
+    <path d="M20 80 L100 80 C110 80 120 70 120 60 L120 40 C120 30 110 20 100 20 L20 20 C10 20 0 30 0 40 L0 60 C0 70 10 80 20 80 Z" 
+          fill="#FFC5E5" stroke="#E77CB3" stroke-width="2"/>
+    
+    <!-- Top layer -->
+    <path d="M30 40 L90 40 C100 40 110 30 110 20 L110 10 C110 0 100 -10 90 -10 L30 -10 C20 -10 10 0 10 10 L10 20 C10 30 20 40 30 40 Z" 
+          fill="#FFE1F0" stroke="#E77CB3" stroke-width="2"/>
+    
+    <!-- Decorative elements -->
+    <circle cx="60" cy="10" r="5" fill="#FF6B9E"/>
+    <circle cx="40" cy="50" r="4" fill="#FF6B9E"/>
+    <circle cx="80" cy="50" r="4" fill="#FF6B9E"/>
+    <circle cx="30" cy="90" r="5" fill="#FF6B9E"/>
+    <circle cx="90" cy="90" r="5" fill="#FF6B9E"/>
+    
+    <!-- Modern geometric topper -->
+    <polygon points="55,-15 65,-15 60,-30" fill="#E77CB3" stroke="#E77CB3"/>
+  </g>
+</svg>
