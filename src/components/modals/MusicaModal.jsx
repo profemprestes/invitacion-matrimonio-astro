@@ -1,22 +1,17 @@
-// Cambiar esta línea
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-  Button,
   useDisclosure,
-  Checkbox,
   Input,
-  Link,
   Autocomplete,
   AutocompleteItem,
 } from '@heroui/react';
-import { Radio, RadioGroup } from '@heroui/react';
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { SomeIcon } from '@heroicons/react/24/outline'; // Fix the import path
+
 
 const generosmusicales = [
   'Pop',
@@ -34,15 +29,15 @@ const generosmusicales = [
 ];
 
 function MusicaModal() {
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [error, setError] = useState('');
   const {
-    register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm();
   const [send, setSend] = useState(false);
+
   const handleGuardarForm = handleSubmit(async data => {
     const datos = {
       ...data,

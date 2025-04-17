@@ -1,22 +1,14 @@
-// Cambiar esta línea
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-  Button,
   useDisclosure,
-  Checkbox,
-  Input,
-  Link,
 } from '@heroui/react';
-import { Radio, RadioGroup } from '@heroui/react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 function TipsModal() {
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  // Removed unused type variable and related code
 
   const title = {
     fontWeight: 'bold',
@@ -34,44 +26,6 @@ function TipsModal() {
     fontSize: '0.8rem',
     flexDirection: 'column',
   };
-
-  const [error, setError] = useState('');
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm();
-  const [send, setSend] = useState(false);
-  const [asistenciaCheck, setAsistenciaCheck] = useState('');
-  const handleGuardarForm = handleSubmit(async data => {
-    if (asistenciaCheck === '') {
-      setError('Debes seleccionar una opción de asistencia');
-      return;
-    }
-    const datos = {
-      ...data,
-      Flag_Asistencia: asistenciaCheck,
-      T_Tipo_Sede: type,
-    };
-
-    const response = await fetch('http://127.0.0.1:8000/api/asistencia', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer 12|SjaqxYBCTstwlZndGdS7IKUjTW7nKnZRayAVsKzA4fcc3c0c',
-      },
-      body: JSON.stringify(datos),
-    });
-    const res = await response.json();
-    if (res.status === 201) {
-      reset();
-      setSend(true);
-      setError('');
-    } else {
-      setError(res.message);
-    }
-  });
 
   return (
     <>

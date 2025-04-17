@@ -8,6 +8,7 @@ import path from 'path';
 export default defineConfig({
   site: 'https://galiacumple.netlify.app',
   output: 'static',
+  outDir: './dist', // Explicitly set output directory
   integrations: [
     react({ fastRefresh: true }),
     tailwind({
@@ -42,15 +43,16 @@ export default defineConfig({
       cssCodeSplit: true,
       minify: 'terser',
       terserOptions: {
-        compress: { drop_console: true },
+        compress: { 
+          drop_console: true,
+          drop_debugger: true // Add this line
+        },
       },
-    },
-    css: {
-      devSourcemap: true,
-    },
-    server: {
-      watch: { usePolling: false },
+      rollupOptions: {
+        output: {
+          manualChunks: undefined // Optimize chunking for Netlify
+        }
+      }
     },
   },
-  viewTransitions: true,
 });

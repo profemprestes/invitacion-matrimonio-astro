@@ -15,6 +15,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.4",
     "@astrojs/prefetch": "^0.4.1",
     "@astrojs/react": "^3.6.3",
     "@astrojs/sitemap": "^3.3.0",
@@ -26,6 +27,8 @@
     "@fontsource/playfair-display": "^5.2.5",
     "@headlessui/react": "^2.2.1",
     "@heroicons/react": "^2.2.0",
+    "@heroui/react": "^2.7.6",
+    "@nextui-org/react": "^2.6.11",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "astro": "^5.7.2",
@@ -42,6 +45,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
+    "@types/prop-types": "^15.7.14",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "cross-env": "^7.0.3",

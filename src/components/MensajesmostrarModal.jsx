@@ -1,12 +1,11 @@
-import {
-  Dialog,
-  DialogPanel,
-} from '@headlessui/react';
+import React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import '../styles/MensajesmostrarModal.css';
 
-function MensajesmostrarModal({ buttonClassName, buttonText }) {
+import { MensajesmostrarModal } from './MensajesmostrarModal';
+
+function MensajesmostrarModal({ buttonClassName, buttonText }: { buttonClassName: string; buttonText: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState('');
   const {
@@ -21,10 +20,10 @@ function MensajesmostrarModal({ buttonClassName, buttonText }) {
     try {
       const { nombre, mensaje } = data;
       console.log(`Sending message from ${nombre}: ${mensaje}`);
-      
+
       // You could store the message in a database or send it to an API
       localStorage.setItem('galia_message', JSON.stringify({ nombre, mensaje }));
-      
+
       setTimeout(() => {
         reset();
         setSend(true);
@@ -40,17 +39,11 @@ function MensajesmostrarModal({ buttonClassName, buttonText }) {
       <button onClick={() => setIsOpen(true)} className={buttonClassName}>
         {buttonText}
       </button>
-      <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        className="relative z-50"
-      >
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <DialogPanel className="message-modal w-full max-w-xl rounded-lg bg-white">
-            <div className="message-modal-header">
-              Mensaje para Galia
-            </div>
+            <div className="message-modal-header">Mensaje para Galia</div>
             <div className="message-modal-body">
               {!send ? (
                 <form onSubmit={handleGuardarForm} className="message-form">
@@ -99,11 +92,7 @@ function MensajesmostrarModal({ buttonClassName, buttonText }) {
                       >
                         Cancelar
                       </button>
-                      <button
-                        type="submit"
-                        className="submit-button"
-                        disabled={isSubmitting}
-                      >
+                      <button type="submit" className="submit-button" disabled={isSubmitting}>
                         {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
                       </button>
                     </div>
@@ -113,10 +102,7 @@ function MensajesmostrarModal({ buttonClassName, buttonText }) {
                 <div className="success-container">
                   <h3>¡Gracias por tu mensaje!</h3>
                   <p>Tu mensaje ha sido enviado y será leído en la fiesta de Galia.</p>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="close-button"
-                  >
+                  <button onClick={() => setIsOpen(false)} className="close-button">
                     Cerrar
                   </button>
                 </div>

@@ -34,7 +34,10 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx",
     "src/**/*.astro",
+    "src/**/*.d.ts",
     ".eslintrc.cjs",
     "*.config.mjs",
     "*.config.cjs"

@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import type { FormEvent, ChangeEvent } from 'react';
 import '../styles/MensajeModal.css';
 
-const MensajeModalMostrar = ({ type }) => {
+interface MensajeModalProps {
+  type?: string; // Made optional since it's not being used
+}
+
+const MensajeModalMostrar: React.FC<MensajeModalProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState('');
   const [peopleCount, setPeopleCount] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (name && peopleCount) {
       const message = `¡Hola! Confirmamos nuestra asistencia al cumpleaños. Somos ${peopleCount} personas. Mi nombre es ${name}.`;
@@ -17,6 +22,10 @@ const MensajeModalMostrar = ({ type }) => {
       alert('Por favor, complete todos los campos.');
     }
   };
+
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => setName(e.target.value);
+  const handlePeopleCountChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setPeopleCount(e.target.value);
 
   return (
     <div>
@@ -33,13 +42,7 @@ const MensajeModalMostrar = ({ type }) => {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">Nombre:</label>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  required
-                />
+                <input type="text" id="name" value={name} onChange={handleNameChange} required />
               </div>
               <div className="form-group">
                 <label htmlFor="peopleCount">Cantidad de personas:</label>
@@ -47,7 +50,7 @@ const MensajeModalMostrar = ({ type }) => {
                   type="number"
                   id="peopleCount"
                   value={peopleCount}
-                  onChange={e => setPeopleCount(e.target.value)}
+                  onChange={handlePeopleCountChange}
                   required
                 />
               </div>

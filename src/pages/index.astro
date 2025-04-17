@@ -23,19 +23,4 @@ import '../styles/css/index.css';
   </main>
 </Layout>
 
-<script>
-  document.addEventListener('startTransition', () => {
-    const introSection = document.getElementById('intro-section');
-    const mainContent = document.getElementById('main-content');
-
-    if (introSection && mainContent) {
-      introSection.style.animation = 'fadeOut 0.8s forwards';
-
-      setTimeout(() => {
-        introSection.style.display = 'none';
-        mainContent.classList.remove('hidden');
-        mainContent.style.animation = 'fadeIn 1s forwards';
-      }, 800);
-    }
-  });
-</script>
+<script is:inline src="path/to/script.js"></script>

@@ -1,9 +1,8 @@
-// Cambiar esta línea
 import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure } from '@heroui/react';
 import '../styles/DressCodeModal.css';
 
-function DressCodeModal({ buttonClassName, buttonText }) {
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+function DressCodeModal({ buttonClassName, buttonText }: { buttonClassName: string; buttonText: string }) {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure(); // Removed onClose
 
   return (
     <>
@@ -24,7 +23,7 @@ function DressCodeModal({ buttonClassName, buttonText }) {
         className="p-8"
       >
         <ModalContent>
-          {onClose => (
+          {() => ( // Removed onClose parameter
             <>
               <ModalHeader
                 className="font-parisienne 

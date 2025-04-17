@@ -20,8 +20,42 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# jetbrains setting folder
-.idea/
+# Python and text files directories
+py/
+txt/
 
-# Netlify-specific files
-.netlify/
+# IDE specific files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local development
+*.local
+
+# Temporary files
+*.tmp
+*.temp
+
+# Cache directories
+.cache/
+.mf/
+.rollup.cache/
+tsconfig.tsbuildinfo
+
+# Coverage directory
+coverage/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Misc
+*.pem
+.DS_Store
+Thumbs.db

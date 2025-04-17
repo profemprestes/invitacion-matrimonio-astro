@@ -4,16 +4,16 @@ import {
   ModalHeader,
   ModalBody,
   Button,
-  useDisclosure,
   Input,
   Textarea,
+  useDisclosure,
 } from '@heroui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import '../styles/MensajesmostrarModal.css';
 
-function MensajesmostrarModal({ buttonClassName, buttonText }) {
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+function MensajesmostrarModal({ buttonClassName, buttonText }: { buttonClassName: string; buttonText: string }) {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure(); // Added useDisclosure hook
   const [error, setError] = useState('');
   const {
     register,
@@ -21,10 +21,13 @@ function MensajesmostrarModal({ buttonClassName, buttonText }) {
     reset,
     formState: { errors, isSubmitting },
   } = useForm();
-  const [send, setSend] = useState(false);
+  const [send, setSend] = useState(false); // Ensure 'send' is used in the component
 
-  const handleGuardarForm = handleSubmit(async data => {
+  const handleGuardarForm = handleSubmit(async ({ nombre, mensaje }) => { // Destructure only needed fields
     try {
+      console.log(`Sending message from ${nombre}: ${mensaje}`);
+      localStorage.setItem('galia_message', JSON.stringify({ nombre, mensaje }));
+      
       setTimeout(() => {
         reset();
         setSend(true);

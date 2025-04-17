@@ -1,12 +1,7 @@
 // IntroGallery.tsx
 import { motion } from 'framer-motion';
 
-const galleryImages = [
-  '/images/galia-1.jpg',
-  '/images/galia-2.jpg',
-  '/images/galia-3.jpg',
-  '/images/galia-4.jpg',
-];
+const galleryImages = ['/galia1.webp', '/galia2.webp', '/galia1.webp', '/galia2.webp'];
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },

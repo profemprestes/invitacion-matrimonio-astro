@@ -6,7 +6,7 @@ const AsistenciaModal = ({ type }) => {
   const [name, setName] = useState('');
   const [peopleCount, setPeopleCount] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && peopleCount) {
       const message = `¡Hola! Confirmamos nuestra asistencia al cumpleaños. Somos ${peopleCount} personas. Mi nombre es ${name}.`;

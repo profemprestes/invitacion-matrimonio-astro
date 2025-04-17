@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import '../styles/MensajeModal.css';
 
-const MensajeModalMostrar = ({ type }) => {
+const MensajeModal = () => { // Removed unused 'type' parameter
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState('');
   const [peopleCount, setPeopleCount] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (name && peopleCount) {
       const message = `¡Hola! Confirmamos nuestra asistencia al cumpleaños. Somos ${peopleCount} personas. Mi nombre es ${name}.`;
@@ -62,4 +62,4 @@ const MensajeModalMostrar = ({ type }) => {
   );
 };
 
-export default MensajeModalMostrar;
+export default MensajeModal;

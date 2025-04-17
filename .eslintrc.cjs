@@ -14,7 +14,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     tsconfigRootDir: __dirname,
-    project: ['./tsconfig.json'],
+    project: ["./tsconfig.json"],
   },
   globals: {
     astroHTML: true,
@@ -55,4 +55,5 @@ module.exports = {
       },
     },
   ],
+  ignorePatterns: ['dist/**/*'], // Add this line to ignore dist folder
 };

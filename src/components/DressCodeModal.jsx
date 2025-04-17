@@ -1,5 +1,12 @@
-// Cambiar esta línea
-import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure } from '@heroui/react';
+// Change this line
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Button,
+  useDisclosure,
+} from '@nextui-org/react';
 import '../styles/DressCodeModal.css';
 
 function DressCodeModal({ buttonClassName, buttonText }) {
@@ -24,7 +31,7 @@ function DressCodeModal({ buttonClassName, buttonText }) {
         className="p-8"
       >
         <ModalContent>
-          {onClose => (
+          {() => (
             <>
               <ModalHeader
                 className="font-parisienne 
