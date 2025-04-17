@@ -43,16 +43,16 @@ export default defineConfig({
       cssCodeSplit: true,
       minify: 'terser',
       terserOptions: {
-        compress: { 
+        compress: {
           drop_console: true,
-          drop_debugger: true // Add this line
+          drop_debugger: true, // Add this line
         },
       },
       rollupOptions: {
         output: {
-          manualChunks: undefined // Optimize chunking for Netlify
-        }
-      }
+          manualChunks: undefined, // Optimize chunking for Netlify
+        },
+      },
     },
   },
 });

@@ -1,10 +1,4 @@
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  useDisclosure,
-} from '@heroui/react';
+import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from '@heroui/react';
 
 function TipsModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

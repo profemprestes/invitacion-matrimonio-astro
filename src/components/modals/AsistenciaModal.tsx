@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/AsistenciaModal.css';
 
-const AsistenciaModal = () => { // Removed unused type parameter
+const AsistenciaModal = () => {
+  // Removed unused type parameter
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState('');
   const [peopleCount, setPeopleCount] = useState('');

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/MensajeModal.css';
 
-const MensajeModal = () => { // Removed unused 'type' parameter
+const MensajeModal = () => {
+  // Removed unused 'type' parameter
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState('');
   const [peopleCount, setPeopleCount] = useState('');
