@@ -16,10 +16,10 @@ const IntroGallery = () => {
 
     // List of images from the public/img directory with captions
     const images: ImageData[] = [
-        { src: '/img/Galia1.png', caption: 'Mi primer añito' },
-        { src: '/img/Galia2.png', caption: 'Momentos especiales' },
-        { src: '/img/Galia3.png', caption: 'Sonrisas de Galia' },
-        { src: '/img/Galia4.png', caption: 'Celebrando juntos' },
+        { src: '/galia1.webp', caption: 'Mi primer añito' },
+        { src: '/galia2.webp', caption: 'Momentos especiales' },
+        { src: '/galia3.webp', caption: 'Sonrisas de Galia' },
+        { src: '/galia4.webp', caption: 'Celebrando juntos' },
     ];
 
     // Memoized navigation functions to prevent unnecessary re-renders
