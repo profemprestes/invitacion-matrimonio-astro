@@ -1,7 +1,7 @@
 ---
-import Divider from "@/components/Divider.astro";
-import AsistenciaModal from "@/components/AsistenciaModal.jsx";
-import "../styles/PrincipalDate.css";
+import Divider from '@/components/Divider.astro';
+import AsistenciaModal from '@/components/AsistenciaModal.tsx';
+import '../styles/css/sections/PrincipalDate.css';
 ---
 
 <section class="principal-date-section">
@@ -9,20 +9,18 @@ import "../styles/PrincipalDate.css";
     <div class="flower-decoration">
       <img src="/daisy.svg" class="flower-icon" alt="icono margarita" />
     </div>
-    
+
     <div class="title-container">
       <h3 class="birthday-title">¡Galia cumple 1 añito!</h3>
     </div>
-    
+
     <div class="info-grid">
       <div class="info-card">
         <div class="info-card-inner">
           <p class="info-label">Cuándo</p>
-          <span class="info-value">
-            Sábado 10 de mayo de 2025 - 13:00 hs
-          </span>
+          <span class="info-value"> Sábado 10 de mayo de 2025 - 13:00 hs </span>
           <a
-            href="https://calendar.app.google/8n2HQ1SNYk4jMCJcA"
+            href="https://calendar.app.google/ursVLnsMBwkJSUVs8"
             target="_blank"
             class="action-button calendar-button"
           >
@@ -31,26 +29,26 @@ import "../styles/PrincipalDate.css";
           </a>
         </div>
       </div>
-      
+
       <div class="info-card">
         <div class="info-card-inner">
           <p class="info-label">Dónde</p>
-          <span class="info-value">
-            Club Ciclista Juanico, Calle San Marcos
-          </span>
-          <a href="https://maps.app.goo.gl/nB1U1MJTKiEXN33A6" target="_blank" class="action-button location-button">
+          <span class="info-value"> Club Ciclista Juanico, Calle San Marcos </span>
+          <a
+            href="https://maps.app.goo.gl/nB1U1MJTKiEXN33A6"
+            target="_blank"
+            class="action-button location-button"
+          >
             <span class="button-icon">📍</span>
             <span class="button-text">¿Cómo llegar?</span>
           </a>
         </div>
       </div>
-      
+
       <div class="info-card">
         <div class="info-card-inner">
           <p class="info-label">Confirma asistencia</p>
-          <span class="info-value">
-            Me gustaría que confirmes tu asistencia
-          </span>
+          <span class="info-value"> Me gustaría que confirmes tu asistencia </span>
           <div class="modal-wrapper">
             <AsistenciaModal type="cumpleaños" client:visible />
           </div>
@@ -62,8 +60,5 @@ import "../styles/PrincipalDate.css";
 
 <Divider />
 
-<script
-  type="text/javascript"
-  src="https://cdn.addevent.com/libs/atc/1.6.1/atc.min.js"
-  async
-  defer></script>
+<script type="text/javascript" src="https://cdn.addevent.com/libs/atc/1.6.1/atc.min.js" async defer
+></script>

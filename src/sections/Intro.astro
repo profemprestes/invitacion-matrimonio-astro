@@ -1,40 +1,10 @@
 ---
-import IntroGallery from '@/components/IntroGallery.tsx'
-import '../styles/intro.css'
+import IntroGallery from '@/components/IntroGallery.tsx';
+import '../styles/css/sections/Intro.css';
 ---
 
-<main id="landing-intro">
-    <div class="floating-balloons">
-        <img src="/img/balloon1.svg" class="balloon balloon-1" alt="balloon" />
-        <img src="/img/balloon2.svg" class="balloon balloon-2" alt="balloon" />
-        <img src="/img/balloon3.svg" class="balloon balloon-3" alt="balloon" />
-    </div>
-    
-    <section class="max-w-[750px] text-center animate-blurred-fade-in intro-container">
-        <div class="birthday-header">
-            <h1 class="birthday-title">
-                ¡Celebra conmigo!
-            </h1>
-            <div class="birthday-badge">
-                <span>1</span>
-                <span>añito</span>
-            </div>
-        </div>
-        
-        <p class="birthday-description">
-            Galia está cumpliendo su primer añito y quiere compartir este día tan especial contigo
-        </p>
-    
-        <div class="gallery-section">
-            <IntroGallery client:idle />
-        </div>
-        
-      
-    </section>
-    <div class="enter-button-container">
-        <button id="enter-button" class="enter-button">
-            Entrar a la Fiesta
-        </button>
-    </div>
+<main id="intro" class="intro-section">
+  <div class="mt-16">
+    <IntroGallery />
+  </div>
 </main>
-

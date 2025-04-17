@@ -1,129 +1,130 @@
 ---
-import Divider from "@/components/Divider.astro";
-import Title from "@/components/Title.astro";
-import "../styles/Countdown.css";
+import Divider from '@/components/Divider.astro';
+import Title from '@/components/Title.astro';
+import '../styles/css/sections/Countdown.css';
 
 // Set the date to May 10, 2025 at 13:00 (1 PM)
 const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
 ---
 
 <section class="countdown-section">
-    <div class="countdown-wrapper">
-        <Title title="Falta" />
-        <div data-date={TIMESTAMP_END} class="countdown-container">
-            <div class="countdown-unit">
-                <div class="countdown-card">
-                    <span data-days class="countdown-number">00</span>
-                </div>
-                <span class="countdown-label">DÍAS</span>
-            </div>
-
-            <div class="countdown-separator">:</div>
-
-            <div class="countdown-unit">
-                <div class="countdown-card">
-                    <span data-hours class="countdown-number">00</span>
-                </div>
-                <span class="countdown-label">HS</span>
-            </div>
-
-            <div class="countdown-separator">:</div>
-
-            <div class="countdown-unit">
-                <div class="countdown-card">
-                    <span data-minutes class="countdown-number">00</span>
-                </div>
-                <span class="countdown-label">MIN</span>
-            </div>
-            
-            <div class="countdown-separator">:</div>
-            
-            <div class="countdown-unit">
-                <div class="countdown-card">
-                    <span data-seconds class="countdown-number">00</span>
-                </div>
-                <span class="countdown-label">SEG</span>
-            </div>
+  <div class="countdown-wrapper">
+    <Title title="Falta para el gran día!" />
+    <p class="countdown-subtitle">El momento está muy cerca...</p>
+    <div data-date={TIMESTAMP_END} class="countdown-container">
+      <div class="countdown-unit">
+        <div class="countdown-card">
+          <span data-days class="countdown-number">00</span>
         </div>
-        <Divider />
+        <span class="countdown-label">DÍAS</span>
+      </div>
+
+      <div class="countdown-separator">:</div>
+
+      <div class="countdown-unit">
+        <div class="countdown-card">
+          <span data-hours class="countdown-number">00</span>
+        </div>
+        <span class="countdown-label">HS</span>
+      </div>
+
+      <div class="countdown-separator">:</div>
+
+      <div class="countdown-unit">
+        <div class="countdown-card">
+          <span data-minutes class="countdown-number">00</span>
+        </div>
+        <span class="countdown-label">MIN</span>
+      </div>
+
+      <div class="countdown-separator">:</div>
+
+      <div class="countdown-unit">
+        <div class="countdown-card">
+          <span data-seconds class="countdown-number">00</span>
+        </div>
+        <span class="countdown-label">SEG</span>
+      </div>
     </div>
+    <Divider />
+  </div>
 </section>
 
 <script>
-    const SECOND = 1000; //1000ms
-    const MINUTE = SECOND * 60; // 60s -> 60000ms
-    const HOUR = MINUTE * 60; // 60m -> 3600s -> 360000ms
-    const DAY = HOUR * 24;
-    
-    function init() {
-        const $countdown = document.querySelector("[data-date]");
-        if (!$countdown) return;
-        const $days = $countdown.querySelector("[data-days]");
-        const $hours = $countdown.querySelector("[data-hours]");
-        const $minutes = $countdown.querySelector("[data-minutes]");
-        const $seconds = $countdown.querySelector("[data-seconds]");
+  const SECOND = 1000; //1000ms
+  const MINUTE = SECOND * 60; // 60s -> 60000ms
+  const HOUR = MINUTE * 60; // 60m -> 3600s -> 360000ms
+  const DAY = HOUR * 24;
 
-        const timestamp = $countdown.getAttribute("data-date");
-        if (!timestamp) return;
+  function init() {
+    const $countdown = document.querySelector('[data-date]');
+    if (!$countdown) return;
+    const $days = $countdown.querySelector('[data-days]');
+    const $hours = $countdown.querySelector('[data-hours]');
+    const $minutes = $countdown.querySelector('[data-minutes]');
+    const $seconds = $countdown.querySelector('[data-seconds]');
 
-        const date = new Date(+timestamp).getTime();
+    const timestamp = $countdown.getAttribute('data-date');
+    if (!timestamp) return;
 
-        const formatTime = (time: number) => {
-            return Math.floor(time).toString().padStart(2, "0");
-        };
+    const date = new Date(+timestamp).getTime();
 
-        function updateCountdown() {
-            const now = Date.now();
-            const diff = date - now;
-            
-            // Ensure we don't show negative values if the date has passed
-            const remainingTime = Math.max(diff, 0);
+    const formatTime = (time: number) => {
+      return Math.floor(time).toString().padStart(2, '0');
+    };
 
-            if ($days instanceof HTMLElement) {
-                const newDays = formatTime(remainingTime / DAY);
-                if ($days.innerText !== newDays) {
-                    $days.parentElement?.classList.add('flip');
-                    $days.innerText = newDays;
-                    setTimeout(() => {
-                        $days.parentElement?.classList.remove('flip');
-                    }, 500);
-                }
-            }
-            if ($hours instanceof HTMLElement) {
-                const newHours = formatTime((remainingTime % DAY) / HOUR);
-                if ($hours.innerText !== newHours) {
-                    $hours.parentElement?.classList.add('flip');
-                    $hours.innerText = newHours;
-                    setTimeout(() => {
-                        $hours.parentElement?.classList.remove('flip');
-                    }, 500);
-                }
-            }
-            if ($minutes instanceof HTMLElement) {
-                const newMinutes = formatTime((remainingTime % HOUR) / MINUTE);
-                if ($minutes.innerText !== newMinutes) {
-                    $minutes.parentElement?.classList.add('flip');
-                    $minutes.innerText = newMinutes;
-                    setTimeout(() => {
-                        $minutes.parentElement?.classList.remove('flip');
-                    }, 500);
-                }
-            }
-            if ($seconds instanceof HTMLElement) {
-                const newSeconds = formatTime((remainingTime % MINUTE) / SECOND);
-                if ($seconds.innerText !== newSeconds) {
-                    $seconds.parentElement?.classList.add('flip');
-                    $seconds.innerText = newSeconds;
-                    setTimeout(() => {
-                        $seconds.parentElement?.classList.remove('flip');
-                    }, 500);
-                }
-            }
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = date - now;
+
+      // Ensure we don't show negative values if the date has passed
+      const remainingTime = Math.max(diff, 0);
+
+      if ($days instanceof HTMLElement) {
+        const newDays = formatTime(remainingTime / DAY);
+        if ($days.innerText !== newDays) {
+          $days.parentElement?.classList.add('flip');
+          $days.innerText = newDays;
+          setTimeout(() => {
+            $days.parentElement?.classList.remove('flip');
+          }, 500);
         }
-
-        updateCountdown(); // Run immediately once
-        setInterval(updateCountdown, SECOND);
+      }
+      if ($hours instanceof HTMLElement) {
+        const newHours = formatTime((remainingTime % DAY) / HOUR);
+        if ($hours.innerText !== newHours) {
+          $hours.parentElement?.classList.add('flip');
+          $hours.innerText = newHours;
+          setTimeout(() => {
+            $hours.parentElement?.classList.remove('flip');
+          }, 500);
+        }
+      }
+      if ($minutes instanceof HTMLElement) {
+        const newMinutes = formatTime((remainingTime % HOUR) / MINUTE);
+        if ($minutes.innerText !== newMinutes) {
+          $minutes.parentElement?.classList.add('flip');
+          $minutes.innerText = newMinutes;
+          setTimeout(() => {
+            $minutes.parentElement?.classList.remove('flip');
+          }, 500);
+        }
+      }
+      if ($seconds instanceof HTMLElement) {
+        const newSeconds = formatTime((remainingTime % MINUTE) / SECOND);
+        if ($seconds.innerText !== newSeconds) {
+          $seconds.parentElement?.classList.add('flip');
+          $seconds.innerText = newSeconds;
+          setTimeout(() => {
+            $seconds.parentElement?.classList.remove('flip');
+          }, 500);
+        }
+      }
     }
-    
-    init();
+
+    updateCountdown(); // Run immediately once
+    setInterval(updateCountdown, SECOND);
+  }
+
+  init();
 </script>

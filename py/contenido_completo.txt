@@ -1,0 +1,482 @@
+// === index.astro ===
+---
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/sections/Hero.astro";
+import Countdown from "@/sections/Countdown.astro";
+import PrincipalDate from "@/sections/PrincipalDate.astro";
+import Party from "@/sections/Party.astro";
+import Intro from "@/sections/Intro.astro";
+import "../styles/index.css";
+---
+
+<Layout title="Cumple de Galia">
+    <main id="intro-section" aria-label="Intro Section">
+        <Intro />
+    </main>
+
+    <main id="main-content" class="hidden" aria-label="Main Content" style="display: none;">
+        <Hero />
+        <section class="p-4">
+            <Countdown />
+            <PrincipalDate />
+            <Party />
+        </section>
+    </main>
+</Layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const enterButton = document.getElementById('enter-button');
+        const introSection = document.getElementById('intro-section');
+        const mainContent = document.getElementById('main-content');
+
+        const handleTransition = () => {
+            introSection.style.animation = 'fadeOut 0.8s forwards';
+            setTimeout(() => {
+                introSection.style.display = 'none';
+                mainContent.style.display = 'block';
+                mainContent.style.animation = 'fadeIn 1s forwards';
+            }, 800);
+        };
+
+        enterButton.addEventListener('click', handleTransition);
+    });
+</script>
+
+
+// === layouts/Layout.astro ===
+---
+import Loader from "@/components/Loader.jsx";
+import { ViewTransitions } from "astro:transitions";
+import "@fontsource-variable/raleway";
+import "@fontsource/parisienne";
+import "@fontsource-variable/rubik";
+import "../styles/layout.css";
+
+interface Props {
+	title: string;
+	description?: string;
+	ogImage?: string;
+}
+
+const { 
+	title, 
+	description = "Invitación para el cumple de Galia", 
+	ogImage = "/og-image.jpg" 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<!-- Primary Meta Tags -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#FFB6C1" />
+		
+		<!-- Apple specific meta tags -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={ogImage} />
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/manifest.json" />
+		
+		<!-- Preload critical assets -->
+		<link rel="preload" href="/herogalia.gif" as="image" />
+		<link rel="preload" href="/margarita.gif" as="image" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		
+		<!-- Astro View Transitions -->
+		<ViewTransitions />
+	</head>
+	<body>
+		<Loader client:load />
+		
+		<div class="background-decoration">
+			<div class="decoration-overlay"></div>
+		</div>
+		
+		<main id="content">
+			<slot />
+		</main>
+		
+		<script>
+			// Add smooth scroll behavior for anchor links
+			document.addEventListener('DOMContentLoaded', () => {
+				document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+					anchor.addEventListener('click', function (e) {
+						e.preventDefault();
+						const target = document.querySelector(this.getAttribute('href'));
+						if (target) {
+							target.scrollIntoView({
+								behavior: 'smooth'
+							});
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
+
+
+// === sections/Hero.astro ===
+---
+import "../styles/hero.css";
+---
+
+<header class="hero-section">
+  <figure class="hero-background-container">
+    <img src="/herogalia.gif" id="parallax-hero" alt="Fondo de celebración del cumpleaños de Galia" />
+  </figure>
+
+  <div class="info-hero">
+    <div class="hero-content animate-fade-in-up">
+      <h2 class="hero-name animate-slide-in">Soy Galia</h2>
+      <h1 class="hero-title animate-zoom-in">
+        Festejo Mi
+        <span>Primer Añito</span>
+      </h1>
+      
+      <!-- Fecha de la celebración con estilo llamativo -->
+      <div class="hero-date animate-fade-in">
+        10 de Mayo de 2024
+      </div>
+
+      <!-- Cita inspiradora o invitación -->
+      <blockquote class="hero-quote animate-fade-in-up">
+        <p>
+          Me encantaría que vinieras a celebrar mi primer año. ¡Será especial contigo!
+        </p>
+      </blockquote>
+
+      <!-- Imagen de llamada a la acción (RSVP) -->
+      <div class="cta-container">
+        <a href="#rsvp" class="cta-image-link">
+          <img src="/galia/galiahamaca.webp" alt="Confirmar asistencia" class="cta-image animate-slide-in" />
+        </a>
+      </div>
+
+      <!-- Detalles adicionales o efectos -->
+      <div class="hero-footer animate-fade-in-up">
+        <p>¡Nos vemos pronto para celebrar juntos!</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+// === sections/Countdown.astro ===
+---
+import Divider from "@/components/Divider.astro";
+import Title from "@/components/Title.astro";
+import "../styles/Countdown.css";
+
+// Set the date to May 10, 2025 at 13:00 (1 PM)
+const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
+---
+
+<section class="countdown-section">
+    <div class="countdown-wrapper">
+        <Title title="Falta para el gran día!" />
+        <p class="countdown-subtitle">El momento está muy cerca...</p>
+        <div data-date={TIMESTAMP_END} class="countdown-container">
+            <div class="countdown-unit">
+                <div class="countdown-card">
+                    <span data-days class="countdown-number">00</span>
+                </div>
+                <span class="countdown-label">DÍAS</span>
+            </div>
+
+            <div class="countdown-separator">:</div>
+
+            <div class="countdown-unit">
+                <div class="countdown-card">
+                    <span data-hours class="countdown-number">00</span>
+                </div>
+                <span class="countdown-label">HS</span>
+            </div>
+
+            <div class="countdown-separator">:</div>
+
+            <div class="countdown-unit">
+                <div class="countdown-card">
+                    <span data-minutes class="countdown-number">00</span>
+                </div>
+                <span class="countdown-label">MIN</span>
+            </div>
+            
+            <div class="countdown-separator">:</div>
+            
+            <div class="countdown-unit">
+                <div class="countdown-card">
+                    <span data-seconds class="countdown-number">00</span>
+                </div>
+                <span class="countdown-label">SEG</span>
+            </div>
+        </div>
+        <Divider />
+    </div>
+</section>
+
+<script>
+    const SECOND = 1000; //1000ms
+    const MINUTE = SECOND * 60; // 60s -> 60000ms
+    const HOUR = MINUTE * 60; // 60m -> 3600s -> 360000ms
+    const DAY = HOUR * 24;
+    
+    function init() {
+        const $countdown = document.querySelector("[data-date]");
+        if (!$countdown) return;
+        const $days = $countdown.querySelector("[data-days]");
+        const $hours = $countdown.querySelector("[data-hours]");
+        const $minutes = $countdown.querySelector("[data-minutes]");
+        const $seconds = $countdown.querySelector("[data-seconds]");
+
+        const timestamp = $countdown.getAttribute("data-date");
+        if (!timestamp) return;
+
+        const date = new Date(+timestamp).getTime();
+
+        const formatTime = (time: number) => {
+            return Math.floor(time).toString().padStart(2, "0");
+        };
+
+        function updateCountdown() {
+            const now = Date.now();
+            const diff = date - now;
+            
+            // Ensure we don't show negative values if the date has passed
+            const remainingTime = Math.max(diff, 0);
+
+            if ($days instanceof HTMLElement) {
+                const newDays = formatTime(remainingTime / DAY);
+                if ($days.innerText !== newDays) {
+                    $days.parentElement?.classList.add('flip');
+                    $days.innerText = newDays;
+                    setTimeout(() => {
+                        $days.parentElement?.classList.remove('flip');
+                    }, 500);
+                }
+            }
+            if ($hours instanceof HTMLElement) {
+                const newHours = formatTime((remainingTime % DAY) / HOUR);
+                if ($hours.innerText !== newHours) {
+                    $hours.parentElement?.classList.add('flip');
+                    $hours.innerText = newHours;
+                    setTimeout(() => {
+                        $hours.parentElement?.classList.remove('flip');
+                    }, 500);
+                }
+            }
+            if ($minutes instanceof HTMLElement) {
+                const newMinutes = formatTime((remainingTime % HOUR) / MINUTE);
+                if ($minutes.innerText !== newMinutes) {
+                    $minutes.parentElement?.classList.add('flip');
+                    $minutes.innerText = newMinutes;
+                    setTimeout(() => {
+                        $minutes.parentElement?.classList.remove('flip');
+                    }, 500);
+                }
+            }
+            if ($seconds instanceof HTMLElement) {
+                const newSeconds = formatTime((remainingTime % MINUTE) / SECOND);
+                if ($seconds.innerText !== newSeconds) {
+                    $seconds.parentElement?.classList.add('flip');
+                    $seconds.innerText = newSeconds;
+                    setTimeout(() => {
+                        $seconds.parentElement?.classList.remove('flip');
+                    }, 500);
+                }
+            }
+        }
+
+        updateCountdown(); // Run immediately once
+        setInterval(updateCountdown, SECOND);
+    }
+    
+    init();
+</script>
+
+
+// === sections/PrincipalDate.astro ===
+---
+import Divider from "@/components/Divider.astro";
+import AsistenciaModal from "@/components/AsistenciaModal.tsx";
+import "../styles/PrincipalDate.css";
+---
+
+<section class="principal-date-section">
+  <div class="principal-date-container">
+    <div class="flower-decoration">
+      <img src="/daisy.svg" class="flower-icon" alt="icono margarita" />
+    </div>
+    
+    <div class="title-container">
+      <h3 class="birthday-title">¡Galia cumple 1 añito!</h3>
+    </div>
+    
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-inner">
+          <p class="info-label">Cuándo</p>
+          <span class="info-value">
+            Sábado 10 de mayo de 2025 - 13:00 hs
+          </span>
+          <a
+            href="https://calendar.app.google/ursVLnsMBwkJSUVs8"
+            target="_blank"
+            class="action-button calendar-button"
+          >
+            <span class="button-icon">📅</span>
+            <span class="button-text">Agendar</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="info-card">
+        <div class="info-card-inner">
+          <p class="info-label">Dónde</p>
+          <span class="info-value">
+            Club Ciclista Juanico, Calle San Marcos
+          </span>
+          <a href="https://maps.app.goo.gl/nB1U1MJTKiEXN33A6" target="_blank" class="action-button location-button">
+            <span class="button-icon">📍</span>
+            <span class="button-text">¿Cómo llegar?</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="info-card">
+        <div class="info-card-inner">
+          <p class="info-label">Confirma asistencia</p>
+          <span class="info-value">
+            Me gustaría que confirmes tu asistencia
+          </span>
+          <div class="modal-wrapper">
+            <AsistenciaModal type="cumpleaños" client:visible />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<Divider />
+
+<script
+  type="text/javascript"
+  src="https://cdn.addevent.com/libs/atc/1.6.1/atc.min.js"
+  async
+  defer></script>
+
+
+// === sections/Party.astro ===
+---
+import Divider from "@/components/Divider.astro";
+import Title from "@/components/Title.astro";
+import CardParty from "@/components/CardParty.tsx";
+import "../styles/party.css";
+---
+
+<section class="party">
+  <div class="party__decorations">
+    <div class="decoration decoration--balloon-left"></div>
+    <div class="decoration decoration--balloon-right"></div>
+    <div class="decoration decoration--confetti-1"></div>
+    <div class="decoration decoration--confetti-2"></div>
+  </div>
+
+  <div class="party__container">
+    <header class="party__header">
+      <div class="party__title-wrapper">
+        <Title title="Mi Fiesta" />
+      </div>
+      <p class="party__subtitle">
+        ¡Estoy muy emocionada por compartir mi primer añito contigo!
+      </p>
+    </header>
+
+    <main class="party__content">
+      <div class="party__cards">
+        <CardParty
+          guid="1"
+          title="Envíame un Mensaje"
+          icon="enviarmensaje"
+          description="¿Quieres dejarme un mensaje especial para el día de mi fiesta? ¡Me encantaría leerlo!"
+          buttonText="Enviar mensaje"
+          buttonClassName="message-button"
+        />
+        <CardParty
+          guid="2"
+          title="Datos Sobre Mí"
+          icon="sobremi"
+          description="¿Quieres conocer un poco más sobre mí? ¡Descubre mis gustos y lo que me hace feliz!"
+          buttonText="Conocer más"
+          buttonClassName="about-button"
+        />
+      </div>
+    </main>
+  </div>
+
+  <Divider />
+</section>
+
+
+// === sections/Intro.astro ===
+---
+import IntroGallery from '@/components/IntroGallery.tsx'
+import '../styles/intro.css'
+---
+
+<main id="landing-intro" aria-label="Landing Intro">
+    <section class="floating-balloons" aria-hidden="true">
+        <img src="/img/balloon1.svg" class="balloon balloon-1" alt="balloon" />
+        <img src="/img/balloon2.svg" class="balloon balloon-2" alt="balloon" />
+        <img src="/img/balloon3.svg" class="balloon balloon-3" alt="balloon" />
+    </section>
+    
+    <section class="intro-container text-center">
+        <header class="birthday-header">
+            <h1 class="birthday-title">¡Celebra conmigo!</h1>
+            <div class="birthday-badge" aria-label="1 añito">
+                <span>1</span>
+                <span>añito</span>
+            </div>
+        </header>
+        
+        <p class="birthday-description">
+            Galia está cumpliendo su primer añito y quiere compartir este día tan especial contigo
+        </p>
+    
+        <div class="gallery-section">
+            <IntroGallery client:idle />
+        </div>
+        
+        <div class="enter-button-container">
+            <button id="enter-button" class="enter-button" aria-label="Entrar a la Fiesta" role="button">
+                Entrar a la Fiesta
+            </button>
+        </div>
+    </section>
+</main>
+
+

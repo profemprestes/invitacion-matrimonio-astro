@@ -1,0 +1,10 @@
+.gitignore
+README.md
+astro.config.mjs
+cake.svg
+package.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+postcss.config.cjs
+tailwind.config.mjs
+tsconfig.json

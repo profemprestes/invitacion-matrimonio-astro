@@ -1,7 +1,7 @@
 src/
     env.d.ts
     components/
-        AsistenciaModal.jsx
+        AsistenciaModal.tsx
         Card.astro
         CardParty.module.css
         CardParty.tsx
@@ -11,15 +11,22 @@ src/
         intro.jsx
         IntroGallery.tsx
         Loader.jsx
+        MensajeModal.tsx
         MensajesmostrarModal.jsx
         MessageCard.astro
         MessageRegistroAsistencia.jsx
+        MotionIntro.tsx
         MusicaModal copy.jsx
+        Sobremimodal.tsx
         TipsModal.jsx
         Title.astro
         dist/
+            AsistenciaModal.js
             CardParty.js
             IntroGallery.js
+            MensajeModal.js
+            MotionIntro.js
+            Sobremimodal.js
     data/
         Datos - Confirmacion.csv
         Datos - Datos.csv
@@ -41,15 +48,42 @@ src/
         Party.astro
         PrincipalDate.astro
     styles/
+        about.css
+        animations.css
+        AsistenciaModal.css
+        base.css
         CardParty.css
+        contact.css
         Countdown.css
         DressCodeModal.css
         hero.css
+        home.css
         index.css
         intro.css
         introgallery.css
         layout.css
-        loader.css
+        MensajeModal.css
         MensajesmostrarModal.css
         party.css
         PrincipalDate.css
+        Sobremimodal.css
+        variables.css
+        css/
+            global.css
+            index.css
+            loader.css
+            components/
+                buttons.css
+                footer.css
+                Gallery.css
+                navbar.css
+            sections/
+                Countdown.css
+                Hero.css
+                Intro.css
+                Party.css
+                PrincipalDate.css
+    utils/
+        animaciones.ts
+        countdown.ts
+        IntroGallery.ts

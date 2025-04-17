@@ -813,29 +813,42 @@ src/
         Loader.jsx
 
         --- Contenido de Loader.jsx ---
-        import React, { useEffect, useState } from 'react';
+        import React, { useEffect, useState, useRef } from 'react';
         import '../styles/loader.css';
         
         function Loader() {
             const [loading, setLoading] = useState(true);
             const [progress, setProgress] = useState(0);
-        
-            // Create confetti elements
+            const [animationComplete, setAnimationComplete] = useState(false);
+            const confettiRef = useRef(null);
+            
+            // Create confetti elements with different shapes
             const createConfetti = () => {
+                const shapes = ['circle', 'square', 'triangle', 'heart'];
+                const colors = ['#FFB6C1', '#FFD700', '#87CEFA', '#FF9494', '#98FB98', '#FFA07A'];
                 const confetti = [];
-                for (let i = 0; i < 30; i++) {
+                
+                for (let i = 0; i < 40; i++) {
                     const left = Math.random() * 100;
-                    const animationDuration = 3 + Math.random() * 2;
+                    const size = 5 + Math.random() * 10;
+                    const animationDuration = 2 + Math.random() * 3;
                     const animationDelay = Math.random() * 3;
+                    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const rotation = Math.random() * 360;
                     
                     confetti.push(
                         <div 
                             key={i}
-                            className="confetti"
+                            className={`confetti ${shape}`}
                             style={{
                                 left: `${left}%`,
+                                width: `${size}px`,
+                                height: `${size}px`,
+                                backgroundColor: color,
                                 animationDuration: `${animationDuration}s`,
-                                animationDelay: `${animationDelay}s`
+                                animationDelay: `${animationDelay}s`,
+                                transform: `rotate(${rotation}deg)`
                             }}
                         />
                     );
@@ -843,44 +856,116 @@ src/
                 return confetti;
             };
         
+            // Create balloon elements
+            const createBalloons = () => {
+                const balloons = [];
+                const colors = ['#FF9494', '#FFD166', '#06D6A0', '#118AB2'];
+                
+                for (let i = 0; i < 6; i++) {
+                    const left = 10 + (i * 15);
+                    const animationDuration = 15 + Math.random() * 10;
+                    const animationDelay = Math.random() * 5;
+                    const size = 40 + Math.random() * 30;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    balloons.push(
+                        <div 
+                            key={i}
+                            className="balloon"
+                            style={{
+                                left: `${left}%`,
+                                animationDuration: `${animationDuration}s`,
+                                animationDelay: `${animationDelay}s`,
+                                width: `${size}px`,
+                                height: `${size * 1.2}px`,
+                                backgroundColor: color
+                            }}
+                        >
+                            <div className="balloon-string"></div>
+                        </div>
+                    );
+                }
+                return balloons;
+            };
+        
             useEffect(() => {
-                // Simulate loading progress
+                // Preload critical assets
+                const preloadImages = ['/margarita.gif', '/herogalia.gif', '/cake.svg'];
+                preloadImages.forEach(src => {
+                    const img = new Image();
+                    img.src = src;
+                });
+                
+                // More realistic loading simulation with variable increments
+                let startTime = Date.now();
+                const totalDuration = 2000; // 2 seconds total loading time
+                
                 const interval = setInterval(() => {
-                    setProgress(prev => {
-                        const newProgress = prev + 10;
-                        if (newProgress >= 100) {
-                            clearInterval(interval);
-                            // Add a small delay before hiding loader
+                    const elapsedTime = Date.now() - startTime;
+                    const progressPercentage = Math.min(100, Math.floor((elapsedTime / totalDuration) * 100));
+                    
+                    setProgress(progressPercentage);
+                    
+                    if (progressPercentage >= 100) {
+                        clearInterval(interval);
+                        
+                        // Add a small delay before hiding loader for smooth transition
+                        setTimeout(() => {
+                            setAnimationComplete(true);
+                            
+                            // After animation completes, remove the loader
                             setTimeout(() => {
                                 setLoading(false);
-                            }, 500);
-                            return 100;
-                        }
-                        return newProgress;
-                    });
-                }, 100);
+                            }, 800);
+                        }, 300);
+                    }
+                }, 50);
         
                 return () => clearInterval(interval);
             }, []);
         
+            // Add confetti explosion effect when loading completes
+            useEffect(() => {
+                if (progress === 100 && confettiRef.current) {
+                    confettiRef.current.classList.add('confetti-explosion');
+                }
+            }, [progress]);
+        
+            if (!loading) return null;
+        
             return (
-                <>
-                    {loading && (
-                        <div className={`loader-container ${progress === 100 ? 'loader-exit' : ''}`}>
-                            {createConfetti()}
-                            <div className="loader-content">
-                                <img className="loader-image" src="/margarita.gif" alt="Loading" />
-                                <div className="loader-text">¡Galia cumple 1 añito!</div>
-                                <div className="loader-progress">
-                                    <div 
-                                        className="loader-progress-bar" 
-                                        style={{ width: `${progress}%` }}
-                                    ></div>
-                                </div>
-                            </div>
+                <div className={`loader-container ${animationComplete ? 'loader-exit' : ''}`}>
+                    <div className="loader-background"></div>
+                    
+                    <div className="confetti-container" ref={confettiRef}>
+                        {createConfetti()}
+                    </div>
+                    
+                    <div className="balloon-container">
+                        {createBalloons()}
+                    </div>
+                    
+                    <div className="loader-content">
+                        <div className="loader-image-container">
+                            <img className="loader-image" src="/margarita.gif" alt="Loading" />
                         </div>
-                    )}
-                </>
+                        
+                        <div className="loader-text-container">
+                            <h1 className="loader-title">¡Galia cumple 1 añito!</h1>
+                            <p className="loader-subtitle">Cargando invitación...</p>
+                        </div>
+                        
+                        <div className="loader-progress-container">
+                            <div className="loader-progress">
+                                <div 
+                                    className="loader-progress-bar" 
+                                    style={{ width: `${progress}%` }}
+                                ></div>
+                            </div>
+                            <div className="loader-progress-text">{progress}%</div>
+                        </div>
+                    </div>
+                </div>
             );
         }
         
@@ -1798,41 +1883,85 @@ src/
         
         interface Props {
         	title: string;
+        	description?: string;
+        	ogImage?: string;
         }
         
-        const { title } = Astro.props;
+        const { 
+        	title, 
+        	description = "Invitación para el cumple de Galia", 
+        	ogImage = "/og-image.jpg" 
+        } = Astro.props;
         ---
         
         <!doctype html>
         <html lang="es">
         	<head>
         		<meta charset="UTF-8" />
-        		<meta name="description" content="Invitación para el cumple de Galia" />
-        		<meta name="viewport" content="width=device-width" />
+        		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        		
+        		<!-- Primary Meta Tags -->
+        		<title>{title}</title>
+        		<meta name="description" content={description} />
         		<meta name="theme-color" content="#FFB6C1" />
+        		
+        		<!-- Apple specific meta tags -->
         		<meta name="apple-mobile-web-app-capable" content="yes" />
         		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        		<meta property="og:title" content={title} />
-        		<meta property="og:description" content="Invitación para el cumple de Galia" />
-        		<meta property="og:type" content="website" />
         		
+        		<!-- Open Graph / Facebook -->
+        		<meta property="og:type" content="website" />
+        		<meta property="og:title" content={title} />
+        		<meta property="og:description" content={description} />
+        		<meta property="og:image" content={ogImage} />
+        		
+        		<!-- Twitter -->
+        		<meta property="twitter:card" content="summary_large_image" />
+        		<meta property="twitter:title" content={title} />
+        		<meta property="twitter:description" content={description} />
+        		<meta property="twitter:image" content={ogImage} />
+        		
+        		<!-- Favicon -->
         		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         		<link rel="manifest" href="/manifest.json" />
         		
-        		<title>{title}</title>
-        		<ViewTransitions />
-        
         		<!-- Preload critical assets -->
         		<link rel="preload" href="/herogalia.gif" as="image" />
+        		<link rel="preload" href="/margarita.gif" as="image" />
         		<link rel="preconnect" href="https://fonts.googleapis.com" />
         		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        		
+        		<!-- Astro View Transitions -->
+        		<ViewTransitions />
         	</head>
         	<body>
         		<Loader client:load />
-        		<div class="background-decoration"></div>
-        
-        		<slot />
+        		
+        		<div class="background-decoration">
+        			<div class="decoration-overlay"></div>
+        		</div>
+        		
+        		<main id="content">
+        			<slot />
+        		</main>
+        		
+        		<script>
+        			// Add smooth scroll behavior for anchor links
+        			document.addEventListener('DOMContentLoaded', () => {
+        				document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        					anchor.addEventListener('click', function (e) {
+        						e.preventDefault();
+        						const target = document.querySelector(this.getAttribute('href'));
+        						if (target) {
+        							target.scrollIntoView({
+        								behavior: 'smooth'
+        							});
+        						}
+        					});
+        				});
+        			});
+        		</script>
         	</body>
         </html>
         --- Fin de Layout.astro ---
@@ -1852,42 +1981,38 @@ src/
         ---
         
         <Layout title="Cumple de Galia">
-        	<div id="intro-section">
-        		<Intro />
-        		
-        	</div>
+            <main id="intro-section" aria-label="Intro Section">
+                <Intro />
+            </main>
         
-        	<div id="main-content" class="hidden">
-        		<Hero />
-        		<section class="p-4">
-        			<Countdown />
-        			<PrincipalDate />
-        			<Party />
-        		</section>
-        	</div>
+            <main id="main-content" class="hidden" aria-label="Main Content">
+                <Hero />
+                <section class="p-4">
+                    <Countdown />
+                    <PrincipalDate />
+                    <Party />
+                </section>
+            </main>
         </Layout>
         
         <script>
-        	document.addEventListener('DOMContentLoaded', () => {
-        		const enterButton = document.getElementById('enter-button');
-        		const introSection = document.getElementById('intro-section');
-        		const mainContent = document.getElementById('main-content');
+            document.addEventListener('DOMContentLoaded', () => {
+                const enterButton = document.getElementById('enter-button');
+                const introSection = document.getElementById('intro-section');
+                const mainContent = document.getElementById('main-content');
         
-        		enterButton.addEventListener('click', () => {
-        			// Add fade-out animation to intro
-        			introSection.style.animation = 'fadeOut 0.8s forwards';
-        			
-        			// After animation completes, hide intro and show main content
-        			setTimeout(() => {
-        				introSection.classList.add('hidden');
-        				mainContent.classList.remove('hidden');
-        				
-        				// Add fade-in animation to main content
-        				mainContent.style.animation = 'fadeIn 1s forwards';
-        				mainContent.classList.add('visible');
-        			}, 700);
-        		});
-        	});
+                const handleTransition = () => {
+                    introSection.style.animation = 'fadeOut 0.8s forwards';
+                    setTimeout(() => {
+                        introSection.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+                        mainContent.style.animation = 'fadeIn 1s forwards';
+                        mainContent.classList.add('visible');
+                    }, 800);
+                };
+        
+                enterButton.addEventListener('click', handleTransition);
+            });
         </script>
         --- Fin de index.astro ---
 
@@ -2063,16 +2188,14 @@ src/
         import "../styles/hero.css";
         ---
         
-        <section
-            class="greater-desktop:h-screen desktop:h-[670px] h-[670px] hero-section desktop:w-full w-full flex justify-center items-center bg-fixed bg-cover bg-no-repeat bg-center"
-        >
-            <div class="hero-background-container">
-                <img src="/herogalia.gif" id="parallax-hero" alt="hero-parallax" />
-            </div>
+        <header class="hero-section">
+            <figure class="hero-background-container">
+                <img src="/herogalia.gif" id="parallax-hero" alt="Galia's birthday celebration background" />
+            </figure>
             
             <div class="info-hero">
                 <div class="hero-content">
-                    <div class="hero-name">Soy Galia</div>
+                    <h2 class="hero-name">Soy Galia</h2>
                     <h1 class="married-hero">
                         Festejo Mi
                         <span>Primer Añito</span>
@@ -2080,19 +2203,19 @@ src/
                     <div class="date-hero">
                         10 de Mayo de 2024
                     </div>
-                    <div class="quote-container">
+                    <blockquote class="quote-container">
                         <img src="/mark_open.svg" alt="Quote open" />
                         <p>
                             Me encantaría que vinieras a celebrar mi primer año. ¡Será especial contigo!
                         </p>
                         <img src="/mark_close.svg" alt="Quote close" />
-                    </div>
+                    </blockquote>
                 </div>
-                <div class="scroll-indicator">
-                    <img src="/arrow_down.gif" alt="Scroll down" />
+                <div class="scroll-indicator" role="button" aria-label="Scroll down">
+                    <img src="/arrow_down.gif" alt="Scroll down indicator" />
                 </div>
             </div>
-        </section>
+        </header>
         --- Fin de Hero.astro ---
 
         Instagram.astro
@@ -2145,23 +2268,21 @@ src/
         import '../styles/intro.css'
         ---
         
-        <main id="landing-intro">
-            <div class="floating-balloons">
+        <main id="landing-intro" aria-label="Landing Intro">
+            <section class="floating-balloons" aria-hidden="true">
                 <img src="/img/balloon1.svg" class="balloon balloon-1" alt="balloon" />
                 <img src="/img/balloon2.svg" class="balloon balloon-2" alt="balloon" />
                 <img src="/img/balloon3.svg" class="balloon balloon-3" alt="balloon" />
-            </div>
+            </section>
             
-            <section class="max-w-[750px] text-center animate-blurred-fade-in intro-container">
-                <div class="birthday-header">
-                    <h1 class="birthday-title">
-                        ¡Celebra conmigo!
-                    </h1>
-                    <div class="birthday-badge">
+            <section class="intro-container text-center">
+                <header class="birthday-header">
+                    <h1 class="birthday-title">¡Celebra conmigo!</h1>
+                    <div class="birthday-badge" aria-label="1 añito">
                         <span>1</span>
                         <span>añito</span>
                     </div>
-                </div>
+                </header>
                 
                 <p class="birthday-description">
                     Galia está cumpliendo su primer añito y quiere compartir este día tan especial contigo
@@ -2172,7 +2293,7 @@ src/
                 </div>
                 
                 <div class="enter-button-container">
-                    <button id="enter-button" class="enter-button">
+                    <button id="enter-button" class="enter-button" aria-label="Entrar a la Fiesta" role="button">
                         Entrar a la Fiesta
                     </button>
                 </div>
@@ -3066,560 +3187,387 @@ src/
         hero.css
 
         --- Contenido de hero.css ---
-        /* Hero section main styles */
+        :root {
+            --color-primary: #FFB6C1;
+            --color-secondary: #FFD166;
+            --color-background: #fff8f0;
+            --color-text: #6F6F6E;
+            --font-heading: 'Parisienne', cursive;
+            --font-body: 'Raleway', sans-serif;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --radius-md: 12px;
+            --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.1);
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+        
         .hero-section {
-          position: relative;
-          height: 670px;
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-attachment: fixed;
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-position: center;
-          overflow: hidden;
+            position: relative;
+            height: 670px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            overflow: hidden;
+            background: linear-gradient(to bottom, var(--color-background), #fff);
         }
         
-        /* Hero container for the background image */
         .hero-background-container {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
         
-        /* Parallax hero image */
         #parallax-hero {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          animation: subtle-zoom 20s infinite alternate ease-in-out;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: subtle-zoom 20s infinite alternate ease-in-out;
         }
         
-        /* Overlay for better text readability */
-        .hero-section::before {
-          content: "";
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(
-            to bottom,
-            rgba(29, 29, 27, 0.4) 0%,
-            rgba(29, 29, 27, 0.3) 50%,
-            rgba(29, 29, 27, 0.5) 100%
-          );
-          z-index: 0;
-          top: 0;
-          left: 0;
-        }
-        
-        /* Hero content container */
         .info-hero {
-          z-index: 50;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          position: relative;
-          text-align: center;
-          margin: 0 auto;
-          max-width: 80%;
-          height: 100%;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+            margin: 0 auto;
+            max-width: 80%;
+            height: 100%;
         }
         
         .hero-content {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          animation: fade-in-up 1.2s ease-out forwards;
-          background-color: rgba(255, 255, 255, 0.25);
-          backdrop-filter: blur(8px);
-          padding: 2.5rem;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-          border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 1.2s ease-out forwards;
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        /* Hero name styling */
         .hero-name {
-          font-family: 'Parisienne', cursive;
-          font-size: 2.5rem;
-          color: #FF6B8B;
-          margin-bottom: 0.5rem;
-          text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.5);
-          animation: float 3s ease-in-out infinite;
-          letter-spacing: 1px;
-        }
-        
-        /* Date display styling */
-        .date-hero {
-          font-size: 1.5rem;
-          color: #FFF8E1;
-          margin: 1.5rem 0;
-          font-family: 'Rubik', sans-serif;
-          font-weight: 600;
-          letter-spacing: 2px;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-          position: relative;
-          padding: 0 2.5rem;
-        }
-        
-        .date-hero::before,
-        .date-hero::after {
-          content: "";
-          position: absolute;
-          top: 50%;
-          width: 40px;
-          height: 2px;
-          background: #FFF8E1;
-          opacity: 0.9;
-        }
-        
-        /* Main title styling */
-        .married-hero {
-          font-size: 3.75rem;
-          color: #FFFFFF;
-          font-family: 'Parisienne', cursive;
-          display: flex;
-          flex-direction: column;
-          text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 107, 139, 0.5);
-          animation: glow 3s infinite alternate;
-          line-height: 1.2;
-          letter-spacing: 1px;
-        }
-        
-        .married-hero span {
-          font-size: 1.1em;
-          color: #FFD166;
-          margin-top: 0.1em;
-          animation: color-shift 4s infinite alternate;
-          text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 209, 102, 0.6);
-        }
-        
-        /* Quote section styling */
-        .quote-container {
-          text-align: center;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          margin-top: 1.75rem;
-          gap: 1rem;
-        }
-        
-        .quote-container p {
-          font-size: 1.25rem;
-          font-family: 'Rubik', sans-serif;
-          color: #FFFFFF;
-          line-height: 1.6;
-          max-width: 90%;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-          font-weight: 500;
-        }
-        
-        .quote-container img {
-          width: 2rem;
-          filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4)) brightness(1.1);
-          opacity: 0.95;
-        }
-        
-        /* Animations */
-        @keyframes glow {
-          from {
-            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #FF6B8B, 0 0 20px #FF6B8B;
-          }
-          to {
-            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #FF6B8B, 0 0 40px #FF6B8B;
-          }
-        }
-        
-        @keyframes color-shift {
-          0% {
-            color: #FFD166;
-          }
-          50% {
-            color: #FF9E7A;
-          }
-          100% {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
             color: #FF6B8B;
-          }
+            margin-bottom: var(--spacing-sm);
+            animation: fadeIn 1s ease-out forwards;
         }
         
-        /* Scroll indicator */
+        .married-hero {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+        
+        .date-hero {
+            font-size: 1.5rem;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+            animation: fadeIn 1.4s ease-out forwards;
+        }
+        
+        .quote-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--color-text);
+            animation: fadeIn 1.6s ease-out forwards;
+        }
+        
         .scroll-indicator {
-          display: flex;
-          justify-content: center;
-          margin-top: 2rem;
-          animation: bounce 2s infinite;
-        }
-        
-        .scroll-indicator img {
-          width: 3.5rem;
-          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-        }
-        
-        /* Animations */
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0);
-          }
-          40% {
-            transform: translateY(-15px);
-          }
-          60% {
-            transform: translateY(-7px);
-          }
-        }
-        
-        @keyframes glow {
-          from {
-            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #FF9494, 0 0 20px #FF9494;
-          }
-          to {
-            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #FF9494, 0 0 40px #FF9494;
-          }
+            margin-top: var(--spacing-lg);
+            animation: bounce 2s infinite;
         }
         
         @keyframes subtle-zoom {
-          from {
-            transform: scale(1);
-          }
-          to {
-            transform: scale(1.05);
-          }
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
         }
         
-        @keyframes float {
-          0% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-          100% {
-            transform: translateY(0);
-          }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        @keyframes color-shift {
-          0% {
-            color: #FFD700;
-          }
-          50% {
-            color: #FFA07A;
-          }
-          100% {
-            color: #FF9494;
-          }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
         
-        /* Responsive adjustments */
-        @media (min-width: 768px) {
-          .info-hero {
-            max-width: 36rem;
-          }
-          
-          .quote-container p {
-            font-size: 1.5rem;
-          }
-          
-          .hero-name {
-            font-size: 3rem;
-          }
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: var(--spacing-md);
+            }
+            
+            .hero-name {
+                font-size: 2rem;
+            }
+            
+            .married-hero {
+                font-size: 2.5rem;
+            }
+            
+            .date-hero {
+                font-size: 1.2rem;
+            }
+            
+            .quote-container {
+                font-size: 1rem;
+            }
         }
         
-        @media (min-width: 993px) {
-          #parallax-hero {
-            height: 100%;
-          }
-          
-          .hero-section::before {
-            height: 100%;
-          }
-          
-          .married-hero {
-            font-size: 4.5rem;
-          }
-        }
-        
-        @media (min-width: 1280px) {
-          .info-hero {
-            max-width: 42rem;
-          }
-          
-          .date-hero {
-            font-size: 1.5rem;
-          }
-          
-          .hero-content {
-            padding: 2.5rem;
-          }
-        }
-        
-        @media (min-width: 1745px) {
-          #parallax-hero {
-            height: 100%;
-          }
-          
-          .hero-section::before {
-            height: 100%;
-          }
-          
-          .hero-section {
-            height: 100vh;
-          }
-          
-          .info-hero {
-            height: 100vh;
-            max-width: 48rem;
-          }
-          
-          .married-hero {
-            font-size: 5rem;
-          }
-          
-          .quote-container p {
-            font-size: 1.5rem;
-          }
-          
-          .hero-name {
-            font-size: 3.5rem;
-          }
+        @media (max-width: 480px) {
+            .hero-content {
+                padding: var(--spacing-sm);
+            }
+            
+            .hero-name {
+                font-size: 1.8rem;
+            }
+            
+            .married-hero {
+                font-size: 2rem;
+            }
+            
+            .date-hero {
+                font-size: 1rem;
+            }
+            
+            .quote-container {
+                font-size: 0.9rem;
+            }
         }
         --- Fin de hero.css ---
 
         index.css
 
         --- Contenido de index.css ---
-        /* Main content styles */
+        :root {
+            --color-primary: #FFB6C1;
+            --color-secondary: #FFD166;
+            --color-accent: #B97600;
+            --color-background: #fff8f0;
+            --color-text: #6F6F6E;
+            --font-heading: 'Parisienne', cursive;
+            --font-body: 'Raleway', sans-serif;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --radius-md: 12px;
+            --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--color-background);
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        #intro-section, #main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
         #intro-section {
-          position: relative;
-          min-height: 100vh;
-          width: 100%;
+            background: linear-gradient(to bottom, var(--color-background), #fff);
         }
         
-        #main-content {
-          opacity: 0;
-          transition: opacity 1s ease;
-        }
-        
-        #main-content.visible {
-          opacity: 1;
-        }
-        
-        /* Enter button styles */
         .enter-button-container {
-          position: absolute;
-          bottom: 10%;
-          left: 0;
-          right: 0;
-          display: flex;
-          justify-content: center;
-          z-index: 10;
+            margin-top: var(--spacing-md);
+            display: flex;
+            justify-content: center;
         }
         
         .enter-button {
-          background-color: #b97600;
-          color: white;
-          font-family: 'Raleway', sans-serif;
-          font-weight: 600;
-          padding: 1rem 2.5rem;
-          border-radius: 2rem;
-          border: none;
-          cursor: pointer;
-          box-shadow: 0 4px 12px rgba(185, 118, 0, 0.3);
-          transition: all 0.3s ease;
-          animation: pulse 2s infinite;
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .enter-button::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.2) 50%,
-            rgba(255, 255, 255, 0) 100%
-          );
-          transition: all 0.6s;
+            background-color: var(--color-primary);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            outline: none;
         }
         
         .enter-button:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 7px 15px rgba(185, 118, 0, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 148, 148, 0.4);
+            background-color: #ff8080;
         }
         
-        .enter-button:hover::before {
-          left: 100%;
+        .enter-button:focus {
+            outline: 2px solid rgba(255, 148, 148, 0.5);
+            outline-offset: 2px;
         }
         
         .enter-button:active {
-          transform: translateY(-1px);
-          box-shadow: 0 5px 10px rgba(185, 118, 0, 0.4);
-        }
-        
-        /* Utility classes */
-        .hidden {
-          display: none;
-        }
-        
-        /* Animations */
-        @keyframes pulse {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.05);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-        
-        @keyframes fadeOut {
-          from { opacity: 1; }
-          to { opacity: 0; }
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(255, 148, 148, 0.4);
         }
         
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        /* Floating elements animation for main content */
-        .float-element {
-          animation: floating 3s ease-in-out infinite;
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
         }
         
-        @keyframes floating {
-          0% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-15px);
-          }
-          100% {
-            transform: translateY(0px);
-          }
-        }
-        
-        /* Page transitions */
-        .page-transition-enter {
-          opacity: 0;
-        }
-        
-        .page-transition-enter-active {
-          opacity: 1;
-          transition: opacity 800ms;
-        }
-        
-        .page-transition-exit {
-          opacity: 1;
-        }
-        
-        .page-transition-exit-active {
-          opacity: 0;
-          transition: opacity 800ms;
-        }
-        
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-          .enter-button {
-            padding: 0.8rem 2rem;
-            font-size: 0.9rem;
-          }
+            #intro-section, #main-content {
+                padding: var(--spacing-md);
+            }
+        
+            .enter-button {
+                font-size: 1rem;
+                padding: 0.7rem 1.5rem;
+            }
         }
         
         @media (max-width: 480px) {
-          .enter-button-container {
-            bottom: 15%;
-          }
-          
-          .enter-button {
-            padding: 0.7rem 1.8rem;
-            font-size: 0.85rem;
-          }
+            .enter-button {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
         }
         --- Fin de index.css ---
 
         intro.css
 
         --- Contenido de intro.css ---
+        :root {
+            --color-primary: #FFB6C1;
+            --color-secondary: #FFD166;
+            --color-background: #fff8f0;
+            --color-text: #6F6F6E;
+            --font-heading: 'Parisienne', cursive;
+            --font-body: 'Raleway', sans-serif;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --radius-md: 12px;
+            --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--color-background);
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
         #landing-intro {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            position: relative;
-            margin-left: 2rem;
-            margin-right: 2rem;
-            background: linear-gradient(to bottom, #fff8f0, #fff);
-            overflow: hidden;
-            padding: 2rem 0;
+            padding: var(--spacing-lg);
+            background: linear-gradient(to bottom, var(--color-background), #fff);
         }
         
         .intro-container {
             background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(5px);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 25px rgba(185, 118, 0, 0.1);
-            border: 1px solid rgba(185, 118, 0, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: var(--spacing-md);
+            animation: fadeInUp 1s ease-out;
         }
         
         .birthday-header {
             position: relative;
-            margin-bottom: 0.5rem;
+            margin-bottom: var(--spacing-sm);
         }
         
         .birthday-title {
             text-align: center;
             font-weight: 500;
-            font-family: 'Parisienne', cursive;
-            color: #B97600;
+            font-family: var(--font-heading);
+            color: var(--color-accent);
             font-size: 75px;
         }
         
         .birthday-description {
-            color: #6F6F6E;
-            margin-top: 0.5rem;
-            margin-bottom: 1rem;
+            color: var(--color-text);
+            margin-top: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
             font-size: 1.25rem;
             line-height: 1.75;
         }
         
         .gallery-section {
-            margin: 1rem 0 2rem;
+            margin: var(--spacing-md) 0 var(--spacing-lg);
         }
         
         .birthday-badge {
             position: absolute;
             top: -15px;
             right: 0;
-            background-color: #FF9494;
+            background-color: var(--color-primary);
             border-radius: 50%;
             width: 70px;
             height: 70px;
@@ -3630,17 +3578,8 @@ src/
             color: white;
             font-weight: bold;
             transform: rotate(15deg);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
             animation: pulse 2s infinite;
-        }
-        
-        .birthday-badge span:first-child {
-            font-size: 2rem;
-            line-height: 1;
-        }
-        
-        .birthday-badge span:last-child {
-            font-size: 0.9rem;
         }
         
         .floating-balloons {
@@ -3654,24 +3593,81 @@ src/
             position: absolute;
             width: 80px;
             opacity: 0.8;
+            animation: float 8s ease-in-out infinite;
         }
         
         .balloon-1 {
             top: 10%;
             left: 10%;
-            animation: float 8s ease-in-out infinite;
         }
         
         .balloon-2 {
             top: 15%;
             right: 15%;
-            animation: float 10s ease-in-out infinite;
         }
         
         .balloon-3 {
             bottom: 20%;
             left: 20%;
-            animation: float 9s ease-in-out infinite 1s;
+        }
+        
+        .enter-button-container {
+            margin-top: var(--spacing-md);
+            display: flex;
+            justify-content: center;
+        }
+        
+        .enter-button {
+            background-color: var(--color-primary);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            outline: none;
+            animation: pulse 2s infinite;
+        }
+        
+        .enter-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 148, 148, 0.4);
+            background-color: #ff8080;
+        }
+        
+        .enter-button:focus {
+            outline: 2px solid rgba(255, 148, 148, 0.5);
+            outline-offset: 2px;
+        }
+        
+        .enter-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 5px rgba(255, 148, 148, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
         
         @keyframes float {
@@ -3686,152 +3682,42 @@ src/
             }
         }
         
-        @keyframes pulse {
-            0% {
-                transform: rotate(15deg) scale(1);
+        @media (max-width: 768px) {
+            .intro-container {
+                padding: var(--spacing-md);
+                gap: var(--spacing-sm);
             }
-            50% {
-                transform: rotate(15deg) scale(1.05);
-            }
-            100% {
-                transform: rotate(15deg) scale(1);
-            }
-        }
-        
-        /* Enhanced animations */
-        .intro-container {
-            animation: fadeIn 1s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Responsive styles */
-        @media (min-width: 1024px) {
+            
             .birthday-title {
                 font-size: 65px;
             }
             
             .birthday-description {
-                font-size: 1.5rem;
-            }
-        }
-        
-        @media (max-width: 1023px) {
-            .balloon {
-                width: 60px;
-            }
-            
-            .birthday-badge {
-                width: 60px;
-                height: 60px;
-                top: -10px;
-                right: 10px;
-            }
-            
-            .birthday-description {
                 font-size: 1.25rem;
-            }
-        }
-        
-        @media (max-width: 640px) {
-            .intro-container {
-                padding: 1.5rem;
-            }
-            
-            .birthday-title {
-                font-size: 55px;
-            }
-            
-            .birthday-description {
-                font-size: 1rem;
-            }
-        }
-        
-        /* Enter button styles */
-        .enter-button-container {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .enter-button {
-            background-color: #FF9494;
-            color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 0.8rem 2rem;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(255, 148, 148, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .enter-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(255, 148, 148, 0.4);
-            background-color: #ff8080;
-        }
-        
-        .enter-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 5px rgba(255, 148, 148, 0.4);
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .intro-container {
-                padding: 2rem 1.5rem;
-                gap: 1rem;
-            }
-            
-            .gallery-section {
-                margin: 0.5rem 0 1.5rem;
-            }
-            
-            .enter-button-container {
-                margin-top: 0.5rem;
-            }
-        }
-        
-        @media (max-width: 640px) {
-            #landing-intro {
-                margin-left: 1rem;
-                margin-right: 1rem;
-                padding: 1rem 0;
-            }
-            
-            .intro-container {
-                padding: 1.5rem 1rem;
-            }
-            
-            .birthday-title {
-                font-size: 55px;
-            }
-            
-            .birthday-description {
-                font-size: 1rem;
-                margin-bottom: 0.5rem;
             }
             
             .enter-button {
                 font-size: 1rem;
                 padding: 0.7rem 1.5rem;
             }
+        }
+        
+        @media (max-width: 480px) {
+            .intro-container {
+                padding: var(--spacing-sm);
+            }
             
-            .gallery-section {
-                margin: 0.5rem 0 1rem;
+            .birthday-title {
+                font-size: 55px;
+            }
+            
+            .birthday-description {
+                font-size: 1rem;
+            }
+            
+            .enter-button {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
             }
         }
         --- Fin de intro.css ---
@@ -3924,6 +3810,25 @@ src/
           backdrop-filter: blur(4px);
           z-index: 5;
           font-size: 1.1rem;
+          transition: bottom 0.3s ease; /* Add transition for smooth movement */
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .gallery-caption {
+            font-size: 0.9rem;
+            bottom: 50px;
+            max-width: 85%;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .gallery-caption {
+            font-size: 0.8rem;
+            bottom: 70px; /* Adjust bottom to avoid overlap */
+            max-width: 90%;
+            padding: 8px 15px;
+          }
         }
         
         .gallery-dots {
@@ -4096,22 +4001,98 @@ src/
         layout.css
 
         --- Contenido de layout.css ---
-        * {
+        :root {
+            /* Color variables */
+            --color-primary: #FF9494;
+            --color-secondary: #FFD166;
+            --color-accent: #B97600;
+            --color-background: #fff9f5;
+            --color-text: #6F6F6E;
+            --color-heading: #B97600;
+            
+            /* Font variables */
+            --font-heading: 'Parisienne', cursive;
+            --font-body: 'Raleway', sans-serif;
+            --font-alt: 'Rubik', sans-serif;
+            
+            /* Spacing variables */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            
+            /* Animation variables */
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Border radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-round: 50%;
+            
+            /* Shadow variables */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Reset and base styles */
+        *, *::before, *::after {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         
         html {
-            background: #fff9f5;
+            font-size: 16px;
             scroll-behavior: smooth;
+            background: var(--color-background);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         body {
-            position: relative;
+            font-family: var(--font-body);
+            color: var(--color-text);
+            line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
             min-height: 100vh;
             margin: 0;
         }
         
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        a:hover {
+            color: var(--color-primary);
+        }
+        
+        button {
+            cursor: pointer;
+            font-family: var(--font-body);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--color-heading);
+            line-height: 1.2;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Background decoration */
         .background-decoration {
             position: fixed;
             top: 0;
@@ -4119,15 +4100,22 @@ src/
             width: 100%;
             height: 100%;
             z-index: -1;
+            overflow: hidden;
+        }
+        
+        .decoration-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: 
                 radial-gradient(circle at 10% 20%, rgba(255, 214, 214, 0.3) 0%, transparent 30%),
                 radial-gradient(circle at 90% 30%, rgba(255, 234, 195, 0.3) 0%, transparent 40%),
                 radial-gradient(circle at 50% 80%, rgba(255, 222, 173, 0.2) 0%, transparent 50%);
-            background-size: 100% 100%;
             opacity: 0.7;
         }
         
-        /* Add confetti-like dots */
         .background-decoration::before {
             content: "";
             position: absolute;
@@ -4136,37 +4124,96 @@ src/
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(#FFB6C1 1px, transparent 1px),
-                radial-gradient(#FFD700 1px, transparent 1px),
+                radial-gradient(var(--color-primary) 1px, transparent 1px),
+                radial-gradient(var(--color-secondary) 1px, transparent 1px),
                 radial-gradient(#87CEFA 1px, transparent 1px);
             background-size: 50px 50px;
             background-position: 0 0, 25px 25px, 12px 12px;
-            opacity: 0.2;
+            opacity: 0.15;
         }
         
-        /* Add floating animation for decorative elements */
+        /* Main content container */
+        #content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Utility classes */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Animation keyframes */
         @keyframes float {
-            0% {
+            0%, 100% {
                 transform: translateY(0);
             }
             50% {
                 transform: translateY(-10px);
             }
-            100% {
-                transform: translateY(0);
-            }
         }
         
-        /* Add subtle pulse animation */
         @keyframes pulse {
-            0% {
+            0%, 100% {
                 transform: scale(1);
             }
             50% {
                 transform: scale(1.05);
             }
-            100% {
-                transform: scale(1);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-xl: 2rem;
+                --spacing-lg: 1.5rem;
+            }
+            
+            html {
+                font-size: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            :root {
+                --spacing-lg: 1.25rem;
+                --spacing-md: 1rem;
+            }
+            
+            html {
+                font-size: 14px;
             }
         }
         --- Fin de layout.css ---
@@ -4174,122 +4221,340 @@ src/
         loader.css
 
         --- Contenido de loader.css ---
+        /* Loader container */
         .loader-container {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(135deg, #fff9f5 0%, #fff5f5 100%);
-          z-index: 9999;
-          transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            overflow: hidden;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
         }
         
+        .loader-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fff9f5 0%, #fff5f5 100%);
+            z-index: -1;
+        }
+        
+        /* Loader content */
         .loader-content {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 90%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .loader-image-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .loader-image {
-          width: 120px;
-          height: auto;
-          animation: bounce 2s infinite;
+            width: 100%;
+            height: auto;
+            animation: bounce 2s infinite;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
         }
         
-        .loader-text {
-          font-family: 'Parisienne', cursive;
-          color: #b97600;
-          font-size: 2rem;
-          opacity: 0;
-          animation: fadeIn 1s ease-out forwards 0.5s;
+        .loader-image-container::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(255, 148, 148, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+        
+        .loader-text-container {
+            text-align: center;
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .loader-title {
+            font-family: 'Parisienne', cursive;
+            color: #b97600;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .loader-subtitle {
+            color: #6F6F6E;
+            font-size: 1rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards 0.5s;
+        }
+        
+        /* Progress bar */
+        .loader-progress-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 250px;
+            gap: 0.5rem;
         }
         
         .loader-progress {
-          width: 200px;
-          height: 4px;
-          background-color: rgba(185, 118, 0, 0.2);
-          border-radius: 10px;
-          overflow: hidden;
-          margin-top: 1rem;
+            width: 100%;
+            height: 6px;
+            background-color: rgba(185, 118, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         .loader-progress-bar {
-          height: 100%;
-          background-color: #b97600;
-          border-radius: 10px;
-          animation: progress 1s ease-out forwards;
+            height: 100%;
+            background: linear-gradient(90deg, #FF9494, #FFD166);
+            border-radius: 10px;
+            transition: width 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
         }
         
-        .loader-exit {
-          opacity: 0;
-          visibility: hidden;
-        }
-        
-        @keyframes bounce {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-15px);
-          }
-        }
-        
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes progress {
-          from {
-            width: 0;
-          }
-          to {
+        .loader-progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-          }
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: shimmer 1.5s infinite;
+        }
+        
+        .loader-progress-text {
+            font-size: 0.8rem;
+            color: #6F6F6E;
+            font-weight: 500;
+        }
+        
+        /* Exit animation */
+        .loader-exit {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+        }
+        
+        /* Confetti styles */
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
         
         .confetti {
-          position: absolute;
-          width: 10px;
-          height: 10px;
-          background-color: #ffb6c1;
-          animation: confetti-fall 3s linear infinite;
+            position: absolute;
+            top: -20px;
+            width: 10px;
+            height: 10px;
+            background-color: #ffb6c1;
+            animation: confetti-fall 3s linear infinite;
+            z-index: 1;
         }
         
-        .confetti:nth-child(2n) {
-          background-color: #ffd700;
+        .confetti.circle {
+            border-radius: 50%;
         }
         
-        .confetti:nth-child(3n) {
-          background-color: #87cefa;
+        .confetti.square {
+            border-radius: 2px;
         }
         
-        .confetti:nth-child(4n) {
-          background-color: #ff9494;
+        .confetti.triangle {
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        
+        .confetti.heart {
+            background-color: transparent;
+            width: 10px;
+            height: 10px;
+            position: relative;
+            transform: rotate(45deg);
+        }
+        
+        .confetti.heart::before,
+        .confetti.heart::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+        
+        .confetti.heart::before {
+            top: -5px;
+            left: 0;
+        }
+        
+        .confetti.heart::after {
+            top: 0;
+            left: -5px;
+        }
+        
+        .confetti-explosion .confetti {
+            animation: confetti-explosion 2s ease-out forwards;
+        }
+        
+        /* Balloon styles */
+        .balloon-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: balloon-float 15s linear infinite;
+            opacity: 0.7;
+        }
+        
+        .balloon-string {
+            position: absolute;
+            width: 1px;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0.2);
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Animation keyframes */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
         }
         
         @keyframes confetti-fall {
-          0% {
-            transform: translateY(-100px) rotate(0deg);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(100vh) rotate(360deg);
-            opacity: 0;
-          }
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes confetti-explosion {
+            0% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh * var(--random) - 50vh)) 
+                           translateX(calc(100vw * var(--random) - 50vw)) 
+                           scale(0) 
+                           rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes balloon-float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-120vh) rotate(5deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .loader-title {
+                font-size: 2rem;
+            }
+            
+            .loader-image-container {
+                width: 120px;
+                height: 120px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .loader-title {
+                font-size: 1.8rem;
+            }
+            
+            .loader-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .loader-image-container {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .loader-progress-container {
+                max-width: 200px;
+            }
         }
         --- Fin de loader.css ---
 

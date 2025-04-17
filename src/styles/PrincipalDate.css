@@ -1,303 +1,227 @@
+:root {
+  --primary-color: #ffb6c1;
+  --secondary-color: #ffd166;
+  --background-color: #fff8f0;
+  --text-color: #6f6f6e;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 .principal-date-section {
-  padding: 4rem 1rem;
-  background-color: #fff9f9;
-  position: relative;
-  overflow: hidden;
+  padding: 2rem;
+  background-color: var(--background-color);
 }
 
 .principal-date-container {
-  max-width: 1152px;
+  max-width: 1200px;
   margin: 0 auto;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  z-index: 2;
-}
-
-/* Decorative elements */
-.principal-date-section::before,
-.principal-date-section::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.1;
-  z-index: 1;
-}
-
-.principal-date-section::before {
-  width: 300px;
-  height: 300px;
-  background-color: #FF9494;
-  top: -150px;
-  right: -100px;
-}
-
-.principal-date-section::after {
-  width: 200px;
-  height: 200px;
-  background-color: #FFD166;
-  bottom: -100px;
-  left: -50px;
 }
 
 .flower-decoration {
-  position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .flower-icon {
-  width: 80px;
-  height: 80px;
-  animation: gentle-rotate 10s infinite linear;
+  width: 50px;
+  height: 50px;
+  animation: bounce 2s infinite;
 }
 
-@keyframes gentle-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
   100% {
-    transform: rotate(360deg);
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
   }
 }
 
 .title-container {
-  margin-bottom: 3rem;
-  position: relative;
-}
-
-.title-container::after {
-  content: '';
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #FF9494, transparent);
+  margin-bottom: 2rem;
 }
 
 .birthday-title {
-  font-family: 'Parisienne', cursive;
-  font-size: 3.5rem;
-  color: #B97600;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 0;
-  line-height: 1.2;
+  font-size: 2rem;
+  color: var(--primary-color);
 }
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
 }
 
 .info-card {
-  background-color: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  border: 1px solid rgba(255, 148, 148, 0.2);
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  animation: fade-in 0.5s ease-out forwards;
 }
 
 .info-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .info-card-inner {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  position: relative;
-  z-index: 1;
-}
-
-.info-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: linear-gradient(90deg, #FF9494, #FFD166);
-  z-index: 0;
+  text-align: left;
 }
 
 .info-label {
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: #FF9494;
-  margin-bottom: 1rem;
-  position: relative;
-  display: inline-block;
+  font-weight: bold;
+  color: var(--text-color);
 }
 
 .info-value {
-  font-size: 1.1rem;
-  color: #6F6F6E;
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
-  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: var(--text-color);
 }
 
 .action-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #FF9494;
-  color: white;
-  font-weight: 600;
-  padding: 0.8rem 1.5rem;
-  border-radius: 30px;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 20px;
   text-decoration: none;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  box-shadow: 0 4px 10px rgba(255, 148, 148, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-.action-button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.5);
-  opacity: 0;
-  border-radius: 100%;
-  transform: scale(1, 1) translate(-50%);
-  transform-origin: 50% 50%;
+  transition: background-color 0.3s ease;
 }
 
 .action-button:hover {
-  background-color: #ff8080;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(255, 148, 148, 0.4);
-}
-
-.action-button:hover::after {
-  animation: ripple 1s ease-out;
-}
-
-.button-icon {
-  margin-right: 0.5rem;
-  font-size: 1.2rem;
-}
-
-.calendar-button {
-  background-color: #4285F4;
-  box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
-}
-
-.calendar-button:hover {
-  background-color: #3367D6;
-  box-shadow: 0 6px 15px rgba(66, 133, 244, 0.4);
-}
-
-.location-button {
-  background-color: #34A853;
-  box-shadow: 0 4px 10px rgba(52, 168, 83, 0.3);
-}
-
-.location-button:hover {
-  background-color: #2E8B57;
-  box-shadow: 0 6px 15px rgba(52, 168, 83, 0.4);
+  background-color: #ff80a5;
 }
 
 .modal-wrapper {
+  margin-top: 1rem;
+}
+
+.modal-header {
+  font-family: 'Parisienne', cursive;
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-@keyframes ripple {
-  0% {
-    transform: scale(0, 0);
-    opacity: 0.5;
-  }
+.input-group {
+  position: relative;
+}
+
+.input-label {
+  color: var(--primary-color);
+}
+
+.input-field {
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.input-field:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 182, 193, 0.5);
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+.confirm-button {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+  background-color: #ff80a5;
+}
+
+.confirmation-message {
+  text-align: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #fff8e1;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.confirmation-text {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.confirmation-subtext {
+  color: var(--text-color);
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%,
   100% {
-    transform: scale(20, 20);
-    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
   }
 }
 
-/* Responsive styles */
-@media (max-width: 1024px) {
-  .birthday-title {
-    font-size: 3rem;
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .info-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @media (max-width: 768px) {
-  .principal-date-section {
-    padding: 3rem 1rem;
-  }
-  
-  .birthday-title {
-    font-size: 2.5rem;
-  }
-  
-  .flower-icon {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .info-card-inner {
-    padding: 1.5rem;
-  }
-  
-  .info-label {
-    font-size: 1.1rem;
-  }
-  
-  .info-value {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .principal-date-section {
-    padding: 2rem 0.75rem;
-  }
-  
-  .birthday-title {
-    font-size: 2rem;
-  }
-  
-  .title-container {
-    margin-bottom: 2rem;
-  }
-  
   .info-grid {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
   }
-  
-  .info-card-inner {
-    padding: 1.25rem;
+
+  .birthday-title {
+    font-size: 1.5rem;
   }
-  
-  .action-button {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.9rem;
+
+  .modal-header {
+    font-size: 2rem;
   }
-  
+
   .flower-icon {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 }

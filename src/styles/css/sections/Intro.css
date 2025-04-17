@@ -1,0 +1,237 @@
+/* Landing Intro Layout */
+.landing-intro {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--color-background, linear-gradient(135deg, #fff4f9 0%, #fff8f0 100%));
+}
+
+.landing-intro__background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.background-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 0.8) 100%);
+  backdrop-filter: blur(10px);
+}
+
+/* Enhanced Floating Balloons */
+.floating-balloons {
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  pointer-events: none;
+  animation: rotate 40s linear infinite;
+}
+
+.balloon {
+  position: absolute;
+  width: clamp(60px, 15vw, 150px);
+  height: auto;
+  opacity: 0.6;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));
+  will-change: transform;
+  animation: floatAnimation 12s ease-in-out infinite;
+}
+
+/* Main Content Container */
+.intro-container {
+  position: relative;
+  z-index: 2;
+  width: min(90vw, 1200px);
+  padding: clamp(2rem, 5vw, 4rem);
+  display: grid;
+  gap: clamp(2rem, 4vw, 4rem);
+  place-items: center;
+}
+
+/* Enhanced Header Styles */
+.intro-header {
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.intro-header__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  color: var(--color-primary);
+  text-shadow:
+    2px 2px 0 rgba(255, 255, 255, 0.5),
+    4px 4px 0 rgba(0, 0, 0, 0.1);
+  margin: 0;
+  position: relative;
+}
+
+.intro-header__badge {
+  position: absolute;
+  top: -20px;
+  right: -40px;
+  background: var(--color-primary);
+  padding: 1rem;
+  border-radius: 50%;
+  width: clamp(60px, 15vw, 100px);
+  height: clamp(60px, 15vw, 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(15deg);
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    0 0 0 8px rgba(255, 255, 255, 0.8);
+  animation: float 6s ease-in-out infinite;
+}
+
+.intro-description {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  text-align: center;
+  max-width: 70ch;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+/* Enhanced Gallery Section */
+.intro-gallery {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Enhanced Button Styles */
+.intro-action__button {
+  position: relative;
+  padding: clamp(1rem, 2vw, 1.5rem) clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  font-weight: 600;
+  color: white;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.button__shine {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: rotate(45deg);
+  animation: shine 3s infinite;
+}
+
+/* Enhanced Animations */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(15deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(20deg);
+  }
+}
+
+@keyframes shine {
+  from {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  to {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .intro-container {
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+
+  .intro-header__badge {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin: 1rem auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .balloon {
+    width: clamp(40px, 12vw, 80px);
+  }
+}
+
+/* Animation Delays */
+.intro-description {
+  animation-delay: 0.2s;
+}
+.intro-gallery {
+  animation-delay: 0.4s;
+}
+.intro-action {
+  animation-delay: 0.6s;
+}

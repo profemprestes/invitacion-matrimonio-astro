@@ -1,0 +1,88 @@
+/* === Theme Variables === */
+:root {
+  /* Colors */
+  --color-primary: #ff9494;
+  --color-primary-light: #ffb6c1;
+  --color-primary-dark: #ff5277;
+  --color-secondary: #ffd166;
+  --color-accent: #b97600;
+  --color-success: #95c998;
+
+  /* Background Colors */
+  --color-background: #fff9f5;
+  --color-background-alt: #fff8f0;
+  --color-overlay: rgba(0, 0, 0, 0.7);
+
+  /* Text Colors */
+  --color-text: #6f6f6e;
+  --color-text-dark: #4a4a4a;
+  --color-heading: #b97600;
+
+  /* Font Families */
+  --font-heading: 'Parisienne', cursive;
+  --font-body: 'Raleway', sans-serif;
+  --font-alt: 'Rubik', sans-serif;
+
+  /* Font Sizes */
+  --text-xs: 0.875rem;
+  --text-sm: 0.95rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Z-index layers */
+  --z-modal: 1000;
+  --z-overlay: 999;
+  --z-header: 100;
+  --z-base: 1;
+}
+
+/* === Section-specific Variables === */
+:root {
+  /* Party Section */
+  --party-card-bg: rgba(255, 255, 255, 0.95);
+  --party-card-border: rgba(255, 107, 139, 0.15);
+  --party-gradient: linear-gradient(90deg, #ff6b8b, #ffd166);
+
+  /* Modal Variables */
+  --modal-bg: white;
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  --modal-blur: blur(5px);
+
+  /* Button Variables */
+  --btn-primary-bg: var(--color-primary);
+  --btn-primary-hover: var(--color-primary-dark);
+  --btn-secondary-bg: var(--color-secondary);
+  --btn-secondary-hover: #ffa726;
+
+  /* Animation Durations */
+  --animation-slow: 0.8s;
+  --animation-medium: 0.5s;
+  --animation-fast: 0.3s;
+}

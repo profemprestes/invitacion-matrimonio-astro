@@ -1,0 +1,14 @@
+/* global.css */
+:root {
+  --color-principal: #e91e63;
+  --color-secundario: #ffebee;
+  --font-principal: 'Quicksand', sans-serif;
+}
+
+body {
+  font-family: var(--font-principal);
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-secundario);
+  color: #333;
+}

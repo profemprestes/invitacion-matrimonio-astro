@@ -1,0 +1,86 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Darker background for better focus */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px); /* Adds a blur effect to the background */
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #ffb6c1, #ffd166); /* Gradient background */
+  padding: 30px;
+  border-radius: 12px;
+  width: 320px;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adds a shadow for depth */
+  animation: slide-down 0.3s ease-out; /* Slide down animation */
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #fff; /* White color for better visibility */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff; /* White color for better contrast */
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+}
+
+.form-group input:focus {
+  border-color: #ff80a5;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 128, 165, 0.5); /* Focus effect */
+}
+
+.submit-button {
+  background-color: #ff80a5;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  font-weight: bold;
+}
+
+.submit-button:hover {
+  background-color: #ff4f7d; /* Darker shade on hover */
+}

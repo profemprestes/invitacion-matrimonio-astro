@@ -1,269 +1,227 @@
+:root {
+  --color-primary: #ffb6c1;
+  --color-secondary: #ffd166;
+  --color-background: #fff8f0;
+  --color-text: #6f6f6e;
+  --font-heading: 'Parisienne', cursive;
+  --font-body: 'Raleway', sans-serif;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --radius-md: 12px;
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-background);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 #landing-intro {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    position: relative;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    background: linear-gradient(to bottom, #fff8f0, #fff);
-    overflow: hidden;
-    padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+  background: linear-gradient(to bottom, var(--color-background), #fff);
 }
 
 .intro-container {
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(5px);
-    border-radius: 20px;
-    padding: 2.5rem;
-    box-shadow: 0 10px 25px rgba(185, 118, 0, 0.1);
-    border: 1px solid rgba(185, 118, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(5px);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  animation: fadeInUp 1s ease-out;
 }
 
 .birthday-header {
-    position: relative;
-    margin-bottom: 0.5rem;
+  position: relative;
+  margin-bottom: var(--spacing-sm);
 }
 
 .birthday-title {
-    text-align: center;
-    font-weight: 500;
-    font-family: 'Parisienne', cursive;
-    color: #B97600;
-    font-size: 75px;
+  text-align: center;
+  font-weight: 500;
+  font-family: var(--font-heading);
+  color: var(--color-accent);
+  font-size: 75px;
 }
 
 .birthday-description {
-    color: #6F6F6E;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
-    line-height: 1.75;
+  color: var(--color-text);
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.25rem;
+  line-height: 1.75;
 }
 
 .gallery-section {
-    margin: 1rem 0 2rem;
+  margin: var(--spacing-md) 0 var(--spacing-lg);
 }
 
 .birthday-badge {
-    position: absolute;
-    top: -15px;
-    right: 0;
-    background-color: #FF9494;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    transform: rotate(15deg);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    animation: pulse 2s infinite;
-}
-
-.birthday-badge span:first-child {
-    font-size: 2rem;
-    line-height: 1;
-}
-
-.birthday-badge span:last-child {
-    font-size: 0.9rem;
+  position: absolute;
+  top: -15px;
+  right: 0;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  transform: rotate(15deg);
+  box-shadow: var(--shadow-md);
+  animation: pulse 2s infinite;
 }
 
 .floating-balloons {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .balloon {
-    position: absolute;
-    width: 80px;
-    opacity: 0.8;
+  position: absolute;
+  width: 80px;
+  opacity: 0.8;
+  animation: float 8s ease-in-out infinite;
 }
 
 .balloon-1 {
-    top: 10%;
-    left: 10%;
-    animation: float 8s ease-in-out infinite;
+  top: 10%;
+  left: 10%;
 }
 
 .balloon-2 {
-    top: 15%;
-    right: 15%;
-    animation: float 10s ease-in-out infinite;
+  top: 15%;
+  right: 15%;
 }
 
 .balloon-3 {
-    bottom: 20%;
-    left: 20%;
-    animation: float 9s ease-in-out infinite 1s;
+  bottom: 20%;
+  left: 20%;
 }
 
-@keyframes float {
-    0% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-20px) rotate(5deg);
-    }
-    100% {
-        transform: translateY(0) rotate(0deg);
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: rotate(15deg) scale(1);
-    }
-    50% {
-        transform: rotate(15deg) scale(1.05);
-    }
-    100% {
-        transform: rotate(15deg) scale(1);
-    }
-}
-
-/* Enhanced animations */
-.intro-container {
-    animation: fadeIn 1s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive styles */
-@media (min-width: 1024px) {
-    .birthday-title {
-        font-size: 65px;
-    }
-    
-    .birthday-description {
-        font-size: 1.5rem;
-    }
-}
-
-@media (max-width: 1023px) {
-    .balloon {
-        width: 60px;
-    }
-    
-    .birthday-badge {
-        width: 60px;
-        height: 60px;
-        top: -10px;
-        right: 10px;
-    }
-    
-    .birthday-description {
-        font-size: 1.25rem;
-    }
-}
-
-@media (max-width: 640px) {
-    .intro-container {
-        padding: 1.5rem;
-    }
-    
-    .birthday-title {
-        font-size: 55px;
-    }
-    
-    .birthday-description {
-        font-size: 1rem;
-    }
-}
-
-/* Enter button styles */
 .enter-button-container {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    z-index: 10; /* Ensure it is above other elements */
+  margin-top: var(--spacing-md);
+  display: flex;
+  justify-content: center;
 }
 
 .enter-button {
-    background-color: #FF9494;
-    color: white;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 0.8rem 2rem;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(255, 148, 148, 0.3);
-    position: relative;
-    overflow: hidden;
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.8rem 2rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  animation: pulse 2s infinite;
 }
 
 .enter-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(255, 148, 148, 0.4);
-    background-color: #ff8080;
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(255, 148, 148, 0.4);
+  background-color: #ff8080;
+}
+
+.enter-button:focus {
+  outline: 2px solid rgba(255, 148, 148, 0.5);
+  outline-offset: 2px;
 }
 
 .enter-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(255, 148, 148, 0.4);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
     transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(255, 148, 148, 0.4);
+  }
 }
 
-/* Responsive adjustments */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
 @media (max-width: 768px) {
-    .intro-container {
-        padding: 2rem 1.5rem;
-        gap: 1rem;
-    }
-    
-    .gallery-section {
-        margin: 0.5rem 0 1.5rem;
-    }
-    
-    .enter-button-container {
-        margin-top: 1.5rem; /* Increase margin to avoid overlap */
-    }
+  .intro-container {
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+  }
+
+  .birthday-title {
+    font-size: 65px;
+  }
+
+  .birthday-description {
+    font-size: 1.25rem;
+  }
+
+  .enter-button {
+    font-size: 1rem;
+    padding: 0.7rem 1.5rem;
+  }
 }
 
-@media (max-width: 640px) {
-    .intro-container {
-        padding: 1.5rem 1rem;
-    }
-    
-    .birthday-title {
-        font-size: 55px;
-    }
-    
-    .birthday-description {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .enter-button {
-        font-size: 1rem;
-        padding: 0.7rem 1.5rem;
-    }
-    
-    .gallery-section {
-        margin: 0.5rem 0 1rem;
-    }
-    
-    .enter-button-container {
-        margin-top: 2rem; /* Further increase margin for smaller screens */
-    }
+@media (max-width: 480px) {
+  .intro-container {
+    padding: var(--spacing-sm);
+  }
+
+  .birthday-title {
+    font-size: 55px;
+  }
+
+  .birthday-description {
+    font-size: 1rem;
+  }
+
+  .enter-button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
 }

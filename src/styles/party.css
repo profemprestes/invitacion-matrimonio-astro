@@ -1,199 +1,325 @@
-/* Party section styles */
-.party-section {
-    padding: 5rem 1rem;
-    position: relative;
-    background: linear-gradient(to bottom, #fff9f9, #fff);
-    overflow: hidden;
+/* ==== Party Section Styles ==== */
+
+.party {
+  position: relative;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #ffe9ec, #fff8f0);
+  overflow: hidden;
 }
 
-.party-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
+.party__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-/* Decorative elements */
-.party-decorations {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
+.party__header {
+  margin-bottom: 3rem;
+}
+
+.party__title-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.party__subtitle {
+  font-size: 1.25rem;
+  color: #757575;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Party Decorations */
+.party__decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .decoration {
-    position: absolute;
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.2;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-.balloon-left {
-    top: 10%;
-    left: 5%;
-    width: 120px;
-    height: 120px;
-    background-image: url("/img/balloon1.svg");
-    animation: float 8s ease-in-out infinite;
+.decoration--balloon-left {
+  top: 20px;
+  left: -30px;
+  width: 150px;
+  height: 150px;
+  background-image: url('/images/balloon-left.png');
+  animation: float 6s ease-in-out infinite;
 }
 
-.balloon-right {
-    top: 15%;
-    right: 5%;
-    width: 100px;
-    height: 100px;
-    background-image: url("/img/balloon1.svg");
-    animation: float 7s ease-in-out infinite 1s;
+.decoration--balloon-right {
+  top: 50px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background-image: url('/images/balloon-right.png');
+  animation: float 7s ease-in-out infinite;
 }
 
-.confetti-1 {
-    bottom: 15%;
-    left: 10%;
-    width: 80px;
-    height: 80px;
-    background-image: url("/cake.svg");
-    animation: float 6s ease-in-out infinite 0.5s;
+.decoration--confetti-1 {
+  bottom: 10%;
+  left: 10%;
+  width: 100px;
+  height: 100px;
+  background-image: url('/images/confetti1.png');
+  animation: confetti-fall 8s linear infinite;
 }
 
-.confetti-2 {
-    bottom: 20%;
-    right: 10%;
-    width: 90px;
-    height: 90px;
-    background-image: url("/cake.svg");
-    animation: float 9s ease-in-out infinite 1.5s;
+.decoration--confetti-2 {
+  bottom: 15%;
+  right: 10%;
+  width: 90px;
+  height: 90px;
+  background-image: url('/images/confetti2.png');
+  animation: confetti-fall 9s linear infinite;
 }
 
-/* Header styles */
-.party-header {
-    text-align: center;
-    margin-bottom: 3rem;
-    animation: fadeIn 1s ease-out;
+/* Party Content */
+.party__content {
+  position: relative;
+  z-index: 1;
 }
 
-.party-title-wrapper {
-    margin-bottom: 1.5rem;
-    position: relative;
-    display: inline-block;
-}
-
-.party-title-wrapper::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #FF6B8B, transparent);
-}
-
-.party-subtitle {
-    font-size: 1.25rem;
-    color: #8A8A89;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-    animation: slideUp 0.8s ease-out forwards;
-}
-
-/* Content styles */
-.party-content {
-    animation: fadeInUp 1s ease-out 0.3s forwards;
-    opacity: 0;
-}
-
-.party-cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
+.party__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
 }
 
 /* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 @keyframes float {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-20px) rotate(5deg);
-    }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
-/* Responsive styles */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0);
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+/* ==== CardParty Component Styling ==== */
+.party-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 2rem;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 107, 139, 0.15);
+}
+
+.party-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(90deg, #ff6b8b, #ffd166);
+}
+
+.party-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.party-card-icon {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 1.5rem;
+}
+
+.party-card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: transform 0.5s ease;
+}
+
+.party-card:hover .party-card-icon img {
+  transform: scale(1.08) rotate(4deg);
+}
+
+.party-card-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff6b8b;
+  margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.party-card-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 60px;
+  height: 3px;
+  background-color: rgba(255, 107, 139, 0.4);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.party-card:hover .party-card-title::after {
+  width: 80px;
+}
+
+.party-card-description {
+  text-align: center;
+  color: #757575;
+  font-size: 1rem;
+  line-height: 1.7;
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+
+.button-wrapper {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.custom-modal-button {
+  background: linear-gradient(135deg, #ff6b8b, #ff8e72);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(255, 107, 139, 0.4);
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-modal-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.8s ease;
+}
+
+.custom-modal-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(255, 107, 139, 0.5);
+}
+
+.custom-modal-button:hover::before {
+  left: 100%;
+}
+
+.custom-modal-button:active {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
+}
+
+/* Button Modifiers */
+.message-button {
+  background: #ff6b8b;
+  animation: pulse 2s infinite;
+}
+
+.message-button:hover {
+  background: #ff5277;
+}
+
+.about-button {
+  background: #ffb347;
+  animation: pulse 2s infinite;
+}
+
+.about-button:hover {
+  background: #ffa726;
+  box-shadow: 0 8px 18px rgba(255, 179, 71, 0.45);
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
-    .party-section {
-        padding: 4rem 1rem;
-    }
-    
-    .party-cards-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .party-subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .decoration {
-        transform: scale(0.8);
-    }
+  .party {
+    padding: 3rem 1.5rem;
+  }
+
+  .party__subtitle {
+    font-size: 1.1rem;
+  }
+
+  .party-card-title {
+    font-size: 1.6rem;
+  }
+
+  .party-card-icon {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 @media (max-width: 480px) {
-    .party-section {
-        padding: 3rem 1rem;
-    }
-    
-    .party-header {
-        margin-bottom: 2rem;
-    }
-    
-    .party-subtitle {
-        font-size: 1rem;
-    }
-    
-    .party-cards-container {
-        gap: 1.5rem;
-    }
-    
-    .decoration {
-        transform: scale(0.6);
-    }
+  .party {
+    padding: 2rem 1rem;
+  }
+
+  .party__subtitle {
+    font-size: 1rem;
+  }
+
+  .party-card-title {
+    font-size: 1.4rem;
+  }
+
+  .party-card-description {
+    font-size: 0.95rem;
+  }
+
+  .party-card-icon {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1rem;
+  }
+
+  .custom-modal-button {
+    padding: 0.6rem 1.3rem;
+    font-size: 0.95rem;
+  }
 }

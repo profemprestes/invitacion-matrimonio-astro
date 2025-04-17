@@ -1,34 +1,52 @@
 ---
-import "../styles/hero.css";
+// importación de estilos CSS
+import '../styles/css/sections/Hero.css';
 ---
 
-<section
-    class="greater-desktop:h-screen desktop:h-[670px] h-[670px] hero-section desktop:w-full w-full flex justify-center items-center bg-fixed bg-cover bg-no-repeat bg-center"
->
-    <div class="hero-background-container">
-        <img src="/herogalia.gif" id="parallax-hero" alt="hero-parallax" />
+<header class="hero-section" aria-label="Sección principal de bienvenida">
+  <!-- Fondo animado/parallax -->
+  <figure class="hero-background-container" aria-hidden="true">
+    <img src="/herogalia.gif" id="parallax-hero" alt="" class="hero-background" loading="lazy" />
+  </figure>
+
+  <!-- Contenido principal -->
+  <div class="info-hero">
+    <div class="hero-content">
+      <h2 class="hero-name">Soy Galia</h2>
+
+      <h1 class="hero-title">
+        Festejo mi<br />
+        <span>Primer Añito</span>
+      </h1>
+
+      <p class="hero-date" role="contentinfo">🎉 10 de Mayo de 2024</p>
+
+      <blockquote class="hero-quote">
+        <p>
+          Me encantaría que vinieras a celebrar
+          <br class="mobile-break" />
+          mi primer año.<br />
+          <strong>¡Será especial contigo!</strong>
+        </p>
+      </blockquote>
+
+      <!-- Botón de llamada a la acción -->
+      <div class="cta-container">
+        <a href="#rsvp" class="cta-image-link" aria-label="Confirmar asistencia">
+          <img
+            src="/galia/galiahamaca.webp"
+            alt="Galia invitando a la celebración"
+            class="cta-image"
+            loading="lazy"
+          />
+        </a>
+        <p class="cta-caption">Hacé clic en la imagen para confirmar asistencia</p>
+      </div>
+
+      <!-- Cierre emocional -->
+      <footer class="hero-footer" role="contentinfo">
+        <p>¡Nos vemos pronto para celebrar juntos!</p>
+      </footer>
     </div>
-    
-    <div class="info-hero">
-        <div class="hero-content">
-            <div class="hero-name">Soy Galia</div>
-            <h1 class="married-hero">
-                Festejo Mi
-                <span>Primer Añito</span>
-            </h1>
-            <div class="date-hero">
-                10 de Mayo de 2024
-            </div>
-            <div class="quote-container">
-                <img src="/mark_open.svg" alt="Quote open" />
-                <p>
-                    Me encantaría que vinieras a celebrar mi primer año. ¡Será especial contigo!
-                </p>
-                <img src="/mark_close.svg" alt="Quote close" />
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <img src="/arrow_down.gif" alt="Scroll down" />
-        </div>
-    </div>
-</section>
+  </div>
+</header>
