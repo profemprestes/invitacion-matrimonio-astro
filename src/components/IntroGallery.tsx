@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react'; // Importa los íconos
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import '../styles/introgallery.css';
 
 interface ImageData {
@@ -11,6 +11,7 @@ interface ImageData {
 const IntroGallery = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
     const intervalRef = useRef<number | null>(null);
 
     // List of images from the public/img directory with captions
@@ -21,63 +22,80 @@ const IntroGallery = () => {
         { src: '/img/Galia4.png', caption: 'Celebrando juntos' },
     ];
 
-    // Auto-rotate images
-    useEffect(() => {
-        setIsLoaded(true);
-
-        intervalRef.current = window.setInterval(() => {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 4000);
-
-        return () => {
-            if (intervalRef.current) {
-                clearInterval(intervalRef.current);
-            }
-        };
-    }, [images.length]);  // Dependencia de images.length
-
-    // Handle manual navigation
-    const goToImage = (index: number) => {
+    // Memoized navigation functions to prevent unnecessary re-renders
+    const goToImage = useCallback((index: number) => {
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
         }
         setCurrentImageIndex(index);
-    };
+        setIsPaused(true);
+    }, []);
 
-    const goToPrevious = () => {
+    const goToPrevious = useCallback(() => {
         if (intervalRef.current) {
-          clearInterval(intervalRef.current);
+            clearInterval(intervalRef.current);
         }
         setCurrentImageIndex((prevIndex) =>
             prevIndex === 0 ? images.length - 1 : prevIndex - 1
         );
-    };
+        setIsPaused(true);
+    }, [images.length]);
 
-    const goToNext = () => {
+    const goToNext = useCallback(() => {
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
         }
         setCurrentImageIndex((prevIndex) =>
             (prevIndex + 1) % images.length
         );
-    };
+        setIsPaused(true);
+    }, [images.length]);
+
+    // Auto-rotate images
+    useEffect(() => {
+        setIsLoaded(true);
+
+        if (!isPaused) {
+            intervalRef.current = window.setInterval(() => {
+                setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+            }, 4000);
+        }
+
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
+    }, [images.length, isPaused]);
+
+    // Reset auto-rotation after 10 seconds of inactivity
+    useEffect(() => {
+        if (isPaused) {
+            const pauseTimer = setTimeout(() => {
+                setIsPaused(false);
+            }, 10000);
+            
+            return () => clearTimeout(pauseTimer);
+        }
+    }, [isPaused]);
 
     return (
         <div className="gallery-container mt-6">
             <div className="gallery-wrapper">
-                <AnimatePresence initial={false}>
+                <AnimatePresence initial={false} mode="wait">
                     {images.map((image, index) => (
                         <motion.div
                             key={index}
                             className={`gallery-image ${index === currentImageIndex ? 'active' : ''}`}
                             style={{ backgroundImage: `url(${image.src})` }}
-                            initial={{ opacity: 0, x: index === currentImageIndex ? 0 : 50 }}
+                            initial={{ opacity: 0, scale: 1.05 }}
                             animate={{
                                 opacity: index === currentImageIndex ? 1 : 0,
+                                scale: index === currentImageIndex ? 1 : 1.05,
                                 x: `${(index - currentImageIndex) * 100}%`,
-                                transition: { duration: 0.5, ease: "easeInOut" },
+                                transition: { duration: 0.7, ease: "easeInOut" },
                             }}
-                            exit={{ opacity: 0, x: -50 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
                         />
                     ))}
                 </AnimatePresence>
@@ -98,9 +116,15 @@ const IntroGallery = () => {
                 <ChevronRight className="h-6 w-6" />
             </button>
 
-            <div className="gallery-caption">
+            <motion.div 
+                className="gallery-caption"
+                key={currentImageIndex}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
                 {images[currentImageIndex].caption}
-            </div>
+            </motion.div>
 
             <div className="gallery-dots">
                 {images.map((_, index) => (

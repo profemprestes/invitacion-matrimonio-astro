@@ -1,100 +1,180 @@
 .party-card {
-    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     padding: 2rem;
+    transition: all 0.4s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    border-radius: 1rem;
+    position: relative;
     overflow: hidden;
+    border: 1px solid rgba(255, 148, 148, 0.2);
+    height: 100%;
 }
 
-.hover-effect:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+.party-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #FF6B8B, #FFD166);
+}
+
+.party-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
 }
 
 .party-card-icon {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
 }
 
 .party-card-icon img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    transition: transform 0.5s ease;
+}
+
+.party-card:hover .party-card-icon img {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .party-card-title {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 600;
-    color: var(--color01);
+    color: #FF6B8B;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 1rem;
     text-align: center;
+    width: 100%;
+}
+
+.party-card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background-color: rgba(255, 107, 139, 0.3);
+    transition: width 0.3s ease;
+}
+
+.party-card:hover .party-card-title::after {
+    width: 80px;
 }
 
 .party-card-description {
     text-align: center;
-    color: #666;
+    color: #6F6F6E;
     line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
 }
 
-.party-card-button {
-    &.custom-modal-button {
-      background-color: var(--color01);
-      color: var(--color02);
-      min-width: 13rem;
-      max-width: 13rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-  }
-    .custom-modal-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(185, 118, 0, 0.2);
-        opacity: 0.9;
-    }
+.button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+}
 
-    .button-wrapper {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-    }
+.custom-modal-button {
+    background-color: #FF6B8B;
+    color: white;
+    font-weight: 600;
+    padding: 0.8rem 1.8rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(255, 107, 139, 0.3);
+    position: relative;
+    overflow: hidden;
+}
 
+.custom-modal-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.8s ease;
+}
 
+.custom-modal-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 107, 139, 0.4);
+    background-color: #FF5277;
+}
 
-/* Animations */
+.custom-modal-button:hover::before {
+    left: 100%;
+}
+
+.custom-modal-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(255, 107, 139, 0.3);
+}
+
+.message-button {
+    background-color: #FF6B8B;
+}
+
+.message-button:hover {
+    background-color: #FF5277;
+}
+
+.about-button {
+    background-color: #FFB347;
+}
+
+.about-button:hover {
+    background-color: #FFA726;
+    box-shadow: 0 8px 20px rgba(255, 179, 71, 0.4);
+}
+
+/* Animation classes */
 .bounce {
     animation: bounce 2s infinite;
 }
 
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
+.fadeIn {
+    animation: fadeIn 1s ease-out forwards;
 }
 
-.slide-up {
-    animation: slideUp 0.5s ease-out;
+.slideUp {
+    animation: slideUp 0.8s ease-out forwards;
 }
 
-.fade-in-up {
-    animation: fadeInUp 0.7s ease-out;
+.fadeInUp {
+    animation: fadeInUp 1s ease-out forwards;
 }
 
+/* Animations */
 @keyframes bounce {
-    0%, 100% {
+    0%, 20%, 50%, 80%, 100% {
         transform: translateY(0);
     }
-    50% {
+    40% {
         transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
     }
 }
 
@@ -121,7 +201,7 @@
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -129,18 +209,47 @@
     }
 }
 
-/* Responsive Design */
-@media (max-width: 576px) {
+/* Responsive styles */
+@media (max-width: 768px) {
+    .party-card {
+        padding: 1.75rem;
+    }
+    
+    .party-card-title {
+        font-size: 1.5rem;
+    }
+    
+    .party-card-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .custom-modal-button {
+        padding: 0.7rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
     .party-card {
         padding: 1.5rem;
     }
-
-    .party-card-icon {
-        width: 60px;
-        height: 60px;
-    }
-
+    
     .party-card-title {
-        font-size: 1.25rem;
+        font-size: 1.35rem;
+    }
+    
+    .party-card-description {
+        font-size: 0.95rem;
+    }
+    
+    .party-card-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 1.25rem;
+    }
+    
+    .custom-modal-button {
+        padding: 0.6rem 1.3rem;
+        font-size: 0.95rem;
     }
 }

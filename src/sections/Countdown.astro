@@ -7,30 +7,46 @@ import "../styles/Countdown.css";
 const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
 ---
 
-<section class="countdown-section max-w-6xl desktop:px-16 pt-20 pb-10 text-center mx-auto flex flex-col items-center justify-center">
-    <Title title="Falta" />
-    <div data-date={TIMESTAMP_END} class="countdown-container">
-        <div class="countdown-unit">
-            <span data-days class="countdown-number">00</span>
-            <span class="countdown-label">DÍAS</span>
-        </div>
+<section class="countdown-section">
+    <div class="countdown-wrapper">
+        <Title title="Falta" />
+        <div data-date={TIMESTAMP_END} class="countdown-container">
+            <div class="countdown-unit">
+                <div class="countdown-card">
+                    <span data-days class="countdown-number">00</span>
+                </div>
+                <span class="countdown-label">DÍAS</span>
+            </div>
 
-        <div class="countdown-unit">
-            <span data-hours class="countdown-number">00</span>
-            <span class="countdown-label">HS</span>
-        </div>
+            <div class="countdown-separator">:</div>
 
-        <div class="countdown-unit">
-            <span data-minutes class="countdown-number">00</span>
-            <span class="countdown-label">MIN</span>
+            <div class="countdown-unit">
+                <div class="countdown-card">
+                    <span data-hours class="countdown-number">00</span>
+                </div>
+                <span class="countdown-label">HS</span>
+            </div>
+
+            <div class="countdown-separator">:</div>
+
+            <div class="countdown-unit">
+                <div class="countdown-card">
+                    <span data-minutes class="countdown-number">00</span>
+                </div>
+                <span class="countdown-label">MIN</span>
+            </div>
+            
+            <div class="countdown-separator">:</div>
+            
+            <div class="countdown-unit">
+                <div class="countdown-card">
+                    <span data-seconds class="countdown-number">00</span>
+                </div>
+                <span class="countdown-label">SEG</span>
+            </div>
         </div>
-        
-        <div class="countdown-unit">
-            <span data-seconds class="countdown-number">00</span>
-            <span class="countdown-label">SEG</span>
-        </div>
+        <Divider />
     </div>
-    <Divider />
 </section>
 
 <script>
@@ -59,18 +75,49 @@ const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
         function updateCountdown() {
             const now = Date.now();
             const diff = date - now;
+            
+            // Ensure we don't show negative values if the date has passed
+            const remainingTime = Math.max(diff, 0);
 
             if ($days instanceof HTMLElement) {
-                $days.innerText = formatTime(diff / DAY);
+                const newDays = formatTime(remainingTime / DAY);
+                if ($days.innerText !== newDays) {
+                    $days.parentElement?.classList.add('flip');
+                    $days.innerText = newDays;
+                    setTimeout(() => {
+                        $days.parentElement?.classList.remove('flip');
+                    }, 500);
+                }
             }
             if ($hours instanceof HTMLElement) {
-                $hours.innerText = formatTime((diff % DAY) / HOUR);
+                const newHours = formatTime((remainingTime % DAY) / HOUR);
+                if ($hours.innerText !== newHours) {
+                    $hours.parentElement?.classList.add('flip');
+                    $hours.innerText = newHours;
+                    setTimeout(() => {
+                        $hours.parentElement?.classList.remove('flip');
+                    }, 500);
+                }
             }
             if ($minutes instanceof HTMLElement) {
-                $minutes.innerText = formatTime((diff % HOUR) / MINUTE);
+                const newMinutes = formatTime((remainingTime % HOUR) / MINUTE);
+                if ($minutes.innerText !== newMinutes) {
+                    $minutes.parentElement?.classList.add('flip');
+                    $minutes.innerText = newMinutes;
+                    setTimeout(() => {
+                        $minutes.parentElement?.classList.remove('flip');
+                    }, 500);
+                }
             }
             if ($seconds instanceof HTMLElement) {
-                $seconds.innerText = formatTime((diff % MINUTE) / SECOND);
+                const newSeconds = formatTime((remainingTime % MINUTE) / SECOND);
+                if ($seconds.innerText !== newSeconds) {
+                    $seconds.parentElement?.classList.add('flip');
+                    $seconds.innerText = newSeconds;
+                    setTimeout(() => {
+                        $seconds.parentElement?.classList.remove('flip');
+                    }, 500);
+                }
             }
         }
 
