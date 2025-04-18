@@ -6,14 +6,50 @@ function Loader() {
     const [progress, setProgress] = useState(0);
     const [animationComplete, setAnimationComplete] = useState(false);
     const confettiRef = useRef(null);
-    
-    // Create confetti elements with different shapes
-    const createConfetti = () => {
+    const [confettiElements, setConfettiElements] = useState([]);
+    const [balloonElements, setBalloonElements] = useState([]);
+
+    useEffect(() => {
+        // Preload critical assets
+        const preloadImages = ['/margarita.gif', '/herogalia.gif', '/cake.svg'];
+        preloadImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+
+        // Simulación de carga más realista
+        let startTime = Date.now();
+        const totalDuration = 2000;
+
+        const interval = setInterval(() => {
+            const elapsedTime = Date.now() - startTime;
+            const progressPercentage = Math.min(100, Math.floor((elapsedTime / totalDuration) * 100));
+            setProgress(progressPercentage);
+
+            if (progressPercentage >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    setAnimationComplete(true);
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 800);
+                }, 300);
+            }
+        }, 50);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        if (progress === 100 && confettiRef.current) {
+            confettiRef.current.classList.add('confetti-explosion');
+        }
+    }, [progress]);
+
+    useEffect(() => {
         const shapes = ['circle', 'square', 'triangle', 'heart'];
         const colors = ['#FFB6C1', '#FFD700', '#87CEFA', '#FF9494', '#98FB98', '#FFA07A'];
-        const confetti = [];
-        
-        for (let i = 0; i < 40; i++) {
+        const newConfetti = Array.from({ length: 40 }, (_, i) => {
             const left = Math.random() * 100;
             const size = 5 + Math.random() * 10;
             const animationDuration = 2 + Math.random() * 3;
@@ -21,9 +57,8 @@ function Loader() {
             const shape = shapes[Math.floor(Math.random() * shapes.length)];
             const color = colors[Math.floor(Math.random() * colors.length)];
             const rotation = Math.random() * 360;
-            
-            confetti.push(
-                <div 
+            return (
+                <div
                     key={i}
                     className={`confetti ${shape}`}
                     style={{
@@ -37,24 +72,18 @@ function Loader() {
                     }}
                 />
             );
-        }
-        return confetti;
-    };
+        });
+        setConfettiElements(newConfetti);
 
-    // Create balloon elements
-    const createBalloons = () => {
-        const balloons = [];
-        const colors = ['#FF9494', '#FFD166', '#06D6A0', '#118AB2'];
-        
-        for (let i = 0; i < 6; i++) {
+        const balloonColors = ['#FF9494', '#FFD166', '#06D6A0', '#118AB2'];
+        const newBalloons = Array.from({ length: 6 }, (_, i) => {
             const left = 10 + (i * 15);
             const animationDuration = 15 + Math.random() * 10;
             const animationDelay = Math.random() * 5;
             const size = 40 + Math.random() * 30;
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            
-            balloons.push(
-                <div 
+            const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+            return (
+                <div
                     key={i}
                     className="balloon"
                     style={{
@@ -69,81 +98,33 @@ function Loader() {
                     <div className="balloon-string"></div>
                 </div>
             );
-        }
-        return balloons;
-    };
-
-    useEffect(() => {
-        // Preload critical assets
-        const preloadImages = ['/margarita.gif', '/herogalia.gif', '/cake.svg'];
-        preloadImages.forEach(src => {
-            const img = new Image();
-            img.src = src;
         });
-        
-        // More realistic loading simulation with variable increments
-        let startTime = Date.now();
-        const totalDuration = 2000; // 2 seconds total loading time
-        
-        const interval = setInterval(() => {
-            const elapsedTime = Date.now() - startTime;
-            const progressPercentage = Math.min(100, Math.floor((elapsedTime / totalDuration) * 100));
-            
-            setProgress(progressPercentage);
-            
-            if (progressPercentage >= 100) {
-                clearInterval(interval);
-                
-                // Add a small delay before hiding loader for smooth transition
-                setTimeout(() => {
-                    setAnimationComplete(true);
-                    
-                    // After animation completes, remove the loader
-                    setTimeout(() => {
-                        setLoading(false);
-                    }, 800);
-                }, 300);
-            }
-        }, 50);
-
-        return () => clearInterval(interval);
+        setBalloonElements(newBalloons);
     }, []);
-
-    // Add confetti explosion effect when loading completes
-    useEffect(() => {
-        if (progress === 100 && confettiRef.current) {
-            confettiRef.current.classList.add('confetti-explosion');
-        }
-    }, [progress]);
 
     if (!loading) return null;
 
     return (
         <div className={`loader-container ${animationComplete ? 'loader-exit' : ''}`}>
             <div className="loader-background"></div>
-            
             <div className="confetti-container" ref={confettiRef}>
-                {createConfetti()}
+                {confettiElements}
             </div>
-            
             <div className="balloon-container">
-                {createBalloons()}
+                {balloonElements}
             </div>
-            
             <div className="loader-content">
                 <div className="loader-image-container">
                     <img className="loader-image" src="/margarita.gif" alt="Loading" />
                 </div>
-                
                 <div className="loader-text-container">
                     <h1 className="loader-title">¡Galia cumple 1 añito!</h1>
                     <p className="loader-subtitle">Cargando invitación...</p>
                 </div>
-                
                 <div className="loader-progress-container">
                     <div className="loader-progress">
-                        <div 
-                            className="loader-progress-bar" 
+                        <div
+                            className="loader-progress-bar"
                             style={{ width: `${progress}%` }}
                         ></div>
                     </div>

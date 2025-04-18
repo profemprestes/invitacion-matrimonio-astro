@@ -1,115 +1,24 @@
 ---
 import Divider from "@/components/Divider.astro";
 import Title from "@/components/Title.astro";
+import CountdownComponent from "@/components/Countdown";
 import "../styles/Countdown.css";
 
-// Set the date to May 10, 2025 at 13:00 (1 PM)
-const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
+const targetDateISO = "2025-05-10T13:00:00-03:00";
+
+const targetDate = new Date(targetDateISO);
+
+if (isNaN(targetDate.getTime())) {
+    console.error(
+        `[Countdown] Fecha objetivo inválida: "${targetDateISO}". Verifica el formato.`,
+    );
+}
 ---
 
 <section class="countdown-section">
     <div class="countdown-wrapper">
         <Title title="Falta" />
-        <div data-date={TIMESTAMP_END} class="countdown-container">
-            <div class="countdown-unit">
-                <div class="countdown-card">
-                    <span data-days class="countdown-number">00</span>
-                </div>
-                <span class="countdown-label">DÍAS</span>
-            </div>
-
-            <div class="countdown-separator">:</div>
-
-            <div class="countdown-unit">
-                <div class="countdown-card">
-                    <span data-hours class="countdown-number">00</span>
-                </div>
-                <span class="countdown-label">HS</span>
-            </div>
-
-            <div class="countdown-separator">:</div>
-
-            <div class="countdown-unit">
-                <div class="countdown-card">
-                    <span data-minutes class="countdown-number">00</span>
-                </div>
-                <span class="countdown-label">MIN</span>
-            </div>
-
-            <div class="countdown-separator">:</div>
-
-            <div class="countdown-unit">
-                <div class="countdown-card">
-                    <span data-seconds class="countdown-number">00</span>
-                </div>
-                <span class="countdown-label">SEG</span>
-            </div>
-        </div>
+        <CountdownComponent client:load targetDateISO={targetDateISO} />
         <Divider />
     </div>
 </section>
-
-<script lang="ts">
-    const SECOND = 1000;
-    const MINUTE = SECOND * 60;
-    const HOUR = MINUTE * 60;
-    const DAY = HOUR * 24;
-
-    function initCountdown() {
-        const countdownElement = document.querySelector<HTMLElement>("[data-date]");
-        if (!countdownElement) {
-            console.error("No se encontró el elemento con el atributo data-date");
-            return;
-        }
-
-        const daysSpan = countdownElement.querySelector<HTMLSpanElement>("[data-days]");
-        const hoursSpan = countdownElement.querySelector<HTMLSpanElement>("[data-hours]");
-        const minutesSpan = countdownElement.querySelector<HTMLSpanElement>("[data-minutes]");
-        const secondsSpan = countdownElement.querySelector<HTMLSpanElement>("[data-seconds]");
-
-        if (!daysSpan || !hoursSpan || !minutesSpan || !secondsSpan) {
-            console.error("No se encontraron uno o más elementos span dentro del contador");
-            return;
-        }
-
-        const timestamp = countdownElement.getAttribute("data-date");
-        if (!timestamp) {
-            console.error("El atributo data-date no está presente en el elemento del contador");
-            return;
-        }
-
-        const endDate = new Date(+timestamp).getTime();
-
-        const formatTime = (time: number): string => Math.floor(time).toString().padStart(2, "0");
-
-        function update() {
-            const now = Date.now();
-            const difference = Math.max(endDate - now, 0);
-
-            const days = Math.floor(difference / DAY);
-            const hours = Math.floor((difference % DAY) / HOUR);
-            const minutes = Math.floor((difference % HOUR) / MINUTE);
-            const seconds = Math.floor((difference % MINUTE) / SECOND);
-
-            updateUnit(daysSpan, formatTime(days));
-            updateUnit(hoursSpan, formatTime(hours));
-            updateUnit(minutesSpan, formatTime(minutes));
-            updateUnit(secondsSpan, formatTime(seconds));
-        }
-
-        function updateUnit(element: HTMLSpanElement, newValue: string): void {
-            if (element.innerText !== newValue) {
-                element.parentElement?.classList.add('flip');
-                element.innerText = newValue;
-                setTimeout(() => {
-                    element.parentElement?.classList.remove('flip');
-                }, 500);
-            }
-        }
-
-        update();
-        setInterval(update, SECOND);
-    }
-
-    initCountdown();
-</script>
