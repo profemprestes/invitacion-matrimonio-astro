@@ -1,0 +1,90 @@
+/* src/styles/AsistenciaModal.css */
+
+/* Specific styles for the button that opens the modal */
+.confirm-button {
+    background-color: #f08080; /* A soft reddish tone */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.confirm-button:hover {
+    background-color: #d9534f; /* A more intense red on hover */
+}
+
+/* Styles for the modal body */
+.modal-body {
+    padding: 20px;
+}
+
+/* Styles for the form group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Styles for individual input groups (label + input + error) */
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style for the input labels (overriding or adding to @heroui/react) */
+.input-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Style for the input fields (overriding or adding to @heroui/react) */
+.input-field {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* Style for error messages */
+.error-message {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8em;
+}
+
+/* Style for the submit button */
+.submit-button {
+    background-color: #ff6b8b; /* Pink submit button */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #e04f6d; /* Darker pink on hover */
+}
+
+/* Re-add the fade-in animation */
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
