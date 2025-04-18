@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro start",
-    "build": "astro build",
+    "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' astro build",
     "preview": "astro preview",
     "clean": "rimraf node_modules pnpm-lock.yaml && rimraf dist --no-glob"
   },
@@ -34,6 +34,7 @@
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "autoprefixer": "^10.4.16",
+    "cross-env": "^7.0.3",
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "postcss-nesting": "^12.1.5",
