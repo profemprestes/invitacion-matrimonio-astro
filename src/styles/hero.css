@@ -1,19 +1,19 @@
 /* Variables CSS para el Hero */
 :root {
   --hero-background-url: url('/herogalia.gif');
-  --hero-card-background: rgba(255, 255, 255, 0.85); /* Fondo blanco con transparencia */
-  --hero-text-primary: #333;
-  --hero-text-secondary: #666;
-  --hero-accent-color: #ff69b4; /* Rosa brillante para destacar */
-  --hero-icon-color: #007bff; /* Azul para los iconos */
-  --hero-scroll-arrow-color: #fff;
+  --hero-card-background: rgba(255, 255, 255, 0.9); /* Fondo blanco más opaco */
+  --hero-text-primary: #4a4a4a; /* Gris más oscuro para mejor legibilidad */
+  --hero-text-secondary: #717171; /* Gris más claro para detalles */
+  --hero-accent-color: #ff8acc; /* Rosa más suave y legible */
+  --hero-icon-color: #00b8d4; /* Cian vibrante para contraste */
+  --hero-scroll-arrow-color: #555; /* Gris oscuro para el scroll arrow */
 }
 
 .hero {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0; /* Fondo de respaldo */
+  background-color: #f0f0f0;
   background-image: var(--hero-background-url);
   background-size: cover;
   background-position: center;
@@ -23,6 +23,7 @@
   width: 100%;
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
 @media (min-width: 1280px) {
@@ -58,8 +59,8 @@
   padding: 40px;
   text-align: center;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  max-width: 90%; /* Ajusta el ancho máximo de la card */
-  margin: 20px; /* Espacio alrededor de la card */
+  max-width: 90%;
+  margin: 20px;
 }
 
 .hero__info {
@@ -67,16 +68,16 @@
 }
 
 .hero__greeting {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: var(--hero-text-secondary);
   margin-bottom: 10px;
 }
 
 .hero__celebration {
-  font-size: 3.5rem;
+  font-size: 3.2rem;
   line-height: 1.2;
   margin-bottom: 15px;
-  color: var(--hero-accent-color); /* Color principal destacado */
+  color: var(--hero-accent-color);
 }
 
 .hero__age {
@@ -84,7 +85,7 @@
 }
 
 .hero__name {
-  font-size: 2.2rem;
+  font-size: 2rem;
   color: var(--hero-text-primary);
   margin-bottom: 20px;
 }
@@ -106,7 +107,7 @@
 }
 
 .hero__invitation-text {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-style: italic;
   color: var(--hero-text-primary);
   margin-top: 20px;
@@ -133,6 +134,15 @@
   stroke: var(--hero-scroll-arrow-color);
 }
 
+@keyframes bounce {
+  0% {
+      transform: translateY(0);
+  }
+  100% {
+      transform: translateY(15px);
+  }
+}
+
 /* Estilos responsivos */
 @media (max-width: 768px) {
   .hero {
@@ -146,15 +156,15 @@
   }
 
   .hero__greeting {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
   }
 
   .hero__celebration {
-      font-size: 2.8rem;
+      font-size: 2.6rem;
   }
 
   .hero__name {
-      font-size: 2rem;
+      font-size: 1.8rem;
   }
 
   .hero__event-details {
@@ -162,7 +172,7 @@
   }
 
   .hero__invitation-text {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
   }
 
   .hero__icon {

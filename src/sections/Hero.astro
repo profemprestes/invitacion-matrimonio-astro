@@ -1,9 +1,15 @@
 ---
 import "../styles/hero.css";
 import AnimatedImage from '@/components/AnimatedImage.astro'; // Componente para la imagen animada
+
+interface Props {
+    targetSectionId: string;
+}
+
+const { targetSectionId } = Astro.props;
 ---
 
-<section class="hero">
+<section class="hero" data-target={targetSectionId}>
     <div class="hero__background">
         <img id="parallax-hero" src="/herogalia.gif" alt="Imagen de fondo con efecto parallax" />
     </div>
@@ -18,7 +24,7 @@ import AnimatedImage from '@/components/AnimatedImage.astro'; // Componente para
             <p class="hero__name">Soy Galia</p>
             <p class="hero__event-details">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hero__icon hero__icon--location">
-                    <path fill-rule="evenodd" d="M11.54 22.351l.071-.039a.975.975 0 01.892 0l.071.039a16.975 16.975 0 01-1.734 0zM12 3a5.5 5.5 0 00-5.5 5.5c0 2.148 1.224 4.145 2.926 5.504a.75.75 0 011.05 1.028l.621.585a.75.75 0 010 1.05l-.621.585a.75.75 0 01-1.05 1.028A7 7 0 016.5 8.5a7 7 0 017-7 7 7 0 017 7c0 1.79-.683 3.447-1.932 4.801a.75.75 0 01-1.05-1.028l-.621-.585a.75.75 0 010-1.05l.621-.585a.75.75 0 011.05 1.028A5.5 5.5 0 0017.5 8.5a5.5 5.5 0 00-5.5-5.5z" clip-rule="evenodd" />
+                    <path fill-rule="evenodd" d="M11.54 22.351l.071-.039a.975.975 0 01.892 0l.071.039a16.975 16.975 0 01-1.734 0zM12 3a5.5 5.5 0 00-5.5 5.5c0 2.148 1.224 4.145 2.926 5.504a.75.75 0 011.05 1.028l.621.585a.75.75 0 010 1.05l-.621-.585a.75.75 0 01-1.05 1.028A7 7 0 016.5 8.5a7 7 0 017-7 7 7 0 017 7c0 1.79-.683 3.447-1.932 4.801a.75.75 0 01-1.05-1.028l-.621-.585a.75.75 0 010-1.05l.621-.585a.75.75 0 011.05 1.028A5.5 5.5 0 0017.5 8.5a5.5 5.5 0 00-5.5-5.5z" clip-rule="evenodd" />
                 </svg>
                 Club Ciclista Juanico
             </p>
@@ -43,13 +49,29 @@ import AnimatedImage from '@/components/AnimatedImage.astro'; // Componente para
     </div>
 </section>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const scrollIndicator = document.querySelector('.hero__scroll-indicator');
+        const targetSectionId = document.querySelector('section.hero')?.getAttribute('data-target');
+
+        if (scrollIndicator && targetSectionId) {
+            scrollIndicator.addEventListener('click', () => {
+                const targetElement = document.getElementById(targetSectionId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
+    });
+</script>
+
 <style>
     /* Estilos para el componente AnimatedImage (si es necesario) */
     .hero__animated-image {
-        max-width: 150px; /* Ajusta el tamaño según necesites */
+        max-width: 150px;
         height: auto;
         margin-bottom: 20px;
-        border-radius: 10px; /* O la forma que desees */
+        border-radius: 10px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 </style>
