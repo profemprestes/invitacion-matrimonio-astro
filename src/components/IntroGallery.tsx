@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import '../styles/introgallery.css';
@@ -8,15 +8,21 @@ interface ImageData {
     caption: string;
 }
 
+const TRANSITION_PROPS = { duration: 0.7, ease: "easeInOut" };
+const INITIAL_MOTION = { opacity: 0, scale: 1.05 };
+const EXIT_MOTION = { opacity: 0, scale: 0.95 };
+const CAPTION_INITIAL = { opacity: 0, y: 10 };
+const CAPTION_ANIMATE = { opacity: 1, y: 0 };
+const CAPTION_TRANSITION = { duration: 0.5 };
+const AUTOPLAY_INTERVAL = 4000;
+const PAUSE_DURATION = 10000;
+
 const IntroGallery = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isLoaded, setIsLoaded] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
-    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const galleryRef = useRef<HTMLDivElement>(null);
     const intervalRef = useRef<number | null>(null);
 
-    // List of images from the public/img directory with captions
     const images: ImageData[] = [
         { src: '/galia4.webp', caption: 'Mi primer añito' },
         { src: '/galia/galiamaurogimeplaya.webp', caption: 'Momentos especiales' },
@@ -24,152 +30,104 @@ const IntroGallery = () => {
         { src: '/galia/galiahamaca.webp', caption: 'Celebrando juntos' },
     ];
 
-    // Update dimensions on resize
-    useEffect(() => {
-        const updateDimensions = () => {
-            if (galleryRef.current) {
-                setDimensions({
-                    width: galleryRef.current.offsetWidth,
-                    height: galleryRef.current.offsetHeight
-                });
-            }
-        };
-
-        updateDimensions();
-        window.addEventListener('resize', updateDimensions);
-        
-        return () => {
-            window.removeEventListener('resize', updateDimensions);
-        };
-    }, []);
-
-    // Memoized navigation functions to prevent unnecessary re-renders
-    const goToImage = useCallback((index: number) => {
+    const handleNavigation = useCallback((direction: 'next' | 'prev' | number) => {
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
         }
-        setCurrentImageIndex(index);
-        setIsPaused(true);
-    }, []);
-
-    const goToPrevious = useCallback(() => {
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-        }
-        setCurrentImageIndex((prevIndex) =>
-            prevIndex === 0 ? images.length - 1 : prevIndex - 1
+        setCurrentImageIndex(prev =>
+            typeof direction === 'number'
+                ? direction
+                : direction === 'next'
+                ? (prev + 1) % images.length
+                : prev === 0
+                ? images.length - 1
+                : prev - 1
         );
         setIsPaused(true);
     }, [images.length]);
 
-    const goToNext = useCallback(() => {
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-        }
-        setCurrentImageIndex((prevIndex) =>
-            (prevIndex + 1) % images.length
-        );
-        setIsPaused(true);
-    }, [images.length]);
-
-    // Auto-rotate images
     useEffect(() => {
-        setIsLoaded(true);
-
         if (!isPaused) {
             intervalRef.current = window.setInterval(() => {
-                setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-            }, 4000);
+                setCurrentImageIndex(prev => (prev + 1) % images.length);
+            }, AUTOPLAY_INTERVAL);
         }
-
         return () => {
-            if (intervalRef.current) {
-                clearInterval(intervalRef.current);
-            }
+            if (intervalRef.current) clearInterval(intervalRef.current);
         };
     }, [images.length, isPaused]);
 
-    // Reset auto-rotation after 10 seconds of inactivity
     useEffect(() => {
         if (isPaused) {
-            const pauseTimer = setTimeout(() => {
-                setIsPaused(false);
-            }, 10000);
-            
+            const pauseTimer = setTimeout(() => setIsPaused(false), PAUSE_DURATION);
             return () => clearTimeout(pauseTimer);
         }
     }, [isPaused]);
 
-    // Handle keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'ArrowLeft') {
-                goToPrevious();
-            } else if (e.key === 'ArrowRight') {
-                goToNext();
-            }
+            if (e.key === 'ArrowLeft') handleNavigation('prev');
+            if (e.key === 'ArrowRight') handleNavigation('next');
         };
 
         window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [goToNext, goToPrevious]);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [handleNavigation]);
 
     return (
-        <div className="gallery-container mt-6" ref={galleryRef}>
-            <div className="gallery-wrapper">
+        <div className="intro-gallery-container" ref={galleryRef}>
+            <div className="intro-gallery-viewport">
                 <AnimatePresence initial={false} mode="wait">
                     {images.map((image, index) => (
                         <motion.div
                             key={index}
-                            className={`gallery-image ${index === currentImageIndex ? 'active' : ''}`}
+                            className={`intro-gallery-image ${index === currentImageIndex ? 'intro-gallery-image--active' : ''}`}
                             style={{ backgroundImage: `url(${image.src})` }}
-                            initial={{ opacity: 0, scale: 1.05 }}
+                            initial={INITIAL_MOTION}
                             animate={{
                                 opacity: index === currentImageIndex ? 1 : 0,
                                 scale: index === currentImageIndex ? 1 : 1.05,
                                 x: `${(index - currentImageIndex) * 100}%`,
-                                transition: { duration: 0.7, ease: "easeInOut" },
                             }}
-                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={TRANSITION_PROPS}
+                            exit={EXIT_MOTION}
                         />
                     ))}
                 </AnimatePresence>
             </div>
 
             <button
-                className="gallery-nav-button prev"
-                onClick={goToPrevious}
-                aria-label="Previous image"
+                className="intro-gallery-nav-button intro-gallery-nav-button--prev"
+                onClick={() => handleNavigation('prev')}
+                aria-label="Imagen anterior"
             >
-                <ChevronLeft className="h-6 w-6" />
+                <ChevronLeft className="intro-gallery-nav-icon" />
             </button>
             <button
-                className="gallery-nav-button next"
-                onClick={goToNext}
-                aria-label="Next image"
+                className="intro-gallery-nav-button intro-gallery-nav-button--next"
+                onClick={() => handleNavigation('next')}
+                aria-label="Siguiente imagen"
             >
-                <ChevronRight className="h-6 w-6" />
+                <ChevronRight className="intro-gallery-nav-icon" />
             </button>
 
-            <motion.div 
-                className="gallery-caption"
+            <motion.div
+                className="intro-gallery-caption"
                 key={currentImageIndex}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                initial={CAPTION_INITIAL}
+                animate={CAPTION_ANIMATE}
+                transition={CAPTION_TRANSITION}
             >
                 {images[currentImageIndex].caption}
             </motion.div>
 
-            <div className="gallery-dots">
+            <div className="intro-gallery-dots">
                 {images.map((_, index) => (
                     <button
                         key={index}
-                        className={`gallery-dot ${index === currentImageIndex ? 'active' : ''}`}
-                        onClick={() => goToImage(index)}
-                        aria-label={`View image ${index + 1}`}
+                        className={`intro-gallery-dot ${index === currentImageIndex ? 'intro-gallery-dot--active' : ''}`}
+                        onClick={() => handleNavigation(index)}
+                        aria-label={`Ver imagen ${index + 1}`}
                     />
                 ))}
             </div>
@@ -178,4 +136,3 @@ const IntroGallery = () => {
 };
 
 export default IntroGallery;
-

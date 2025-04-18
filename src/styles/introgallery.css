@@ -1,25 +1,18 @@
-.gallery-container {
+.intro-gallery-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 600px; /* Ajusta el ancho máximo según tus necesidades */
+  margin: 0 auto;
+}
+
+.intro-gallery-viewport {
   position: relative;
   width: 100%;
-  max-width: 800px;
-  height: 0;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  margin: 0 auto;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  aspect-ratio: 16 / 9; /* Relación de aspecto común para imágenes */
 }
 
-.gallery-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.gallery-image {
+.intro-gallery-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -27,245 +20,106 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  will-change: transform, opacity;
-  object-fit: cover;
 }
 
-.gallery-image.active {
-  z-index: 1;
+.intro-gallery-image--active {
+  /* No se necesitan estilos específicos aquí, la animación de Framer Motion se encarga */
 }
 
-.gallery-nav-button {
+.intro-gallery-nav-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
-  background-color: rgba(255, 255, 255, 0.7);
+  background: none;
   border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0.7;
-}
-
-.gallery-nav-button:hover {
-  background-color: rgba(255, 255, 255, 0.9);
-  opacity: 1;
-  transform: translateY(-50%) scale(1.1);
-}
-
-.gallery-nav-button.prev {
-  left: 15px;
-}
-
-.gallery-nav-button.next {
-  right: 15px;
-}
-
-.gallery-caption {
-  position: absolute;
-  bottom: 60px;
-  left: 0;
-  right: 0;
-  text-align: center;
+  z-index: 10;
+  padding: 10px;
   color: white;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
-  margin: 0 auto;
-  max-width: 80%;
-  border-radius: 20px;
-  font-weight: 500;
-  backdrop-filter: blur(4px);
-  z-index: 5;
-  font-size: 1.1rem;
-  transition: bottom 0.3s ease; /* Add transition for smooth movement */
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .gallery-caption {
-    font-size: 0.9rem;
-    bottom: 50px;
-    max-width: 85%;
-  }
+.intro-gallery-nav-button:hover {
+  opacity: 1;
 }
 
-@media (max-width: 480px) {
-  .gallery-caption {
-    font-size: 0.8rem;
-    bottom: 70px; /* Adjust bottom to avoid overlap */
-    max-width: 90%;
-    padding: 8px 15px;
-  }
+.intro-gallery-nav-button--prev {
+  left: 10px;
 }
 
-.gallery-dots {
+.intro-gallery-nav-button--next {
+  right: 10px;
+}
+
+.intro-gallery-nav-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.intro-gallery-caption {
   position: absolute;
   bottom: 20px;
   left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  z-index: 5;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9rem;
 }
 
-.gallery-dot {
-  width: 12px;
-  height: 12px;
+.intro-gallery-dots {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  padding: 10px;
+  gap: 8px;
+}
+
+.intro-gallery-dot {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
+  transition: background-color 0.3s ease;
 }
 
-.gallery-dot.active {
+.intro-gallery-dot:hover,
+.intro-gallery-dot--active {
   background-color: white;
-  transform: scale(1.2);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
-.gallery-dot:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
-/* Responsive adjustments */
+/* Estilos responsivos */
 @media (max-width: 768px) {
-  .gallery-container {
-    padding-bottom: 66.67%; /* 3:2 aspect ratio for tablets */
+  .intro-gallery-container {
+      max-width: 95%;
   }
-  
-  .gallery-caption {
-    font-size: 0.9rem;
-    bottom: 50px;
-    max-width: 85%;
-  }
-  
-  .gallery-nav-button {
-    width: 35px;
-    height: 35px;
-  }
-}
 
-@media (max-width: 480px) {
-  .gallery-container {
-    padding-bottom: 75%; /* 4:3 aspect ratio for mobile */
-    margin-bottom: 10px;
+  .intro-gallery-nav-button {
+      opacity: 1; /* Mostrar siempre los botones en pantallas pequeñas */
   }
-  
-  .gallery-caption {
-    font-size: 0.8rem;
-    bottom: 45px;
-    max-width: 90%;
-    padding: 8px 15px;
+
+  .intro-gallery-caption {
+      font-size: 0.8rem;
+      padding: 8px;
   }
-  
-  .gallery-nav-button {
-    width: 30px;
-    height: 30px;
+
+  .intro-gallery-dots {
+      gap: 6px;
   }
-  
-  .gallery-dot {
-    width: 8px;
-    height: 8px;
+
+  .intro-gallery-dot {
+      width: 8px;
+      height: 8px;
   }
-  
-  .gallery-dots {
-    bottom: 15px;
-    gap: 8px;
+
+  .intro-gallery-nav-icon {
+      width: 20px;
+      height: 20px;
   }
-}
-
-/* Animation for active images */
-.gallery-image.active {
-  animation: subtle-zoom 8s ease-in-out infinite alternate;
-}
-
-@keyframes subtle-zoom {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.05);
-  }
-}
-
-/* Button transitions */
-.gallery-nav-button svg {
-  transition: transform 0.2s ease;
-}
-
-.gallery-nav-button:hover svg {
-  transform: scale(1.2);
-}
-
-/* Loading effect */
-.gallery-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
-  z-index: -1;
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-/* Touch swipe indicator */
-.gallery-container::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14 5l7 7m0 0l-7 7m7-7H3'%3E%3C/path%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0;
-  z-index: 5;
-  transition: opacity 0.3s ease;
-}
-
-.gallery-container:hover::after {
-  animation: swipe-hint 1.5s ease-in-out;
-}
-
-@keyframes swipe-hint {
-  0%, 100% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.3;
-  }
-}
-
-/* Preload images for smoother transitions */
-.gallery-container {
-  background-color: #f8f8f8;
-}
-
-/* Improve focus states for accessibility */
-.gallery-nav-button:focus,
-.gallery-dot:focus {
-  outline: 2px solid rgba(255, 148, 148, 0.5);
-  outline-offset: 2px;
 }
