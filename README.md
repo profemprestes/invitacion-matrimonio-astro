@@ -1,54 +1,124 @@
-# Astro Starter Kit: Basics
+# Invitación Cumpleaños Infantil - Galia
 
-```sh
-npm create astro@latest -- --template basics
+![Versión](https://img.shields.io/badge/versión-0.0.1-blue)
+![Astro](https://img.shields.io/badge/Astro-3.6.5-orange)
+![React](https://img.shields.io/badge/React-18.3.1-blue)
+![Tailwind](https://img.shields.io/badge/Tailwind-3.4.17-06B6D4)
+![Netlify](https://img.shields.io/badge/Netlify-deployed-00C7B7)
+
+Una aplicación web moderna para crear invitaciones digitales para cumpleaños infantiles, con un diseño elegante y personalizable.
+
+## ✨ Características
+
+- 🎨 Diseño responsive y elegante optimizado para todos los dispositivos
+- 🔄 Componentes interactivos con React y Framer Motion para animaciones atractivas
+- 🌈 Esquema de colores personalizado y cuidadosamente seleccionado
+- 📝 Formularios interactivos para recolectar respuestas de los invitados
+- 🚀 Optimizado para rendimiento y velocidad
+- 🔒 Configuración de seguridad mejorada para implementación en producción
+
+## 🛠️ Tecnologías
+
+Este proyecto utiliza un stack moderno de desarrollo web:
+
+- **[Astro](https://astro.build/)**: Framework web con enfoque en rendimiento y experiencia de desarrollo
+- **[React](https://reactjs.org/)**: Biblioteca para crear interfaces de usuario
+- **[Tailwind CSS](https://tailwindcss.com/)**: Framework CSS utilitario
+- **[HeroUI](https://heroui.dev/)**: Componentes UI modernos
+- **[Framer Motion](https://www.framer.com/motion/)**: Biblioteca para animaciones
+- **[TypeScript](https://www.typescriptlang.org/)**: Superset tipado de JavaScript
+- **[Netlify](https://netlify.com/)**: Plataforma de hosting y despliegue continuo
+
+## 🎨 Paleta de colores
+
+La aplicación utiliza una paleta de colores elegante y fresca:
+
+- **Principal**: `#95C998` - Verde claro
+- **Secundario 1**: `#5F6934` - Verde oliva
+- **Secundario 2**: `#3D6679` - Azul grisáceo
+
+## 📂 Estructura del proyecto
+
 ```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
-├── public/
-│   └── favicon.svg
+├── public/           # Archivos estáticos
 ├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/   # Componentes React reutilizables
+│   ├── layouts/      # Layouts de Astro
+│   ├── pages/        # Páginas de la aplicación
+│   └── styles/       # Estilos globales y utilidades
+└── package.json      # Dependencias y scripts
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🚀 Primeros pasos
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Prerrequisitos
 
-Any static assets, like images, can be placed in the `public/` directory.
+- Node.js (v18 o superior)
+- PNPM (recomendado) o NPM
 
-## 🧞 Commands
+### Instalación
 
-All commands are run from the root of the project, from a terminal:
+1. Clona el repositorio
+   ```bash
+   git clone https://github.com/tu-usuario/invitacion-cumple-galia.git
+   cd invitacion-cumple-galia
+   ```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+2. Instala las dependencias
+   ```bash
+   pnpm install
+   ```
 
-## 👀 Want to learn more?
+3. Inicia el servidor de desarrollo
+   ```bash
+   pnpm dev
+   ```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+4. Abre tu navegador en `http://localhost:3000`
+
+## 📦 Comandos disponibles
+
+- `pnpm dev` - Inicia el servidor de desarrollo
+- `pnpm build` - Construye la aplicación para producción
+- `pnpm preview` - Vista previa local de la build de producción
+- `pnpm clean` - Limpia la caché y archivos generados
+
+## 🚢 Despliegue
+
+Este proyecto está configurado para desplegarse automáticamente en Netlify:
+
+1. Conecta tu repositorio a Netlify
+2. Netlify detectará automáticamente la configuración en `netlify.toml`
+3. Cada push a la rama principal activará un nuevo despliegue
+
+## 🔧 Personalización
+
+### Fuentes
+
+El proyecto utiliza tres fuentes principales:
+- **Raleway Variable** - Para textos generales
+- **Rubik Variable** - Para elementos de UI
+- **Parisienne** - Para títulos decorativos y elementos destacados
+
+### Breakpoints responsive
+
+```
+- 'phone': max-width 576px
+- 'tablet': min-width 577px
+- 'laptop': min-width 769px
+- 'desktop': min-width 993px
+- 'greater-desktop': min-width 1745px
+```
+
+## 📄 Licencia
+
+[MIT](LICENSE)
+
+## 👥 Contribución
+
+Las contribuciones son bienvenidas. Por favor, abre un issue o pull request para sugerencias.
+
+---
+
+Desarrollado con ❤️ usando Astro, React y TailwindCSS
