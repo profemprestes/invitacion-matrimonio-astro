@@ -1,15 +1,10 @@
 [build]
-  command = "pnpm install --no-frozen-lockfile --shamefully-hoist && NODE_OPTIONS='--max-old-space-size=4096' pnpm run build"
+  command = "pnpm install --no-frozen-lockfile && NODE_OPTIONS='--max-old-space-size=4096' pnpm run build --verbose"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "18"
   PNPM_VERSION = "8.10.0"
   NPM_FLAGS = "--version"
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
+  # Añadimos este log de depuración
+  DEBUG = "netlify:*"
