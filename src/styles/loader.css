@@ -1,10 +1,10 @@
+/* loader.css - Optimizado */
+
+/* Contenedor principal */
 .loader-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+    inset: 0; /* Shorthand para top, right, bottom, left: 0; */
+    background-color: rgba(255, 255, 255, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,53 +13,62 @@
     transition: opacity 0.8s ease-out;
 }
 
+/* Transición de salida */
 .loader-exit {
     opacity: 0;
-    pointer-events: none; /* Evita interacciones mientras desaparece */
+    pointer-events: none;
 }
 
+/* Fondo */
 .loader-background {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #ffe4e1; /* Un rosa suave de fondo */
+    inset: 0;
+    background-color: #ffe4e1;
     opacity: 0.7;
 }
 
+/* Contenido principal */
 .loader-content {
     text-align: center;
-    position: relative; /* Para que esté encima del fondo y las decoraciones */
+    position: relative;
 }
 
+/* Contenedor de imagen */
 .loader-image-container {
     margin-bottom: 20px;
 }
 
+/* Imagen */
 .loader-image {
     max-width: 150px;
     height: auto;
+    display: block; /* Evita espacio extra debajo de la imagen */
+    margin: 0 auto; /* Centra la imagen */
 }
 
+/* Título */
 .loader-title {
     font-family: 'Parisienne', cursive;
     font-size: 2.5em;
-    color: #ff69b4; /* Rosa más fuerte para el título */
+    color: #ff69b4;
     margin-bottom: 10px;
+    line-height: 1; /* Mejora la apariencia del texto con fuentes cursivas */
 }
 
+/* Subtítulo */
 .loader-subtitle {
     font-size: 1em;
     color: #888;
     margin-bottom: 20px;
 }
 
+/* Contenedor de progreso */
 .loader-progress-container {
     width: 200px;
     margin: 0 auto;
 }
 
+/* Fondo de progreso */
 .loader-progress {
     background-color: #f0f0f0;
     border-radius: 5px;
@@ -68,28 +77,30 @@
     margin-bottom: 5px;
 }
 
+/* Barra de progreso */
 .loader-progress-bar {
-    background-color: #ffb6c1; /* Barra de progreso rosa claro */
+    background-color: #ffb6c1;
     height: 100%;
     border-radius: 5px;
-    width: 0%; /* Se actualiza con el estado progress */
+    width: 0%;
     transition: width 0.3s ease-in-out;
 }
 
+/* Texto de progreso */
 .loader-progress-text {
     font-size: 0.9em;
     color: #555;
     text-align: center;
 }
 
-/* Confetti Styles */
+/* -------------------------------------------------- */
+/* Confeti */
+/* -------------------------------------------------- */
+
 .confetti-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Permite la interacción con el contenido debajo */
+    inset: 0;
+    pointer-events: none;
     overflow: hidden;
 }
 
@@ -155,13 +166,13 @@
     top: 0;
 }
 
-/* Balloon Styles */
+/* -------------------------------------------------- */
+/* Globos */
+/* -------------------------------------------------- */
+
 .balloon-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     pointer-events: none;
     overflow: hidden;
 }
