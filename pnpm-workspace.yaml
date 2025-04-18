@@ -4,6 +4,3 @@ packages:
 
 ignoredBuiltDependencies:
   - sharp
-
-onlyBuiltDependencies:
-  - esbuild
