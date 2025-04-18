@@ -1,9 +1,10 @@
 [build]
-  command = "pnpm install --no-frozen-lockfile && NODE_OPTIONS='--max-old-space-size=4096' pnpm run build"
+  command = "pnpm install --no-frozen-lockfile --shamefully-hoist && NODE_OPTIONS='--max-old-space-size=4096' pnpm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "18"
+  PNPM_VERSION = "8.10.0"
   NPM_FLAGS = "--version"
 
 [[headers]]
