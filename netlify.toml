@@ -1,18 +1,56 @@
 [build]
-  command = "pnpm install --no-frozen-lockfile && pnpm install postcss-custom-media cssnano --save-dev && NODE_OPTIONS='--max-old-space-size=4096' pnpm run build"
+  command = "pnpm install --no-frozen-lockfile && NODE_OPTIONS='--max-old-space-size=5120' pnpm run build"
   publish = "dist"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)content'"
 
 [build.environment]
-  NODE_VERSION = "18.18.0"
-  PNPM_VERSION = "8.10.0"
-  NPM_FLAGS = "--version"
+  NODE_VERSION = "20.12.1"
+  PNPM_VERSION = "8.15.3"
+  NPM_FLAGS = "--no-optional"
   CI = "true"
   NETLIFY_USE_YARN = "false"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
 
 [[headers]]
   for = "/_astro/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
 
 [[headers]]
   for = "/*"
@@ -21,3 +59,18 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+
+[[plugins]]
+package = "@netlify/plugin-lighthouse"
+
+[plugins.inputs]
+output_path = "reports/lighthouse.html"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+  conditions = {Country = ["US", "ES", "AR", "MX"], Role = ["admin", "subscriber"]}

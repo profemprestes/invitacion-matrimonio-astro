@@ -13,7 +13,9 @@
       "@layouts/*": ["src/layouts/*"],
       "@assets/*": ["src/assets/*"],
       "@styles/*": ["src/styles/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@interfaces/*": ["src/interfaces/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
@@ -32,8 +34,9 @@
     "target": "ES2022",
     "module": "ESNext",
     "sourceMap": true,
-    "noEmit": true
+    "noEmit": true,
+    "incremental": true
   },
-  "include": ["src/**/*", "src/**/*.astro"],
-  "exclude": ["node_modules", "dist", ".astro"]
+  "include": ["src/**/*", "src/**/*.astro", "scripts/**/*"],
+  "exclude": ["node_modules", "dist", ".astro", "public"]
 }

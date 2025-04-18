@@ -1,7 +1,7 @@
-const { heroui } = require("@heroui/react");
+import { heroui } from "@heroui/react";
 import animations from '@midudev/tailwind-animations';
-const colors = require('tailwindcss/colors');
-const plugin = require('tailwindcss/plugin');
+import colors from 'tailwindcss/colors';
+import plugin from 'tailwindcss/plugin';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -9,7 +9,7 @@ export default {
     './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
-  darkMode: 'class', // Habilita modo oscuro con clase
+  darkMode: ['class', '[data-theme="dark"]'],
   theme: {
     screens: {
       'phone': { 'max': '576px' },
@@ -21,26 +21,26 @@ export default {
     colors: {
       // Colores primarios con variaciones de transparencia
       'color01': {
-        DEFAULT: '#95C998FF',
+        DEFAULT: '#95C998',
         50: '#95C99880',
         100: '#95C998BF',
-        200: '#95C998FF',
+        200: '#95C998',
         light: '#a5d9a8',
         dark: '#75a978',
       },
       'color02': {
-        DEFAULT: '#5F6934FF',
+        DEFAULT: '#5F6934',
         50: '#5F693480',
         100: '#5F6934BF',
-        200: '#5F6934FF',
+        200: '#5F6934',
         light: '#7f8954',
         dark: '#3f4924',
       },
       'color03': {
-        DEFAULT: '#3D6679FF',
+        DEFAULT: '#3D6679',
         50: '#3D667980',
         100: '#3D6679BF',
-        200: '#3D6679FF',
+        200: '#3D6679',
         light: '#5d8699',
         dark: '#2d4659',
       },
@@ -62,17 +62,29 @@ export default {
       'raleway': ['Raleway Variable', 'sans-serif'],
       'parisienne': ['Parisienne', 'cursive'],
       'rubik': ['Rubik Variable', 'sans-serif'],
+      'sans': ['Raleway Variable', 'system-ui', 'sans-serif'],
+      'serif': ['ui-serif', 'Georgia', 'Cambria', 'serif'],
     },
     extend: {
       animation: {
         'float': 'floating 3s ease-in-out infinite',
         'bounce-slow': 'bounce 3s infinite',
+        'fade-in': 'fadeIn 0.5s ease-in forwards',
+        'fade-out': 'fadeOut 0.5s ease-out forwards',
       },
       keyframes: {
         floating: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
-        }
+        },
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        fadeOut: {
+          '0%': { opacity: 1 },
+          '100%': { opacity: 0 },
+        },
       },
       spacing: {
         '128': '32rem',
@@ -91,6 +103,9 @@ export default {
               '&:hover': {
                 textDecoration: 'underline',
               },
+            },
+            strong: {
+              fontWeight: '600',
             },
           },
         },
@@ -133,6 +148,25 @@ export default {
           padding: theme('spacing.8'),
           boxShadow: theme('boxShadow.lg'),
         },
+        '.responsive-container': {
+          width: '100%',
+          paddingLeft: theme('spacing.4'),
+          paddingRight: theme('spacing.4'),
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          '@screen tablet': {
+            maxWidth: '540px',
+          },
+          '@screen laptop': {
+            maxWidth: '720px',
+          },
+          '@screen desktop': {
+            maxWidth: '960px',
+          },
+          '@screen greater-desktop': {
+            maxWidth: '1140px',
+          },
+        },
       });
     }),
     // Plugin para soporte de texto con contorno
@@ -157,5 +191,31 @@ export default {
       };
       addUtilities(newUtilities);
     }),
-  ]
+    // Plugin para aspect ratios
+    plugin(function({ addUtilities }) {
+      const aspectRatios = {
+        '.aspect-1-1': {
+          aspectRatio: '1 / 1',
+        },
+        '.aspect-16-9': {
+          aspectRatio: '16 / 9',
+        },
+        '.aspect-4-3': {
+          aspectRatio: '4 / 3',
+        },
+        '.aspect-3-2': {
+          aspectRatio: '3 / 2',
+        },
+      };
+      addUtilities(aspectRatios);
+    }),
+  ],
+  safelist: [
+    'animate-float',
+    'animate-bounce-slow',
+    'animate-fade-in',
+    'animate-fade-out',
+    'text-outline',
+    'text-outline-light',
+  ],
 }

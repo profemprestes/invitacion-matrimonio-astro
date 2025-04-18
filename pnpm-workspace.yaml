@@ -1,6 +1,7 @@
 packages:
   - 'src/**'
   - 'public/**'
+  - 'scripts/**'
 
 ignoredBuiltDependencies:
   - sharp
