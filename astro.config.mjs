@@ -18,13 +18,9 @@ export default defineConfig({
       lastmod: new Date(),
     }),
     compress({
+      // Configuración más conservadora para evitar problemas
       html: {
-        removeAttributeQuotes: false,
         removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true,
         collapseWhitespace: true,
         minifyCSS: true,
         minifyJS: true,
@@ -54,7 +50,7 @@ export default defineConfig({
     functionPerRoute: false,
     builders: true,
     binaryMediaTypes: ['image/*', 'video/*'],
-    imageCDN: true, // Habilita CDN para imágenes
+    imageCDN: true,
   }),
   site: 'https://galiacumple.netlify.app',
   vite: {
@@ -68,29 +64,22 @@ export default defineConfig({
         external: ['sharp']
       },
       cssCodeSplit: true,
-      // Mejora el tamaño del archivo final
       assetsInlineLimit: 4096,
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-        },
-      },
+      // Elimina terser para usar el minificador por defecto que es más estable
+      minify: 'esbuild',
     },
     ssr: {
       noExternal: ['@heroui/react', '@midudev/tailwind-animations'],
     },
-    // Configura optimizaciones para el desarrollo
     optimizeDeps: {
       include: ['react', 'react-dom', 'framer-motion'],
+      exclude: ['sharp'],
     },
-    // Agregar soporte para módulos legacy
+    // Simplifica la configuración legacy
     legacy: {
       buildSsrCjsExternalHeuristics: true,
     },
   },
-  // Configuración de rendimiento
   experimental: {
     assets: true,
     viewTransitions: true,
