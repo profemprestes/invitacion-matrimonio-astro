@@ -1,7 +1,23 @@
 {
-  "name": "invitacion-matrimonio-astro",
+  "name": "invitaciones-infantiles",
   "type": "module",
   "version": "0.0.1",
+  "description": "Aplicación web moderna para crear invitaciones digitales para cumpleaños infantiles, con diseño responsive y experiencia interactiva personalizable",
+  "author": {
+    "name": "Matías Prestes",
+    "email": "profemprestes@gmail.com",
+    "url": "https://github.com/profemprestes"
+  },
+  "license": "MIT",
+  "homepage": "https://galiacumple.netlify.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/profemprestes/invitaciones-infantiles"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro start",
@@ -9,6 +25,14 @@
     "preview": "astro preview",
     "clean": "rimraf node_modules pnpm-lock.yaml && rimraf dist --no-glob"
   },
+  "keywords": [
+    "astro",
+    "react",
+    "tailwindcss",
+    "invitacion",
+    "cumpleaños",
+    "infantil"
+  ],
   "dependencies": {
     "@astrojs/netlify": "^3.1.1",
     "@astrojs/react": "^3.6.3",
@@ -40,5 +64,10 @@
     "postcss-nesting": "^12.1.5",
     "rimraf": "^5.0.10",
     "tailwindcss": "^3.4.17"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }
