@@ -68,7 +68,6 @@ export default defineConfig({
     builders: true,
     binaryMediaTypes: ['image/*', 'video/*', 'font/*', 'audio/*'],
     imageCDN: true,
-    cacheOnDemandPages: true,
   }),
   site: 'https://galiacumple.netlify.app',
   vite: {
@@ -108,11 +107,10 @@ export default defineConfig({
       },
     },
   },
+  // Los flags experimentales que estaban causando errores han sido eliminados
+  // Solo dejamos los que son compatibles con la versión actual de Astro 4.4.9
   experimental: {
-    assets: true,
-    viewTransitions: true,
-    directRenderScript: true,
-    clientPrerender: true,
+    contentCollections: true
   },
   compressHTML: true,
 });

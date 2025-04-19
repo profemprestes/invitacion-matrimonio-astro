@@ -1,11 +1,10 @@
 [build]
   command = "pnpm install --no-frozen-lockfile && NODE_OPTIONS='--max-old-space-size=5120' pnpm run build"
   publish = "dist"
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)content'"
 
 [build.environment]
-  NODE_VERSION = "20.12.1"
-  PNPM_VERSION = "8.15.3"
+  NODE_VERSION = "20.18.1"
+  PNPM_VERSION = "10.8.1"
   NPM_FLAGS = "--no-optional"
   CI = "true"
   NETLIFY_USE_YARN = "false"
@@ -61,16 +60,3 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'"
     Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
-
-[[plugins]]
-package = "@netlify/plugin-lighthouse"
-
-[plugins.inputs]
-output_path = "reports/lighthouse.html"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
-  conditions = {Country = ["US", "ES", "AR", "MX"], Role = ["admin", "subscriber"]}

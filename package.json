@@ -21,15 +21,13 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "clean": "rimraf node_modules pnpm-lock.yaml dist",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,astro,css,md,json}\"",
     "check": "astro check && npm run lint",
-    "optimize:images": "node scripts/optimize-images.js",
-    "postbuild": "pnpm run optimize:images",
     "analyze": "vite-bundle-analyzer"
   },
   "keywords": [
@@ -41,6 +39,7 @@
     "infantil"
   ],
   "dependencies": {
+    "@astrojs/check": "^0.5.10",
     "@astrojs/netlify": "^4.1.0",
     "@astrojs/react": "^3.0.10",
     "@astrojs/sitemap": "^3.0.5",
@@ -59,7 +58,8 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.50.1"
+    "react-hook-form": "^7.50.1",
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",
@@ -84,7 +84,6 @@
     "rimraf": "^5.0.5",
     "sharp": "^0.33.2",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3",
     "vite-bundle-analyzer": "^0.9.0"
   },
   "browserslist": [
