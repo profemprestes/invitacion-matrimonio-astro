@@ -107,10 +107,6 @@ export default defineConfig({
       },
     },
   },
-  // Los flags experimentales que estaban causando errores han sido eliminados
-  // Solo dejamos los que son compatibles con la versión actual de Astro 4.4.9
-  experimental: {
-    contentCollections: true
-  },
+  // Removed experimental flags as they are now standard features in Astro 4.x
   compressHTML: true,
 });

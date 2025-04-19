@@ -21,14 +21,16 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' astro build",
     "preview": "astro preview",
-    "clean": "rimraf node_modules pnpm-lock.yaml dist",
+    "clean": "rimraf node_modules pnpm-lock.yaml dist .astro",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,astro,css,md,json}\"",
-    "check": "astro check && npm run lint",
-    "analyze": "vite-bundle-analyzer"
+    "check": "astro check && pnpm lint",
+    "analyze": "vite-bundle-analyzer",
+    "deploy": "pnpm clean && pnpm install && pnpm build",
+    "prepare": "npx sharp --preinstall"
   },
   "keywords": [
     "astro",
@@ -39,12 +41,10 @@
     "infantil"
   ],
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
     "@astrojs/netlify": "^4.1.0",
     "@astrojs/react": "^3.0.10",
     "@astrojs/sitemap": "^3.0.5",
     "@astrojs/tailwind": "^5.1.0",
-    "@astrojs/ts-plugin": "^1.4.0",
     "@fontsource-variable/raleway": "^5.0.17",
     "@fontsource-variable/rubik": "^5.0.18",
     "@fontsource/parisienne": "^5.0.8",
@@ -58,10 +58,11 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.50.1",
-    "typescript": "^5.8.3"
+    "react-hook-form": "^7.50.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.5.10",
+    "@astrojs/ts-plugin": "^1.4.0",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
@@ -84,6 +85,7 @@
     "rimraf": "^5.0.5",
     "sharp": "^0.33.2",
     "tailwindcss": "^3.4.1",
+    "typescript": "^5.8.3",
     "vite-bundle-analyzer": "^0.9.0"
   },
   "browserslist": [
@@ -96,5 +98,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "packageManager": "pnpm@10.8.1+sha1.a4eff733d0c4ccc179997f0ef4986f6e92427781"
+  "packageManager": "pnpm@10.8.1+sha1.a4eff733d0c4ccc179997f0ef4986f6e92427781",
+  "resolutions": {
+    "string-width": "^4.2.0",
+    "strip-ansi": "^6.0.1"
+  }
 }
