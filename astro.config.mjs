@@ -19,7 +19,6 @@ export default defineConfig({
       filter: (page) => !page.includes('/_'),
     }),
     compress({
-      // Configuración optimizada para evitar problemas
       html: {
         removeComments: true,
         collapseWhitespace: true,
@@ -107,6 +106,5 @@ export default defineConfig({
       },
     },
   },
-  // Removed experimental flags as they are now standard features in Astro 4.x
   compressHTML: true,
 });
