@@ -1,26 +1,40 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Hero from '@/sections/Hero.astro';
-import Countdown from '@/sections/Countdown.astro';
 import PrincipalDate from '@/sections/PrincipalDate.astro';
-import Party from '@/sections/Party.astro';
-import Intro from '@/sections/Intro.astro';
+import Presentacion from '@/sections/Presentacion.astro';
 import '../styles/css/index.css';
 ---
 
 <Layout title="Cumple de Galia">
-  <main id="intro-section" aria-label="Intro de bienvenida">
-    <Intro />
+  <main id="presentacion-section" aria-label="Presentación de Galia">
+    <Presentacion />
   </main>
 
   <main id="main-content" class="hidden" aria-label="Contenido principal">
     <Hero />
     <section class="p-4">
-      <Countdown />
       <PrincipalDate />
-      <Party />
     </section>
   </main>
 </Layout>
 
-<script is:inline src="path/to/script.js"></script>
+<script is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+  const presentacionSection = document.getElementById('presentacion-section');
+  const mainContent = document.getElementById('main-content');
+
+  // Función para mostrar el contenido principal
+  window.showMainContent = () => {
+    if (presentacionSection) {
+      presentacionSection.classList.add('hidden');
+    }
+    if (mainContent) {
+      mainContent.classList.remove('hidden');
+      mainContent.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+});
+</script>
+<script is:inline src="/src/js/main.js"></script>
+

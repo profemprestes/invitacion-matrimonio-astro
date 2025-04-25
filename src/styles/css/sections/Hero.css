@@ -1,171 +1,441 @@
-/* Asegura que el body y html no agreguen márgenes */
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  font-family: 'Poppins', sans-serif;
-  background-color: #fff;
-}
-
+/* Estilos base para la sección Hero */
 .hero-section {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
   position: relative;
+  min-height: 100vh;
+  display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  color: #fff;
   text-align: center;
-  background-color: #fef6f0;
-  padding: 0;
+  padding: 2rem 1rem;
 }
 
-/* Fondo animado */
+/* Contenedor de fondo y parallax */
 .hero-background-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
-  overflow: hidden;
+  z-index: -1;
+  margin: 0;
 }
 
-.hero-background-container img.hero-background {
+.hero-background {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  animation: scaleIn 10s ease-in-out infinite alternate;
+  transition: transform 0.3s ease-out;
 }
 
-/* Animación suave de fondo */
-@keyframes scaleIn {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.05);
-  }
+/* Elementos flotantes decorativos */
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
 }
 
-/* Contenido centrado */
+.floating-item {
+  position: absolute;
+  max-width: 80px;
+  opacity: 0.8;
+}
+
+.balloon-1 {
+  top: 10%;
+  left: 10%;
+  animation: float 8s ease-in-out infinite;
+}
+
+.balloon-2 {
+  top: 15%;
+  right: 15%;
+  animation: float 10s ease-in-out infinite 1s;
+}
+
+.confetti-1 {
+  bottom: 20%;
+  left: 20%;
+  animation: spin 15s linear infinite;
+}
+
+.confetti-2 {
+  top: 30%;
+  right: 25%;
+  animation: spin 12s linear infinite reverse;
+}
+
+/* Contenido principal */
 .info-hero {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
   padding: 2rem;
-  max-width: 700px;
-  width: 100%;
-  color: #3a3a3a;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
 }
 
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Estilos de tipografía */
 .hero-name {
-  font-size: 2rem;
-  color: #ec6aa4;
-  margin-bottom: 0.5rem;
-  animation: fadeIn 1s ease-in-out forwards;
+  font-family: 'Pacifico', cursive;
+  font-size: 2.5rem;
+  margin: 0;
+  color: #FF69B4;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  order: 3; /* Reordenamos para que aparezca después del título */
 }
 
 .hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #ec6aa4;
-  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
   line-height: 1.2;
-  animation: slideInUp 1.2s ease-in-out forwards;
+  margin: 0;
+  color: #8A2BE2;
+  order: 1; /* Reordenamos para que aparezca primero */
 }
 
 .hero-title span {
-  display: block;
-  font-size: 3.5rem;
-  color: #ff9f68;
+  display: inline-block;
+  color: #FF1493;
+  font-size: 3.2rem;
+}
+
+.hero-location {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0.5rem 0;
+  order: 4; /* Ubicación después del nombre */
 }
 
 .hero-date {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #ff6b6b;
-  animation: fadeIn 1.4s ease-in-out forwards;
+  font-weight: 600;
+  color: #333;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  order: 5; /* Fecha después de la ubicación */
 }
 
 .hero-quote {
-  font-size: 1.1rem;
-  font-style: italic;
+  font-family: 'Courgette', cursive;
+  font-size: 1.3rem;
+  line-height: 1.6;
   color: #555;
   margin: 1rem 0;
-  animation: fadeInUp 1.6s ease-in-out forwards;
+  padding: 0.5rem 1rem;
+  border-left: 4px solid #FF69B4;
+  background-color: rgba(255, 105, 180, 0.1);
+  border-radius: 0 10px 10px 0;
+  order: 7; /* Después del contador */
 }
 
-.hero-quote strong {
-  display: block;
-  margin-top: 0.5rem;
-  color: #ff9f68;
+.highlight-text {
+  color: #FF1493;
+  font-weight: 700;
 }
 
-.cta-container {
-  margin-top: 2rem;
-  animation: slideInUp 1.8s ease-in-out forwards;
+/* Estilos para la imagen principal */
+.main-image-frame {
+  margin: 1rem auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 8px solid #FF69B4;
+  box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
+  transition: all 0.5s ease;
+  order: 2; /* Posicionamos después del título */
+  position: relative;
+  z-index: 3;
 }
 
-.cta-image {
-  max-width: 200px;
+.main-image-frame:hover {
+  transform: scale(1.05);
+  border-color: #FF1493;
+  box-shadow: 0 12px 30px rgba(255, 20, 147, 0.6);
+}
+
+.principal-image {
   width: 100%;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.main-image-frame:hover .principal-image {
+  transform: scale(1.1);
+}
+
+/* Botón de llamada a la acción */
+.cta-container {
+  margin: 2rem auto;
+  max-width: 300px;
+  order: 8;
+  transition: all 0.3s ease;
+}
+
+.scroll-indicator-link {
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
   transition: transform 0.3s ease;
 }
 
-.cta-image:hover {
-  transform: scale(1.05);
+.scroll-indicator-link:hover {
+  transform: translateY(5px);
+}
+
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+  transition: all 0.3s ease;
+  border: 2px dashed #FF69B4;
+}
+
+.scroll-indicator:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
+  border-color: #FF1493;
 }
 
 .cta-caption {
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  color: #777;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #FF1493;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.hero-footer {
-  margin-top: 2rem;
+.arrow-down {
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.scroll-indicator:hover .arrow-down {
+  transform: translateY(5px);
+}
+
+/* Animación mejorada para el parpadeo */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-blink {
+  animation: blink 2s ease-in-out infinite;
+}
+
+.cta-image-link {
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.cta-image-link:hover {
+  transform: scale(1.05);
+}
+
+.image-frame {
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #FF69B4;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.image-frame:hover {
+  border-color: #FF1493;
+  box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+}
+
+.cta-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.cta-image:hover {
+  transform: scale(1.1);
+}
+
+.cta-caption {
+  margin-top: 1rem;
   font-size: 1rem;
-  color: #444;
-  animation: fadeInUp 2s ease-in-out forwards;
+  color: #666;
+  font-style: italic;
 }
 
-/* Break para móviles */
-.mobile-break {
-  display: none;
+/* Estilos para el contador */
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem auto;
+  flex-wrap: wrap;
+  order: 6; /* Después de la fecha */
 }
 
-@media (max-width: 600px) {
-  .hero-title {
-    font-size: 2.2rem;
-  }
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0.5rem;
+}
 
-  .hero-title span {
-    font-size: 2.5rem;
-  }
+.countdown-card {
+  position: relative;
+  width: 70px;
+  height: 80px;
+  background: linear-gradient(145deg, #FF69B4, #FF1493);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 
+    0 10px 20px rgba(255, 105, 180, 0.3),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.2),
+    inset 0 5px 10px rgba(255, 255, 255, 0.2);
+  perspective: 500px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  overflow: hidden;
+}
 
-  .hero-name {
-    font-size: 1.5rem;
-  }
+.countdown-card-reflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.1)
+  );
+  border-radius: 12px 12px 0 0;
+  pointer-events: none;
+}
 
-  .hero-date {
-    font-size: 1.2rem;
-  }
+.countdown-number {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
 
-  .mobile-break {
-    display: inline;
-  }
+.countdown-separator {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FF69B4;
+  margin-top: -1.5rem;
+  animation: pulse 1s infinite alternate;
+}
 
-  .cta-image {
-    max-width: 160px;
+.countdown-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8A2BE2;
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+}
+
+/* Animación de volteo para las tarjetas */
+.countdown-card.flip {
+  animation: flipCard 0.5s ease-out;
+  transform-origin: center bottom;
+}
+
+@keyframes flipCard {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
   }
 }
 
 /* Animaciones */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -175,24 +445,418 @@ body {
   }
 }
 
-@keyframes fadeInUp {
+@keyframes slideIn {
   from {
+    transform: translateX(-50px);
     opacity: 0;
-    transform: translateY(30px);
   }
   to {
+    transform: translateX(0);
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-@keyframes slideInUp {
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-bounce {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.animate-blink {
+  animation: blink 2s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 1.2s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1.5s ease-out forwards;
+}
+
+.animate-pop {
+  animation: pop 1s ease-out forwards;
+}
+
+.emoji-bounce {
+  display: inline-block;
+  animation: bounce 1.5s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-name {
+    font-size: 2rem;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-title span {
+    font-size: 2.5rem;
+  }
+  
+  .hero-quote {
+    font-size: 1.1rem;
+  }
+  
+  .info-hero {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+  
+  .floating-item {
+    max-width: 60px;
+  }
+  
+  .countdown-card {
+    width: 60px;
+    height: 70px;
+  }
+  
+  .countdown-number {
+    font-size: 1.8rem;
+  }
+  
+  .countdown-separator {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-name {
+    font-size: 1.8rem;
+  }
+  
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .hero-title span {
+    font-size: 2rem;
+  }
+  
+  .hero-quote {
+    font-size: 1rem;
+  }
+  
+  .info-hero {
+    padding: 1rem;
+  }
+  
+  .floating-item {
+    max-width: 40px;
+  }
+  
+  .countdown-container {
+    gap: 0.3rem;
+  }
+  
+  .countdown-card {
+    width: 50px;
+    height: 60px;
+  }
+  
+  .countdown-number {
+    font-size: 1.5rem;
+  }
+  
+  .countdown-separator {
+    font-size: 1.5rem;
+    margin: 0 -5px;
+  }
+  
+  .countdown-label {
+    font-size: 0.6rem;
+  }
+  
+  .hero-location, .hero-date {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .countdown-card {
+    width: 45px;
+    height: 55px;
+  }
+  
+  .countdown-number {
+    font-size: 1.3rem;
+  }
+  
+  .countdown-separator {
+    font-size: 1.3rem;
+    margin: 0 -8px;
+  }
+  
+  .countdown-label {
+    font-size: 0.5rem;
+  }
+}
+
+/* Indicador de desplazamiento */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.arrow-down {
+  width: 40px;
+  height: 40px;
+  margin-top: 0.5rem;
+}
+
+.cta-caption {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Animación específica para la flecha */
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce-arrow 2s ease-in-out infinite;
+}
+
+/* Estilos para el contador */
+.countdown-card {
+  position: relative;
+  width: 70px;
+  height: 80px;
+  background: linear-gradient(145deg, #FF69B4, #FF1493);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 
+    0 10px 20px rgba(255, 105, 180, 0.3),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.2),
+    inset 0 5px 10px rgba(255, 255, 255, 0.2);
+  perspective: 500px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  overflow: hidden;
+}
+
+.countdown-card-reflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.1)
+  );
+  border-radius: 12px 12px 0 0;
+  pointer-events: none;
+}
+
+.countdown-number {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.countdown-separator {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FF69B4;
+  margin-top: -1.5rem;
+  animation: pulse 1s infinite alternate;
+}
+
+.countdown-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8A2BE2;
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+}
+
+/* Animación de volteo para las tarjetas */
+.countdown-card.flip {
+  animation: flipCard 0.5s ease-out;
+  transform-origin: center bottom;
+}
+
+@keyframes flipCard {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+/* Animaciones */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(50px);
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
     transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-image-frame {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-image-frame {
+    width: 150px;
+    height: 150px;
+    border-width: 6px;
+  }
+  
+  .arrow-down {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 380px) {
+  .main-image-frame {
+    width: 130px;
+    height: 130px;
+    border-width: 5px;
   }
 }

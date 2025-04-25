@@ -1,1 +1,324 @@
 /* PrincipalDate.css */
+.principal-date-section {
+  padding: 6rem 1rem;
+  background: linear-gradient(135deg, #6d4c55, #8a5d68);
+  position: relative;
+  overflow: hidden;
+}
+
+.principal-date-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Decoraciones florales mejoradas */
+.flower-decoration {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.flower-icon {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  opacity: 0.6;
+  transition: all 0.5s ease;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.flower-icon.left {
+  top: -30px;
+  left: -30px;
+  transform: rotate(-15deg);
+  animation: floatLeft 8s ease-in-out infinite;
+}
+
+.flower-icon.right {
+  top: -20px;
+  right: -30px;
+  transform: rotate(15deg);
+  animation: floatRight 7s ease-in-out infinite;
+}
+
+.flower-icon.bottom-left {
+  bottom: -30px;
+  left: -30px;
+  transform: rotate(15deg);
+  animation: floatBottomLeft 9s ease-in-out infinite;
+}
+
+.flower-icon.bottom-right {
+  bottom: -20px;
+  right: -30px;
+  transform: rotate(-15deg);
+  animation: floatBottomRight 6s ease-in-out infinite;
+}
+
+/* Título y subtítulo mejorados */
+.title-container {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.birthday-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #FFB6C1;
+  margin: 0 0 0.5rem;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+  animation: popIn 1s ease-out forwards;
+}
+
+.birthday-subtitle {
+  font-family: 'Courgette', cursive;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: #FFF;
+  margin: 0;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.5s forwards;
+}
+
+.title-decoration {
+  width: 150px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #FFB6C1, transparent);
+  margin: 1.5rem auto;
+  animation: expandWidth 1s ease-out forwards;
+}
+
+/* Grid de información mejorado */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  backdrop-filter: blur(10px);
+}
+
+.info-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.info-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(255, 182, 193, 0.3);
+}
+
+.info-card-inner {
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+}
+
+.info-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  animation: bounce 2s infinite ease-in-out;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.info-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #FF69B4;
+  margin: 0 0 1rem;
+  position: relative;
+}
+
+.info-value {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+/* Botones de acción mejorados */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #FF69B4, #FF1493);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+  margin-top: auto;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.8s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 105, 180, 0.5);
+}
+
+.action-button:hover::before {
+  left: 100%;
+}
+
+.button-icon {
+  margin-right: 0.8rem;
+  font-size: 1.3rem;
+}
+
+/* Información adicional mejorada */
+.additional-info {
+  text-align: center;
+  margin-top: 3rem;
+  position: relative;
+}
+
+.additional-info p {
+  font-family: 'Courgette', cursive;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: #FFF;
+  margin: 0;
+  animation: fadeIn 1s ease-out 1s forwards;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sparkles {
+  font-size: 2rem;
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: sparkle 2s infinite;
+}
+
+/* Animaciones mejoradas */
+@keyframes floatLeft {
+  0%, 100% { transform: rotate(-15deg) translate(0, 0); }
+  50% { transform: rotate(-20deg) translate(-15px, -15px); }
+}
+
+@keyframes floatRight {
+  0%, 100% { transform: rotate(15deg) translate(0, 0); }
+  50% { transform: rotate(20deg) translate(15px, -15px); }
+}
+
+@keyframes floatBottomLeft {
+  0%, 100% { transform: rotate(15deg) translate(0, 0); }
+  50% { transform: rotate(20deg) translate(-15px, 15px); }
+}
+
+@keyframes floatBottomRight {
+  0%, 100% { transform: rotate(-15deg) translate(0, 0); }
+  50% { transform: rotate(-20deg) translate(15px, 15px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.5; transform: translateX(-50%) scale(1.2); }
+}
+
+@keyframes expandWidth {
+  from { width: 0; }
+  to { width: 150px; }
+}
+
+/* Responsive mejorado */
+@media (max-width: 992px) {
+  .principal-date-section {
+    padding: 4rem 1rem;
+  }
+  
+  .info-grid {
+    gap: 2rem;
+  }
+  
+  .flower-icon {
+    width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .principal-date-section {
+    padding: 3rem 1rem;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .info-card-inner {
+    padding: 2rem 1.5rem;
+  }
+  
+  .flower-icon {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .principal-date-section {
+    padding: 2rem 1rem;
+  }
+  
+  .info-card-inner {
+    padding: 1.5rem 1rem;
+  }
+  
+  .info-icon {
+    font-size: 2.5rem;
+  }
+  
+  .info-label {
+    font-size: 1.2rem;
+  }
+  
+  .action-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .flower-icon {
+    width: 60px;
+  }
+}

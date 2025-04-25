@@ -4,24 +4,31 @@ import AsistenciaModal from '@/components/AsistenciaModal.tsx';
 import '../styles/css/sections/PrincipalDate.css';
 ---
 
-<section class="principal-date-section">
+<section class="principal-date-section" id="rsvp">
   <div class="principal-date-container">
     <div class="flower-decoration">
-      <img src="/daisy.svg" class="flower-icon" alt="icono margarita" />
+      <img src="/daisy.svg" class="flower-icon left" alt="icono margarita" />
+      <img src="/daisy.svg" class="flower-icon right" alt="icono margarita" />
+      <img src="/daisy.svg" class="flower-icon bottom-left" alt="icono margarita" />
+      <img src="/daisy.svg" class="flower-icon bottom-right" alt="icono margarita" />
     </div>
 
-    <div class="title-container">
+    <div class="title-container" data-aos="fade-down">
       <h3 class="birthday-title">¡Galia cumple 1 añito!</h3>
+      <p class="birthday-subtitle">Te invito a celebrar conmigo este día tan especial</p>
+      <div class="title-decoration"></div>
     </div>
 
     <div class="info-grid">
-      <div class="info-card">
+      <div class="info-card" data-aos="fade-up" data-aos-delay="100">
         <div class="info-card-inner">
+          <div class="info-icon">📅</div>
           <p class="info-label">Cuándo</p>
-          <span class="info-value"> Sábado 10 de mayo de 2025 - 13:00 hs </span>
+          <span class="info-value">Sábado 10 de mayo de 2025 - 13:00 hs</span>
           <a
             href="https://calendar.app.google/ursVLnsMBwkJSUVs8"
             target="_blank"
+            rel="noopener noreferrer"
             class="action-button calendar-button"
           >
             <span class="button-icon">📅</span>
@@ -30,13 +37,15 @@ import '../styles/css/sections/PrincipalDate.css';
         </div>
       </div>
 
-      <div class="info-card">
+      <div class="info-card" data-aos="fade-up" data-aos-delay="200">
         <div class="info-card-inner">
+          <div class="info-icon">📍</div>
           <p class="info-label">Dónde</p>
-          <span class="info-value"> Club Ciclista Juanico, Calle San Marcos </span>
+          <span class="info-value">Club Ciclista Juanico, Calle San Marcos</span>
           <a
             href="https://maps.app.goo.gl/nB1U1MJTKiEXN33A6"
             target="_blank"
+            rel="noopener noreferrer"
             class="action-button location-button"
           >
             <span class="button-icon">📍</span>
@@ -45,20 +54,47 @@ import '../styles/css/sections/PrincipalDate.css';
         </div>
       </div>
 
-      <div class="info-card">
+      <div class="info-card" data-aos="fade-up" data-aos-delay="300">
         <div class="info-card-inner">
+          <div class="info-icon">✉️</div>
           <p class="info-label">Confirma asistencia</p>
-          <span class="info-value"> Me gustaría que confirmes tu asistencia </span>
+          <span class="info-value">Me gustaría que confirmes tu asistencia</span>
           <div class="modal-wrapper">
             <AsistenciaModal type="cumpleaños" client:visible />
           </div>
         </div>
       </div>
     </div>
+    
+    <div class="additional-info" data-aos="fade-up" data-aos-delay="400">
+      <p>¡No olvides traer tu mejor sonrisa!</p>
+      <div class="sparkles">✨</div>
+    </div>
   </div>
 </section>
 
 <Divider />
 
-<script type="text/javascript" src="https://cdn.addevent.com/libs/atc/1.6.1/atc.min.js" async defer
-></script>
+<script type="text/javascript" src="https://cdn.addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
+
+<script>
+  // Script para animaciones al hacer scroll
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.info-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    
+    cards.forEach(card => {
+      observer.observe(card);
+    });
+  });
+</script>

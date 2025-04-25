@@ -9,12 +9,21 @@ const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
 
 <section class="countdown-section">
   <div class="countdown-wrapper">
-    <Title title="Falta para el gran día!" />
-    <p class="countdown-subtitle">El momento está muy cerca...</p>
+    <div class="countdown-header">
+      <Title title="¡Falta poco para mi fiesta!" />
+      <p class="countdown-subtitle">El momento está muy cerca...</p>
+    </div>
+    
+    <div class="countdown-decoration">
+      <img src="/balloon-left.png" alt="" class="balloon balloon-left" />
+      <img src="/balloon-right.png" alt="" class="balloon balloon-right" />
+    </div>
+    
     <div data-date={TIMESTAMP_END} class="countdown-container">
       <div class="countdown-unit">
         <div class="countdown-card">
           <span data-days class="countdown-number">00</span>
+          <div class="countdown-card-reflection"></div>
         </div>
         <span class="countdown-label">DÍAS</span>
       </div>
@@ -24,6 +33,7 @@ const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
       <div class="countdown-unit">
         <div class="countdown-card">
           <span data-hours class="countdown-number">00</span>
+          <div class="countdown-card-reflection"></div>
         </div>
         <span class="countdown-label">HS</span>
       </div>
@@ -33,6 +43,7 @@ const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
       <div class="countdown-unit">
         <div class="countdown-card">
           <span data-minutes class="countdown-number">00</span>
+          <div class="countdown-card-reflection"></div>
         </div>
         <span class="countdown-label">MIN</span>
       </div>
@@ -42,10 +53,13 @@ const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
       <div class="countdown-unit">
         <div class="countdown-card">
           <span data-seconds class="countdown-number">00</span>
+          <div class="countdown-card-reflection"></div>
         </div>
         <span class="countdown-label">SEG</span>
       </div>
     </div>
+    
+    <p class="countdown-message">¡Estoy muy emocionada por verte en mi fiesta!</p>
     <Divider />
   </div>
 </section>
@@ -118,6 +132,15 @@ const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
           setTimeout(() => {
             $seconds.parentElement?.classList.remove('flip');
           }, 500);
+        }
+      }
+      
+      // Si la fecha ya pasó, mostrar un mensaje especial
+      if (remainingTime === 0) {
+        const countdownMessage = document.querySelector('.countdown-message');
+        if (countdownMessage) {
+          countdownMessage.textContent = '¡Hoy es el gran día! ¡Te espero en mi fiesta!';
+          countdownMessage.classList.add('celebrate');
         }
       }
     }

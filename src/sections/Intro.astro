@@ -1,10 +1,20 @@
 ---
 import IntroGallery from '@/components/IntroGallery.tsx';
 import '../styles/css/sections/Intro.css';
+
+declare global {
+  interface Window {
+    showPresentacion: () => void;
+  }
+}
+
+const handleComplete = () => {
+  window.showPresentacion?.();
+};
 ---
 
 <main id="intro" class="intro-section">
   <div class="mt-16">
-    <IntroGallery />
+    <IntroGallery client:load onIntroComplete={handleComplete} />
   </div>
 </main>

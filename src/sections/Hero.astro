@@ -1,52 +1,214 @@
 ---
 // importación de estilos CSS
 import '../styles/css/sections/Hero.css';
+
+// Set the date to May 10, 2025 at 13:00 (1 PM)
+const TIMESTAMP_END = new Date('2025-05-10T13:00:00').getTime();
 ---
 
 <header class="hero-section" aria-label="Sección principal de bienvenida">
   <!-- Fondo animado/parallax -->
   <figure class="hero-background-container" aria-hidden="true">
-    <img src="/herogalia.gif" id="parallax-hero" alt="" class="hero-background" loading="lazy" />
+    <img src="/fondoback.gif" id="parallax-hero" alt="" class="hero-background" loading="lazy" />
   </figure>
 
   <!-- Contenido principal -->
   <div class="info-hero">
     <div class="hero-content">
-      <h2 class="hero-name">Soy Galia</h2>
+     
+      <h2 class="hero-name animate-pop">Soy Galia</h2>
 
-      <h1 class="hero-title">
-        Festejo mi<br />
-        <span>Primer Añito</span>
+      <h1 class="hero-title animate-fade-in">
+        ¡Acompáñame a celebrar!<br />
+        <span class="animate-bounce">Mi Primer Añito</span>
       </h1>
+      
+      <!-- Imagen principal reposicionada después del título -->
+      <div class="main-image-frame animate-pop">
+        <img
+          src="/GaliaHero1.gif"
+          alt="Galia invitando a la celebración"
+          class="principal-image"
+          loading="lazy"
+        />
+      </div>
+      
+      <p class="hero-location animate-fade-in-up">
+        Club Ciclista Juanico
+      </p>
 
-      <p class="hero-date" role="contentinfo">🎉 10 de Mayo de 2024</p>
+      <p class="hero-date animate-slide-in" role="contentinfo">
+        <span class="emoji-bounce">🎉</span> 10 de Mayo de 2025 | 13:00
+      </p>
 
-      <blockquote class="hero-quote">
+      <!-- Contador integrado -->
+      <div data-date={TIMESTAMP_END} class="countdown-container">
+        <div class="countdown-unit">
+          <div class="countdown-card">
+            <span data-days class="countdown-number">00</span>
+            <div class="countdown-card-reflection"></div>
+          </div>
+          <span class="countdown-label">DÍAS</span>
+        </div>
+
+        <div class="countdown-separator">:</div>
+
+        <div class="countdown-unit">
+          <div class="countdown-card">
+            <span data-hours class="countdown-number">00</span>
+            <div class="countdown-card-reflection"></div>
+          </div>
+          <span class="countdown-label">HORAS</span>
+        </div>
+
+        <div class="countdown-separator">:</div>
+
+        <div class="countdown-unit">
+          <div class="countdown-card">
+            <span data-minutes class="countdown-number">00</span>
+            <div class="countdown-card-reflection"></div>
+          </div>
+          <span class="countdown-label">MINUTOS</span>
+        </div>
+
+        <div class="countdown-separator">:</div>
+
+        <div class="countdown-unit">
+          <div class="countdown-card">
+            <span data-seconds class="countdown-number">00</span>
+            <div class="countdown-card-reflection"></div>
+          </div>
+          <span class="countdown-label">SEGUNDOS</span>
+        </div>
+      </div>
+
+      <blockquote class="hero-quote animate-fade-in-up">
         <p>
-          Me encantaría que vinieras a celebrar
-          <br class="mobile-break" />
-          mi primer año.<br />
-          <strong>¡Será especial contigo!</strong>
+          ¡Tu presencia hará este día aún más especial!
         </p>
       </blockquote>
 
-      <!-- Botón de llamada a la acción -->
-      <div class="cta-container">
-        <a href="#rsvp" class="cta-image-link" aria-label="Confirmar asistencia">
-          <img
-            src="/galia/galiahamaca.webp"
-            alt="Galia invitando a la celebración"
-            class="cta-image"
-            loading="lazy"
-          />
+      <!-- Botón de llamada a la acción con flecha animada -->
+      <div class="cta-container animate-pulse">
+        <a href="#rsvp" class="scroll-indicator-link">
+          <div class="scroll-indicator">
+            <p class="cta-caption animate-blink">Desliza para ver más</p>
+            <img src="/arrow_down.gif" alt="Flecha hacia abajo" class="arrow-down animate-bounce" />
+          </div>
         </a>
-        <p class="cta-caption">Hacé clic en la imagen para confirmar asistencia</p>
       </div>
-
-      <!-- Cierre emocional -->
-      <footer class="hero-footer" role="contentinfo">
-        <p>¡Nos vemos pronto para celebrar juntos!</p>
-      </footer>
     </div>
   </div>
 </header>
+
+<script>
+  // Script para efecto parallax
+  document.addEventListener('DOMContentLoaded', () => {
+    const parallaxHero = document.getElementById('parallax-hero');
+    
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      if (parallaxHero) {
+        parallaxHero.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+      }
+    });
+    
+    // Script para el contador
+    const SECOND = 1000;
+    const MINUTE = SECOND * 60;
+    const HOUR = MINUTE * 60;
+    const DAY = HOUR * 24;
+
+    const $countdown = document.querySelector('[data-date]');
+    if ($countdown) {
+      const $days = $countdown.querySelector('[data-days]');
+      const $hours = $countdown.querySelector('[data-hours]');
+      const $minutes = $countdown.querySelector('[data-minutes]');
+      const $seconds = $countdown.querySelector('[data-seconds]');
+
+      const timestamp = $countdown.getAttribute('data-date');
+      if (timestamp) {
+        const date = new Date(+timestamp).getTime();
+
+        const formatTime = (time: number) => {
+          return Math.floor(time).toString().padStart(2, '0');
+        };
+
+        function updateCountdown() {
+          const now = Date.now();
+          const diff = date - now;
+
+          // Ensure we don't show negative values if the date has passed
+          const remainingTime = Math.max(diff, 0);
+
+          if ($days instanceof HTMLElement) {
+            const newDays = formatTime(remainingTime / DAY);
+            if ($days.innerText !== newDays) {
+              $days.parentElement?.classList.add('flip');
+              $days.innerText = newDays;
+              setTimeout(() => {
+                $days.parentElement?.classList.remove('flip');
+              }, 500);
+            }
+          }
+          if ($hours instanceof HTMLElement) {
+            const newHours = formatTime((remainingTime % DAY) / HOUR);
+            if ($hours.innerText !== newHours) {
+              $hours.parentElement?.classList.add('flip');
+              $hours.innerText = newHours;
+              setTimeout(() => {
+                $hours.parentElement?.classList.remove('flip');
+              }, 500);
+            }
+          }
+          if ($minutes instanceof HTMLElement) {
+            const newMinutes = formatTime((remainingTime % HOUR) / MINUTE);
+            if ($minutes.innerText !== newMinutes) {
+              $minutes.parentElement?.classList.add('flip');
+              $minutes.innerText = newMinutes;
+              setTimeout(() => {
+                $minutes.parentElement?.classList.remove('flip');
+              }, 500);
+            }
+          }
+          if ($seconds instanceof HTMLElement) {
+            const newSeconds = formatTime((remainingTime % MINUTE) / SECOND);
+            if ($seconds.innerText !== newSeconds) {
+              $seconds.parentElement?.classList.add('flip');
+              $seconds.innerText = newSeconds;
+              setTimeout(() => {
+                $seconds.parentElement?.classList.remove('flip');
+              }, 500);
+            }
+          }
+        }
+
+        updateCountdown(); // Run immediately once
+        setInterval(updateCountdown, SECOND);
+      }
+    }
+  });
+
+  // Script para el desplazamiento suave al hacer clic en la flecha
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollLinks = document.querySelectorAll('.scroll-indicator-link');
+    
+    scrollLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        if (!targetId) return;
+        
+        const targetElement = document.querySelector<HTMLElement>(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start',
+            inline: 'nearest'
+          });
+        }
+      });
+    });
+  });
+</script>

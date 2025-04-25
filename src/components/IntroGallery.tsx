@@ -1,5 +1,10 @@
 // IntroGallery.tsx
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
+
+interface IntroGalleryProps {
+  onIntroComplete?: () => void;
+}
 
 const galleryImages = ['/galia1.webp', '/galia2.webp', '/galia1.webp', '/galia2.webp'];
 
@@ -16,7 +21,15 @@ const fadeIn = {
   }),
 };
 
-export default function IntroGallery() {
+export default function IntroGallery({ onIntroComplete }: IntroGalleryProps) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onIntroComplete?.();
+    }, galleryImages.length * 200 + 600); // Tiempo total de las animaciones
+
+    return () => clearTimeout(timer);
+  }, [onIntroComplete]);
+
   return (
     <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-4 md:px-0">
       {galleryImages.map((src, index) => (

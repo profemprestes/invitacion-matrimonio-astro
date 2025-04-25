@@ -1,0 +1,376 @@
+.presentation-section {
+  padding: 4rem 1rem;
+  background: linear-gradient(135deg, #fff8f8 0%, #fff0f5 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.presentation-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.presentation-header {
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 3rem;
+  color: #FF69B4;
+  margin-bottom: 0.5rem;
+  font-family: 'Pacifico', cursive;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  font-size: 2.5rem;
+  color: #8A2BE2;
+  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+  padding: 0 1rem;
+}
+
+.image-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+}
+
+.image-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+}
+
+.image-wrapper {
+  position: relative;
+  padding-top: 100%;
+  overflow: hidden;
+}
+
+.card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.image-card:hover .card-image {
+  transform: scale(1.1);
+}
+
+.image-caption {
+  padding: 1rem;
+  font-size: 1.1rem;
+  color: #FF69B4;
+  font-weight: 600;
+  margin: 0;
+}
+
+.cta-section {
+  margin-top: 3rem;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  color: white;
+  background: linear-gradient(45deg, #FF69B4, #FF1493);
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255, 20, 147, 0.4);
+}
+
+.button-sparkle {
+  margin-left: 0.5rem;
+  animation: sparkle 1.5s infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 1s ease-out forwards;
+}
+
+.animate-pop {
+  animation: pop 0.8s ease-out forwards;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .subtitle {
+    font-size: 2rem;
+  }
+  
+  .description {
+    font-size: 1.1rem;
+    padding: 0 1rem;
+  }
+  
+  .image-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1.8rem;
+  }
+  
+  .description {
+    font-size: 1rem;
+  }
+  
+  .image-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  color: white;
+  background: linear-gradient(45deg, #FF69B4, #FF1493);
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+}
+
+/* Fondo animado */
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #FFB6C1, #FF69B4, #DA70D6, #FFB6C1);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Carrusel de imágenes */
+.carousel-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel {
+  position: relative;
+  height: 400px;
+}
+
+.carousel-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 105, 180, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: #FF1493;
+  transform: scale(1.2);
+}
+
+.carousel-dot:hover {
+  background: #FF69B4;
+}
+
+/* Mejoras en la presentación */
+.presentation-section {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.presentation-content {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 30px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Animaciones mejoradas */
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.title {
+  animation: floatAnimation 3s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .carousel {
+    height: 300px;
+  }
+  
+  .presentation-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel {
+    height: 250px;
+  }
+}
