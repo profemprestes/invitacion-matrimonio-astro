@@ -1,9 +1,12 @@
 ---
 import '../styles/css/sections/Presentacion.css';
 
----
+interface ImageData {
+  src: string;
+  caption: string;
+}
 
-const images = [
+const images: ImageData[] = [
   {
     src: "/GaliaFoto.png",
     caption: "Mi primer añito",
@@ -21,6 +24,8 @@ const images = [
     caption: "Celebrando juntos",
   }
 ];
+---
+
 <section class="presentation-section">
   <div class="animated-background"></div>
   <div class="presentation-content">
@@ -36,7 +41,10 @@ const images = [
       <div class="carousel">
         {
           images.map((image, index) => (
-            <div class="carousel-item" style={{animationDelay: `${index * 0.2}s`}} data-index={index}>
+            <div 
+              class={`carousel-item delay-${index}`} 
+              data-index={index}
+            >
               <div class="image-wrapper">
                 <img
                   src={image.src}
@@ -66,6 +74,13 @@ const images = [
   </div>
 </section>
 
+<style>
+  .delay-0 { animation-delay: 0s; }
+  .delay-1 { animation-delay: 0.2s; }
+  .delay-2 { animation-delay: 0.4s; }
+  .delay-3 { animation-delay: 0.6s; }
+</style>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const carousel = document.querySelector('.carousel');
@@ -75,7 +90,7 @@ const images = [
 
     function updateCarousel() {
       items.forEach((item, index) => {
-        item.style.opacity = index === currentIndex ? '1' : '0';
+        (item as HTMLElement).style.opacity = index === currentIndex ? '1' : '0';
       });
       dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === currentIndex);
